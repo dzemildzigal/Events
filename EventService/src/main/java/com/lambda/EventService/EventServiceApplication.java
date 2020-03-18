@@ -20,7 +20,7 @@ public class EventServiceApplication {
 		return(args) ->{
 		long millis=System.currentTimeMillis();
 		Event eventInfo = new Event(null,
-				"Svirka Radno Vrijeme",
+				"Svirka Radno Vrij eme",
 				"Straaaaaashna svirka, drug.",
 				1L,
 				1L,
