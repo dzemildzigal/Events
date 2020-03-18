@@ -11,7 +11,6 @@ public class EventService implements IEventService {
 
     @Autowired
     IEventRepository eventRepository;
-
     @Override
     public Event createEvent(Event info) {
         //test

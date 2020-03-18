@@ -19,8 +19,8 @@ public class EventServiceApplication {
 	public CommandLineRunner demo(IEventService service){
 		return(args) ->{
 		long millis=System.currentTimeMillis();
-		Event eventInfo = new Event(null,
-				"Svirka Radno Vrij eme",
+		Event eventInfo = new Event(1L,
+				"Svirka Radno Vrijeme",
 				"Straaaaaashna svirka, drug.",
 				1L,
 				1L,

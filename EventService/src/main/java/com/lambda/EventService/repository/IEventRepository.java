@@ -8,7 +8,7 @@ import java.sql.Date;
 public interface IEventRepository extends CrudRepository<Event,Long> {
     Event findById(long id);
     Event findByEventName(String name);
-    Event findByEventDescription(String desc);
+    Event findByDescription(String desc);
     Event findByLocationId(long id);
     Event findByEventTypeId(long id);
     Event findByCanBuyTicket(boolean cbt);
