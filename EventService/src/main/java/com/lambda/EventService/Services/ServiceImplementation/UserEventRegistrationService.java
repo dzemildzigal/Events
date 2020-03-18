@@ -4,7 +4,9 @@ import com.lambda.EventService.Services.IUserEventRegistrationService;
 import com.lambda.EventService.models.UserEventRegistration;
 import com.lambda.EventService.repository.IUserEventRegistrationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserEventRegistrationService implements IUserEventRegistrationService {
 
     @Autowired

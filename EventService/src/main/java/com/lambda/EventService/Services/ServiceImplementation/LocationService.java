@@ -4,7 +4,9 @@ import com.lambda.EventService.Services.ILocationService;
 import com.lambda.EventService.models.Location;
 import com.lambda.EventService.repository.IEventLocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class LocationService implements ILocationService {
 
     @Autowired

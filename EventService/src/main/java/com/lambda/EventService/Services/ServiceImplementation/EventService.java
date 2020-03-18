@@ -4,7 +4,9 @@ import com.lambda.EventService.Services.IEventService;
 import com.lambda.EventService.models.Event;
 import com.lambda.EventService.repository.IEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EventService implements IEventService {
 
     @Autowired

@@ -4,7 +4,9 @@ import com.lambda.EventService.Services.IEventCommentsService;
 import com.lambda.EventService.models.EventComments;
 import com.lambda.EventService.repository.IEventCommentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EventCommentsService implements IEventCommentsService {
 
     @Autowired
