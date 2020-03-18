@@ -1,5 +1,7 @@
 package com.lambda.UserService;
 
+import com.lambda.UserService.Service.IUserService;
+import com.lambda.UserService.model.UserCredentials;
 import com.lambda.UserService.model.UserInfo;
 import com.lambda.UserService.repository.IUserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -16,14 +18,12 @@ public class UserServiceApplication {
 		SpringApplication.run(UserServiceApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner demo(IUserRepository repository) {
+	public CommandLineRunner demo(IUserService service) {
 		return (args) -> {
 
-			UserInfo a = new UserInfo();
-			a.setEmail("test");
-			a.setFullName("test");
-			repository.save(a);
-			List<UserInfo> test = repository.findByEmail("test");
+			UserInfo userInfo = new UserInfo(null, "test", "test", "test");
+			UserCredentials userCredentials = new UserCredentials(null, "test", "test", userInfo);
+			var tmp = service.createUser(userCredentials);
 		};
 	}
 }

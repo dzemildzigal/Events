@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,9 @@ public class UserInfo {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long userId;
+    @Length(min = 3, max = 40)
     private String email;
+    @Length(min = 3, max = 40)
     private String fullName;
     private String profilePictureURL;
 }

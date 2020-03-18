@@ -1,4 +1,4 @@
-package com.lambda.UserService;
+package com.lambda.UserService.Controller;
 
 
 import com.lambda.UserService.Service.IUserService;
