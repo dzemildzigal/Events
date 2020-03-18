@@ -20,7 +20,7 @@ public class EventType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int eventTypeId;
+    private Long eventTypeId;
     private String description;
 
 }

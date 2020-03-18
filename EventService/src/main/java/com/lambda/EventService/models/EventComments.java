@@ -19,8 +19,8 @@ import javax.persistence.Id;
 public class EventComments {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int eventCommentId;
-    private int userId;
-    private int eventId;
+    private Long eventCommentId;
+    private Long userId;
+    private Long eventId;
     private String text;
 }

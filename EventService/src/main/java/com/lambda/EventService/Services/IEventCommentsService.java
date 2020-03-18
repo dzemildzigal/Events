@@ -4,5 +4,5 @@ import com.lambda.EventService.models.EventComments;
 
 public interface IEventCommentsService {
     EventComments createEventComments(EventComments object);
-    EventComments findById(long id);
+    EventComments findById(Long id);
 }

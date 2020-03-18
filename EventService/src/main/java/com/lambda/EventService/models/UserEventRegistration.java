@@ -18,8 +18,8 @@ import javax.persistence.Id;
 public class UserEventRegistration {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int userEventRegistrationId;
-    private int userId;
-    private int registrationTypeId;
-    private int eventId;
+    private Long userEventRegistrationId;
+    private Long userId;
+    private Long registrationTypeId;
+    private Long eventId;
 }

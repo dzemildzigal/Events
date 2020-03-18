@@ -4,5 +4,6 @@ import com.lambda.EventService.models.EnuRegistrationType;
 import org.springframework.data.repository.CrudRepository;
 
 public interface IEnuRegistrationTypeRepository extends CrudRepository<EnuRegistrationType,Long> {
-
+    EnuRegistrationType findById(long id);
+    EnuRegistrationType findByDescription(String desc);
 }

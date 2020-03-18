@@ -18,6 +18,6 @@ import javax.persistence.Id;
 public class EnuRegistrationType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int enuRegistrationTypeId;
+    private Long enuRegistrationTypeId;
     private String description;
 }

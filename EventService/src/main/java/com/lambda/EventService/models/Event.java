@@ -20,17 +20,18 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int eventId;
+    private Long eventId;
+
     private String eventName;
     private String description;
-    private int locationId;
-    private int eventTypeId;
-    private boolean canBuyTicket;
-    private double ticketPrice;
-    private int numberOfTicketsAvailable;
+    private Long locationId;
+    private Long eventTypeId;
+    private Boolean canBuyTicket;
+    private Double ticketPrice;
+    private Long numberOfTicketsAvailable;
     private String eventPictureURL;
-    private int createdByUserId;
-    private int eventStatusId;
+    private Long createdByUserId;
+    private Long eventStatusId;
     private Date eventTime;
 // ostali atributi ...
 

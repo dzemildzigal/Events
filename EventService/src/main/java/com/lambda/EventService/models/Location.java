@@ -18,16 +18,6 @@ import javax.persistence.Id;
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int locationId;
+    private Long locationId;
     private String description;
-
-
-    /*
-    Event proba() {
-        Event novi = new Event();
-       return novi;
-    }
-    */
-
-
 }

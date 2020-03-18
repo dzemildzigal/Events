@@ -20,7 +20,7 @@ public class EnuEventStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int eventStatusId;
+    private Long eventStatusId;
     private String description;
 
 

@@ -6,7 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
+import com.lambda.EventService.repository.IEventRepository;
 import java.sql.Date;
 
 @SpringBootApplication
@@ -22,16 +22,16 @@ public class EventServiceApplication {
 		Event eventInfo = new Event(null,
 				"Svirka Radno Vrijeme",
 				"Straaaaaashna svirka, drug.",
-				1,
-				1,
+				1L,
+				1L,
 				true,
-				10.0,
-				100,
+				10.0D,
+				100L,
 				"https://www.google.ba",
-				1,
-				1,
+				1L,
+				1L,
 				new java.sql.Date(millis));
-		 service.createEvent(eventInfo);
+		 var tmp = service.createEvent(eventInfo);
 		};
 	}
 

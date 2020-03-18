@@ -4,6 +4,6 @@ import com.lambda.EventService.models.UserEventRegistration;
 
 public interface IUserEventRegistrationService {
     UserEventRegistration createUserEventRegistration(UserEventRegistration object);
-    UserEventRegistration findById(long id);
+    UserEventRegistration findById(Long id);
 
 }
