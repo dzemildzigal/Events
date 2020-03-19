@@ -7,5 +7,4 @@ import org.springframework.data.repository.CrudRepositoryExtensionsKt;
 
 public interface IEventLocationRepository extends CrudRepository<Location,Long> {
     Location findById(long id);
-    Location findByDescription(String desc);
 }
