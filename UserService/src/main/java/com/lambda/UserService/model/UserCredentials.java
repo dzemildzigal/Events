@@ -26,6 +26,7 @@ public class UserCredentials {
     @Length(min = 3, max = 100)
     private String password;
 
+
     @MapsId
     @OneToOne
     @JoinColumn(name = "userId")

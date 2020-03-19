@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,6 +17,15 @@ public class UserEventRegistration {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userEventRegistrationId;
     private Long userId;
-    private Long registrationTypeId;
-    private Long eventId;
+    //veze
+    @MapsId //šta se mapira
+    @ManyToOne(fetch= FetchType.LAZY)  //tip veze
+    @JoinColumn(name = "registrationTypeId") //kako se zove kolona u tabeli na koju se veže
+    private EnuRegistrationType enuRegistrationType; //instanca klase na koju se veže
+
+    //veze
+    @MapsId //šta se mapira
+    @ManyToOne(fetch= FetchType.LAZY) //tip veze
+    @JoinColumn(name = "eventId") //kako se zove kolona u tabeli na koju se veže
+    private Event event; //instanca klase na koju se veže
 }

@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface IEnuEventStatusRepository extends CrudRepository<EnuEventStatus,Long> {
     EnuEventStatus findById(long id);
-    List<EnuEventStatus> findByDescription(String desc);
 }
