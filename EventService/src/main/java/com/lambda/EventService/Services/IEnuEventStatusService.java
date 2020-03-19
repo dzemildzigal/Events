@@ -1,6 +1,6 @@
 package com.lambda.EventService.Services;
 
-import com.lambda.EventService.models.EnuEventStatus;
+import com.lambda.EventService.Models.EnuEventStatus;
 
 public interface IEnuEventStatusService {
     EnuEventStatus createEnuEventStatus(EnuEventStatus object);

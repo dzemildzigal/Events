@@ -1,7 +1,6 @@
-package com.lambda.EventService.repository;
+package com.lambda.EventService.Repositories;
 
-import com.lambda.EventService.models.UserEventRegistration;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import com.lambda.EventService.Models.UserEventRegistration;
 import org.springframework.data.repository.CrudRepository;
 
 public interface IUserEventRegistrationRepository extends CrudRepository<UserEventRegistration,Long> {

@@ -1,6 +1,6 @@
 package com.lambda.EventService.Services;
 
-import com.lambda.EventService.models.Event;
+import com.lambda.EventService.Models.Event;
 
 public interface IEventService {
     Event createEvent(Event info);

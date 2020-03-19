@@ -1,10 +1,11 @@
 package com.lambda.EventService.Models;
 
-
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.catalina.User;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,13 +16,14 @@ import java.util.List;
 @Setter
 @Entity
 @Table
-public class EventType {
-
+public class EnuRegistrationType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long eventTypeId;
+    private Long enuRegistrationTypeId;
+    @NotNull
     private String description;
 
-    @OneToMany(mappedBy = "eventType")
-    private List<Event> eventList;
+    @OneToMany(mappedBy = "enuRegistrationType")
+    private List<UserEventRegistration> userEventRegistrationList;
+
 }

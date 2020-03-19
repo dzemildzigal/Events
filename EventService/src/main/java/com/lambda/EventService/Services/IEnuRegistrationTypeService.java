@@ -1,6 +1,6 @@
 package com.lambda.EventService.Services;
 
-import com.lambda.EventService.models.EnuRegistrationType;
+import com.lambda.EventService.Models.EnuRegistrationType;
 
 public interface IEnuRegistrationTypeService {
     EnuRegistrationType createEnuRegistrationType(EnuRegistrationType object);
