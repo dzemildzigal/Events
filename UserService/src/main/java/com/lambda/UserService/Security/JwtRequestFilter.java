@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static ch.qos.logback.classic.PatternLayout.HEADER_PREFIX;
+import static com.lambda.UserService.Security.SecurityConstants.HEADER_STRING;
+
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
@@ -28,19 +31,19 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        final String authorizationHeader = request.getHeader("Authorization");
+        final String authorizationHeader = request.getHeader(HEADER_STRING);
 
         String username = null;
         String jwt = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader != null && authorizationHeader.startsWith(HEADER_PREFIX)) {
             jwt = authorizationHeader.substring(7);
             username = jwtUtil.extractUsername(jwt);
         }
 
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
+            // should add filter to so the user can just update his records -> ..
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 
             if (jwtUtil.validateToken(jwt, userDetails)) {
