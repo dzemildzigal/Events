@@ -1,4 +1,4 @@
-package com.lambda.UserService.model;
+package com.lambda.UserService.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
