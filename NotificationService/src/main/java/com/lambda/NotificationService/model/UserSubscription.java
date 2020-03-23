@@ -1,10 +1,11 @@
-package com.lambda.EventService.models;
+package com.lambda.NotificationService.model;
 
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 
@@ -13,12 +14,17 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class EnuRegistrationType {
+public class UserSubscription {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long enuRegistrationTypeId;
+    private Long userSubscriptionId;
+
     @NotNull
-    private String description;
+    private Long userId;
+
+    @NotNull
+    private Long eventTypeId;
 
 
 

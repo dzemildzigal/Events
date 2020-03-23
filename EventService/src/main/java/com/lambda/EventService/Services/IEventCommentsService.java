@@ -1,6 +1,6 @@
 package com.lambda.EventService.Services;
 
-import com.lambda.EventService.models.EventComments;
+import com.lambda.EventService.Models.EventComments;
 
 public interface IEventCommentsService {
     EventComments createEventComments(EventComments object);

@@ -1,9 +1,7 @@
-package com.lambda.EventService.repository;
+package com.lambda.EventService.Repositories;
 
-import com.lambda.EventService.models.Event;
+import com.lambda.EventService.Models.Event;
 import org.springframework.data.repository.CrudRepository;
-
-import java.sql.Date;
 
 public interface IEventRepository extends CrudRepository<Event,Long> {
     Event findById(long id);

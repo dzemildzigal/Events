@@ -2,8 +2,8 @@ package com.lambda.EventService.Services.ServiceImplementation;
 
 
 import com.lambda.EventService.Services.IEnuEventStatusService;
-import com.lambda.EventService.models.EnuEventStatus;
-import com.lambda.EventService.repository.IEnuEventStatusRepository;
+import com.lambda.EventService.Models.EnuEventStatus;
+import com.lambda.EventService.Repositories.IEnuEventStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

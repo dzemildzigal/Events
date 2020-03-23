@@ -1,4 +1,4 @@
-package com.lambda.EventService.models;
+package com.lambda.EventService.Models;
 
 
 import lombok.AllArgsConstructor;
@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@Table
 public class EventComments {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,9 +21,9 @@ public class EventComments {
     private Long userId;
 
    //veze
-    @MapsId //šta se mapira
-    @ManyToOne(fetch= FetchType.LAZY)  //tip veze
-    @JoinColumn(name = "eventId") //kako se zove kolona u tabeli na koju se veže
+    //@MapsId //šta se mapira
+    @ManyToOne//(fetch= FetchType.LAZY)  //tip veze
+    //@JoinColumn(name = "eventId") //kako se zove kolona u tabeli na koju se veže
     private Event event; //instanca klase na koju se veže
 
     private String text;

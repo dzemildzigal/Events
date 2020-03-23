@@ -1,4 +1,4 @@
-package com.lambda.EventService.models;
+package com.lambda.EventService.Models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table
 @Entity
 public class UserEventRegistration {
     @Id
@@ -18,14 +19,14 @@ public class UserEventRegistration {
     private Long userEventRegistrationId;
     private Long userId;
     //veze
-    @MapsId //šta se mapira
-    @ManyToOne(fetch= FetchType.LAZY)  //tip veze
-    @JoinColumn(name = "registrationTypeId") //kako se zove kolona u tabeli na koju se veže
+    //@MapsId //šta se mapira
+    @ManyToOne//(fetch= FetchType.LAZY)  //tip veze
+    //@JoinColumn(name = "registrationTypeId") //kako se zove kolona u tabeli na koju se veže
     private EnuRegistrationType enuRegistrationType; //instanca klase na koju se veže
 
     //veze
-    @MapsId //šta se mapira
-    @ManyToOne(fetch= FetchType.LAZY) //tip veze
-    @JoinColumn(name = "eventId") //kako se zove kolona u tabeli na koju se veže
+    //@MapsId //šta se mapira
+    @ManyToOne//(fetch= FetchType.LAZY) //tip veze
+    //@JoinColumn(name = "eventId") //kako se zove kolona u tabeli na koju se veže
     private Event event; //instanca klase na koju se veže
 }

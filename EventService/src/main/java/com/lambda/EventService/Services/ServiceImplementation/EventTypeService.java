@@ -1,9 +1,8 @@
 package com.lambda.EventService.Services.ServiceImplementation;
 
 import com.lambda.EventService.Services.IEventTypeService;
-import com.lambda.EventService.models.EventType;
-import com.lambda.EventService.repository.IEventRepository;
-import com.lambda.EventService.repository.IEventTypeRepository;
+import com.lambda.EventService.Models.EventType;
+import com.lambda.EventService.Repositories.IEventTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
