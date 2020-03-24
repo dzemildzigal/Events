@@ -31,8 +31,7 @@ public class UserInfo {
     @NotBlank(message = "Email cannot be blank")
     private String email;
 
-    @Length(min = 3, max = 40)
-    @Length(min = 3, max = 20, message = "Name length must be between 3 and 40 characters")
+    @Length(min = 3, max = 40, message = "Name length must be between 3 and 40 characters")
     @NotNull(message  = "Name cannot be null")
     @NotBlank(message = "Name cannot be blank")
     private String fullName;
