@@ -1,5 +1,6 @@
 package com.lambda.EventService.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +31,7 @@ public class Event {
     //@MapsId //šta se mapira
     @ManyToOne//(fetch= FetchType.LAZY)  //tip veze
     //@JoinColumn(name = "locationId") //kako se zove kolona u tabeli na koju se veže
+    @JsonIgnore
     private Location location; //instanca klase na koju se veže
 
 
