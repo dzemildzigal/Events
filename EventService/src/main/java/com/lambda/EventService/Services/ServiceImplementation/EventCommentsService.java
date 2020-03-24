@@ -15,7 +15,6 @@ public class EventCommentsService implements IEventCommentsService {
 
     @Override
     public EventComments createEventComments(EventComments object) {
-        //test
         var eventCommentsRepositoryTemp = eventCommentsRepository.save(object);
         return object;
     }

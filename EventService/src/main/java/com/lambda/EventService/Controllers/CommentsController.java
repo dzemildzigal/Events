@@ -33,7 +33,7 @@ public class CommentsController {
     }
 
     @PostMapping("/post-comment/{eventId}")
-    public Event updateEventStatus(@PathVariable long eventId, EventComments comment) throws Exception{
+    public Event updateEventStatus(@PathVariable long eventId, @org.jetbrains.annotations.NotNull EventComments comment) throws Exception{
         var event = eventService.findById(eventId);
         comment.setEvent(event);
         commentService.createEventComments(comment);
