@@ -6,6 +6,8 @@ import com.lambda.EventService.Repositories.IEventCommentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EventCommentsService implements IEventCommentsService {
 
@@ -24,4 +26,16 @@ public class EventCommentsService implements IEventCommentsService {
         long idd = id;
         return eventCommentsRepository.findById(idd);
     }
+    @Override
+    public List<EventComments> findByUserId(Long userId){
+        long uid = userId;
+        return eventCommentsRepository.findByUserId(uid);
+    }
+
+    @Override
+    public List<EventComments> findByTextContainingIgnoreCase(String containingString){
+        String search = containingString;
+        return eventCommentsRepository.findByTextContainingIgnoreCase(search);
+    }
+
 }
