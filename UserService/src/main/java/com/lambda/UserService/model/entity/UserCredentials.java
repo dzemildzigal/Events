@@ -1,6 +1,5 @@
 package com.lambda.UserService.model.entity;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +7,8 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,18 +20,22 @@ public class UserCredentials {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userCredentialsId;
-    @NotNull
-    @Length(min = 3, max = 20)
+
+    @NotNull(message  = "Username cannot be null")
+    @NotBlank(message = "Username cannot be blank")
+    @Length(min = 3, max = 20, message = "Username length must be between 3 and 20 characters")
     private String username;
-    @NotNull
-    @Length(min = 3, max = 100)
+
+
+    @NotNull(message  = "Password cannot be null")
+    @NotBlank(message = "Password cannot be blank")
     private String password;
 
 
     @MapsId
     @OneToOne
     @JoinColumn(name = "userId")
+    @NotNull(message = "UserInfo cannot be null")
     private UserInfo user;
-
 
 }

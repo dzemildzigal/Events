@@ -7,7 +7,9 @@ import com.lambda.UserService.model.entity.UserInfo;
 
 public interface IUserService {
     UserInfo createUser(UserCredentials userDTO);
-    UserInfo findById(long id);
+    UserInfo findById(long id) throws Exception;
     UserInfo updateUserInfo(UserInfo info);
     UserLoginAckDTO login(UserLoginDTO userLoginDTO);
+    boolean isUserAuthorized(long userId, String token);
+    boolean deleteUser(long userId);
 }

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static ch.qos.logback.classic.PatternLayout.HEADER_PREFIX;
+import static com.lambda.UserService.Security.SecurityConstants.HEADER_PREFIX;
 import static com.lambda.UserService.Security.SecurityConstants.HEADER_STRING;
 
 @Component
@@ -47,7 +47,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 
             if (jwtUtil.validateToken(jwt, userDetails)) {
-
+                var test = request.getRequestURI();
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken

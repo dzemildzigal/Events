@@ -36,6 +36,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers(HttpMethod.POST, AUTH_URL).permitAll()
+                .antMatchers(HttpMethod.GET, "/users/is-user-authorized/**").permitAll()
+                // allow swagger
+                .antMatchers("/v2/api-docs", "/swagger-resources/configuration/ui", "/swagger-resources", "/swagger-resources/configuration/security", "/swagger-ui.html", "/webjars/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 //.addFilter(new JWTAuthorizationFilter(authenticationManager()))
@@ -59,11 +62,5 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationManager getAuthenticationManagerBean() throws Exception {
         return super.authenticationManager();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-        //return NoOpPasswordEncoder.getInstance();
     }
 }
