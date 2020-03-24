@@ -1,6 +1,7 @@
 package com.lambda.EventService.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,5 +24,6 @@ public class EventType {
     private String description;
 
     @OneToMany(mappedBy = "eventType")
+    @JsonIgnoreProperties("eventList")
     private List<Event> eventList;
 }

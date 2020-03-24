@@ -1,6 +1,7 @@
 package com.lambda.EventService.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +24,8 @@ public class EventComments {
    //veze
     //@MapsId //šta se mapira
     @ManyToOne//(fetch= FetchType.LAZY)  //tip veze
-    //@JoinColumn(name = "eventId") //kako se zove kolona u tabeli na koju se veže
-    private Event event; //instanca klase na koju se veže
+    @JsonIgnore
+    public Event event; //instanca klase na koju se veže
 
     private String text;
 }

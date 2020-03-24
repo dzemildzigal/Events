@@ -1,6 +1,7 @@
 package com.lambda.EventService.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class EnuEventStatus {
     @NotNull
     private String description;
     @OneToMany(mappedBy = "enuEventStatus")
+    @JsonIgnoreProperties("events")
     private List<Event> events;
 
 }

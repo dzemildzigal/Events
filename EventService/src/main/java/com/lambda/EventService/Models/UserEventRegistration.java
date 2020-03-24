@@ -1,5 +1,6 @@
 package com.lambda.EventService.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,12 +22,12 @@ public class UserEventRegistration {
     //veze
     //@MapsId //šta se mapira
     @ManyToOne//(fetch= FetchType.LAZY)  //tip veze
-    //@JoinColumn(name = "registrationTypeId") //kako se zove kolona u tabeli na koju se veže
+    @JsonIgnore
     private EnuRegistrationType enuRegistrationType; //instanca klase na koju se veže
 
     //veze
     //@MapsId //šta se mapira
     @ManyToOne//(fetch= FetchType.LAZY) //tip veze
-    //@JoinColumn(name = "eventId") //kako se zove kolona u tabeli na koju se veže
+    @JsonIgnore
     private Event event; //instanca klase na koju se veže
 }

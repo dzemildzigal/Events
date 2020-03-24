@@ -1,11 +1,15 @@
 package com.lambda.EventService.Models;
 
+
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -28,17 +32,15 @@ public class Event {
     @NotNull
     private String description;
     //veze
-    //@MapsId //šta se mapira
-    @ManyToOne//(fetch= FetchType.LAZY)  //tip veze
-    //@JoinColumn(name = "locationId") //kako se zove kolona u tabeli na koju se veže
+
+    @ManyToOne
     @JsonIgnore
-    private Location location; //instanca klase na koju se veže
+    public Location location;
 
 
     //veze
-    //@MapsId //šta se mapira
-    @ManyToOne//(fetch= FetchType.LAZY)  //tip veze
-    //@JoinColumn(name = "eventTypeId") //kako se zove kolona u tabeli na koju se veže
+    @ManyToOne
+    @JsonIgnore
     private EventType eventType; //instanca klase na koju se veže
 
 
@@ -53,17 +55,18 @@ public class Event {
     @NotNull
     private Long createdByUserId;
     //veze
-    //@MapsId //šta se mapira
     @ManyToOne//(fetch= FetchType.LAZY, cascade = CascadeType.ALL)  //tip veze
-    //@JoinColumn(name = "eventStatusId") //kako se zove kolona u tabeli na koju se veže
+    @JsonIgnore
     private EnuEventStatus enuEventStatus; //instanca klase na koju se veže
     @NotNull
     private Date eventTime;
 
     @OneToMany(mappedBy = "event")
+    @JsonIgnoreProperties("eventCommentsList")
     private List<EventComments> eventCommentsList;
 
     @OneToMany(mappedBy = "event")
+    @JsonIgnoreProperties("userEventRegistrationList")
     private List<UserEventRegistration> userEventRegistrationList;
 
 }

@@ -1,5 +1,6 @@
 package com.lambda.EventService.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class EnuRegistrationType {
     private String description;
 
     @OneToMany(mappedBy = "enuRegistrationType")
+    @JsonIgnoreProperties("userEventRegistrationList")
     private List<UserEventRegistration> userEventRegistrationList;
 
 }
