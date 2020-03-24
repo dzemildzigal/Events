@@ -1,6 +1,5 @@
 package com.lambda.UserTicketService.model;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,10 +22,10 @@ public class UserTicket {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userTicketId;
 
-    @NotNull
+    @NotNull(message = "UserId cannot be null")
     private Long userId;
 
-    @NotNull
+    @NotNull(message = "eventId cannot be null")
     private Long eventId;
 
 }
