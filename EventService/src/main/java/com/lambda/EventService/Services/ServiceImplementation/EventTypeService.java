@@ -16,7 +16,6 @@ public class EventTypeService implements IEventTypeService {
 
     @Override
     public EventType createEventType(EventType object) {
-        //test
         var eventTypeRepositoryTemp = eventTypeRepository.save(object);
         return object;
     }

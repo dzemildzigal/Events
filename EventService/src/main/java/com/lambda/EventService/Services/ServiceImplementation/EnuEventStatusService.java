@@ -26,4 +26,14 @@ public class EnuEventStatusService implements IEnuEventStatusService {
         long idd= id;
         return enuEventStatusRepository.findById(idd);
     }
+
+    @Override
+    public EnuEventStatus updateEnuEventStatus(EnuEventStatus newVal){
+        long idd = newVal.getEventStatusId();
+        var old =  enuEventStatusRepository.findById(idd);
+        old.setDescription(newVal.getDescription());
+        old.setEvents(newVal.getEvents());
+        return old;
+    }
+
 }

@@ -1,22 +1,20 @@
 package com.lambda.EventService.Controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lambda.EventService.Models.EnuEventStatus;
 import com.lambda.EventService.Models.Event;
-import com.lambda.EventService.Models.EventComments;
+import com.lambda.EventService.Services.IEnuEventStatusService;
 import com.lambda.EventService.Services.IEventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 @RequestMapping("event")
 public class EventController {
     @Autowired
     IEventService eventService;
+    @Autowired
+    IEnuEventStatusService enuEventStatusService;
 
     @GetMapping("/{id}")
     public Event getEvent(@PathVariable long id){
@@ -24,16 +22,20 @@ public class EventController {
     }
 
     @GetMapping("/status/{id}")
-    public EnuEventStatus getEventStatus(@PathVariable long id)throws Exception{
+    public EnuEventStatus getEventStatusByEventId(@PathVariable long id)throws Exception{
         var event = eventService.findById(id);
         return event.getEnuEventStatus();
     }
 
-    @PostMapping("/update-status")
-    public Event updateEventStatus(@PathVariable long id, EnuEventStatus status) throws Exception{
-        var event = eventService.findById(id);
-        event.setEnuEventStatus(status);
-        return event;
+    @PostMapping("/update-status/{eventId}")
+    public Event updateEventStatus(@PathVariable long eventId, EnuEventStatus status) throws Exception{
+        var event = eventService.findById(eventId);
+        event.getEnuEventStatus().setDescription(status.getDescription());
+
+        var eventStatus = enuEventStatusService.findById(status.getEventStatusId());
+        eventStatus.setDescription(status.getDescription());
+        enuEventStatusService.updateEnuEventStatus(eventStatus);
+        return eventService.updateEventStatus(event);
     }
 
     @PostMapping("/add-event")
