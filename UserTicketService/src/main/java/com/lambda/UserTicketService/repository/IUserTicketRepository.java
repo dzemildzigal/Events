@@ -4,8 +4,9 @@ import com.lambda.UserTicketService.model.UserTicket;
 import org.apache.catalina.User;
 import org.springframework.data.repository.CrudRepository;
 
-public interface IUserTicketRepository extends CrudRepository<UserTicket, Long> {
-//UserTicket findById(Long id);
-void deleteById(Long id);
+import java.util.List;
 
+public interface IUserTicketRepository extends CrudRepository<UserTicket, Long> {
+        void deleteById(Long id);
+        List<UserTicket> findByUserId(Long id);
 }
