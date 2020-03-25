@@ -69,8 +69,6 @@ public class UserService implements IUserService {
     @Override
     public UserLoginAckDTO login(UserLoginDTO userLoginDTO) {
         try {
-            String test;
-            boolean bla = this.bCryptPasswordEncoder.matches("test", this.bCryptPasswordEncoder.encode("test"));
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             userLoginDTO.getUsername(),
