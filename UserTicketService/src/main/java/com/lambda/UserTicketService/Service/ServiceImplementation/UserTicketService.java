@@ -33,6 +33,12 @@ public class UserTicketService implements IUserTicketService {
     public UserTicket getUserTicketById(long id) {
         return this.userTicketRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
+    @Override
+    public List<UserTicket> getUserTicketsByEventId(long eventid)
+    {
+        return this.userTicketRepository.findByEventId(eventid);
+
+    }
 
     @Override
     public List<UserTicket> getUserTicketsByUserId(long id) {

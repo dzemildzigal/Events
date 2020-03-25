@@ -14,4 +14,6 @@ public interface IUserTicketService {
     void deleteUserTicket(Long id);
     List<UserTicket> getUserTicketsByUserId(long id);
 
+
+    List<UserTicket> getUserTicketsByEventId(long eventid);
 }

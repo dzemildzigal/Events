@@ -5,6 +5,7 @@ import com.lambda.UserTicketService.Service.IUserTicketService;
 import com.lambda.UserTicketService.model.CCPayment;
 import com.lambda.UserTicketService.model.UserTicket;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.web.JsonPath;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,11 @@ public class UserTicketController {
     public UserTicket createNewTicket(@RequestBody UserTicket userTicket){
         return this.userTicketService.createUserTicket(userTicket);
     }
+    @PostMapping("/eventtickets/{eventid}")
+    public List<UserTicket> getUserTicketsByEventId(@PathVariable long eventid){
+        return this.userTicketService.getUserTicketsByEventId(eventid);
+    }
+
 
     @PostMapping("/newpayment")
     public CCPayment createNewPayment(@RequestBody CCPayment ccPayment)
@@ -37,7 +43,7 @@ public class UserTicketController {
     }
 
     @GetMapping("users-tickets/{userId}")
-    public List<UserTicket> getUserTicketsByUserId(long userId) {
+    public List<UserTicket> getUserTicketsByUserId(@PathVariable  long userId) {
         return this.userTicketService.getUserTicketsByUserId(userId);
     }
 }

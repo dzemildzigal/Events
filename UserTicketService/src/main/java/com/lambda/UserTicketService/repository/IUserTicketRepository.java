@@ -9,4 +9,6 @@ import java.util.List;
 public interface IUserTicketRepository extends CrudRepository<UserTicket, Long> {
         void deleteById(Long id);
         List<UserTicket> findByUserId(Long id);
+
+        List<UserTicket> findByEventId(long eventid);
 }
