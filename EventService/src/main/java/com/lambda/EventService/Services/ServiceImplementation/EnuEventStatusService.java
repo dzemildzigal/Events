@@ -29,11 +29,16 @@ public class EnuEventStatusService implements IEnuEventStatusService {
 
     @Override
     public EnuEventStatus updateEnuEventStatus(EnuEventStatus newVal){
-        long idd = newVal.getEventStatusId();
-        var old =  enuEventStatusRepository.findById(idd);
-        old.setDescription(newVal.getDescription());
-        old.setEvents(newVal.getEvents());
-        return old;
+
+        if(newVal.getEventStatusId() != null) {
+            long idd = newVal.getEventStatusId();
+            var old = enuEventStatusRepository.findById(idd);
+            old.setDescription(newVal.getDescription());
+            old.setEvents(newVal.getEvents());
+            return enuEventStatusRepository.save(old);
+        }
+        var newEntry = newVal;
+        return enuEventStatusRepository.save(newEntry);
     }
 
     @Override
