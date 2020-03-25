@@ -17,12 +17,14 @@ public class NotificationController {
     @Autowired
     INotificationService notificationservice;
     @PostMapping("/newsubscription")
-    public UserSubscription createSubscription (@RequestBody UserSubscription info) {
+    public UserSubscription createSubscription (@ModelAttribute UserSubscription info) {
         return this.notificationservice.createUserSubscription(info);
     }
+
     @PostMapping("/newnotification")
-    public UserNotification createNotification (@RequestBody UserNotification info) {
+    public UserNotification createNotification (@ModelAttribute UserNotification info) {
         return this.notificationservice.createUserNotification(info);
+
     }
     @PostMapping("/deletesubscription/{usersubscriptionid}")
             void DeleteSubscription (@PathVariable Long usersubscriptionid){
