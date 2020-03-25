@@ -8,6 +8,8 @@ import com.lambda.NotificationService.repository.IUserSubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class NotificationService implements INotificationService {
 
@@ -30,5 +32,26 @@ public class NotificationService implements INotificationService {
        UserSubscription createdUserSubscription = this.userSubscriptionRepository.save(userSubscription);
 
        return createdUserSubscription;
+    }
+
+    @Override
+    public List<UserNotification> updateSeen(Long id) {
+
+          List<UserNotification> lista = userNotificationRepository.findByUserId(id);
+        for (int i=0; i < lista.size(); i++){
+            lista.get(i).setSeen(true);
+
+
+        }
+        userNotificationRepository.saveAll(lista);
+        return lista;
+    }
+
+    @Override
+   public void deleteSubscription(Long usersubscriptionid) {
+    userSubscriptionRepository.deleteById(usersubscriptionid);
+
+
+
     }
 }
