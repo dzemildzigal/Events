@@ -6,4 +6,5 @@ public interface IEnuEventStatusService {
     EnuEventStatus createEnuEventStatus(EnuEventStatus object);
     EnuEventStatus findById(Long id);
     EnuEventStatus updateEnuEventStatus(EnuEventStatus updateVal);
+    EnuEventStatus findByDescription(String description);
 }
