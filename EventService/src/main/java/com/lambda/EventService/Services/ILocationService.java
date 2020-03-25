@@ -4,5 +4,6 @@ import com.lambda.EventService.Models.Location;
 
 public interface ILocationService {
     Location createLocation(Location object);
+    Location updateLocation(Location object);
     Location findById(Long id);
 }

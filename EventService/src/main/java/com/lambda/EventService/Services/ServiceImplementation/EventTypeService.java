@@ -25,4 +25,9 @@ public class EventTypeService implements IEventTypeService {
         long idd = id;
         return eventTypeRepository.findById(idd);
     }
+
+    @Override
+    public EventType updateEventType(EventType updatedValue){
+        return eventTypeRepository.save(updatedValue);
+    }
 }

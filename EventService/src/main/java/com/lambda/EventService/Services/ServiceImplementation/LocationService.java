@@ -25,4 +25,10 @@ public class LocationService implements ILocationService {
         long idd=id;
         return eventLocationRepository.findById(idd);
     }
+
+    @Override
+    public Location updateLocation(Location updateVal){
+        return eventLocationRepository.save(updateVal);
+    }
+
 }

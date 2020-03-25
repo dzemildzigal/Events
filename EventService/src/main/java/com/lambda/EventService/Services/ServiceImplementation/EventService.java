@@ -26,7 +26,6 @@ public class EventService implements IEventService {
 
     @Override
     public Event updateEventStatus(Event info)throws Exception{
-        if (info.getEventId() == null) throw new Exception("Cannot update Event with ID == null! This will create a new event!");
         return eventRepository.save(info);
     }
 

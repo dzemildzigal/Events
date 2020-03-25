@@ -21,7 +21,7 @@ public class EventType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long eventTypeId;
-    private String description;
+    private String eventTypeDescription;
 
     @OneToMany(mappedBy = "eventType")
     @JsonIgnoreProperties("eventList")
