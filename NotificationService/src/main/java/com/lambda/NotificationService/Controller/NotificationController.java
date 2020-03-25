@@ -4,7 +4,6 @@ package com.lambda.NotificationService.Controller;
 import com.lambda.NotificationService.Service.INotificationService;
 import com.lambda.NotificationService.model.UserNotification;
 import com.lambda.NotificationService.model.UserSubscription;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +25,16 @@ public class NotificationController {
         return this.notificationservice.createUserNotification(info);
 
     }
+    /*
+    @PostMapping("/subscribetoacategory/{id}")
+    public void subscribeToCategory (@PathVariable Long id)
+    {
+        notificationservice.subscribeToACategory(id);
+    }*/
+
+
     @PostMapping("/deletesubscription/{usersubscriptionid}")
-            void DeleteSubscription (@PathVariable Long usersubscriptionid){
+    public void DeleteSubscription (@PathVariable Long usersubscriptionid){
      notificationservice.deleteSubscription(usersubscriptionid); }
     @PutMapping("/updateseen/{userid}")
     public List<UserNotification> updateSeen (@PathVariable Long userid){
