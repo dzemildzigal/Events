@@ -18,7 +18,7 @@ public class EnuEventStatusService implements IEnuEventStatusService {
     public EnuEventStatus createEnuEventStatus(EnuEventStatus object) {
         //test
         var enuEventStatusTemp = enuEventStatusRepository.save(object);
-        return object;
+        return enuEventStatusTemp;
     }
 
     @Override
@@ -34,6 +34,12 @@ public class EnuEventStatusService implements IEnuEventStatusService {
         old.setDescription(newVal.getDescription());
         old.setEvents(newVal.getEvents());
         return old;
+    }
+
+    @Override
+    public EnuEventStatus findByDescription(String description){
+        var statusOut = enuEventStatusRepository.findByDescription(description);
+        return statusOut;
     }
 
 }

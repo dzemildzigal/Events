@@ -7,6 +7,9 @@ import com.lambda.EventService.Services.IEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @RestController
 @RequestMapping("event")
@@ -30,12 +33,22 @@ public class EventController {
     @PostMapping("/update-status/{eventId}")
     public Event updateEventStatus(@PathVariable long eventId, EnuEventStatus status) throws Exception{
         var event = eventService.findById(eventId);
-        event.getEnuEventStatus().setDescription(status.getDescription());
+        var oldStatus = event.getEnuEventStatus();
 
-        var eventStatus = enuEventStatusService.findById(status.getEventStatusId());
-        eventStatus.setDescription(status.getDescription());
-        enuEventStatusService.updateEnuEventStatus(eventStatus);
-        return eventService.updateEventStatus(event);
+        oldStatus.getEvents().remove(event);
+        var newStatus = enuEventStatusService.findByDescription(status.getDescription());
+        if (newStatus == null){
+                if(status.getEvents()==null)
+                    status.setEvents(new ArrayList<Event>());
+                enuEventStatusService.createEnuEventStatus(status);
+                newStatus = enuEventStatusService.findByDescription(status.getDescription());
+        }
+        newStatus.getEvents().add(event);
+        event.setEnuEventStatus(newStatus);
+        enuEventStatusService.updateEnuEventStatus(newStatus);
+        eventService.updateEventStatus(event);
+
+        return event;
     }
 
     @PostMapping("/add-event")
@@ -49,9 +62,4 @@ public class EventController {
         return eventService.updateEventStatus(event);
     }
 
-    @PostMapping("/update-event")
-    public Event updateEventStatus(@RequestBody Event event, EnuEventStatus newStatus) throws Exception{
-        event.setEnuEventStatus(newStatus);
-        return eventService.updateEventStatus(event);
-    }
 }
