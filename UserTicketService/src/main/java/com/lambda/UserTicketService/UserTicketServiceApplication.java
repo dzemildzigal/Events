@@ -23,7 +23,7 @@ public class UserTicketServiceApplication {
 		return (args) -> {
 
 			UserTicket userTicket = new UserTicket(null, 1L, 1L);
-			CCPayment payment = new CCPayment(null, userTicket, new BigDecimal(22), "number");
+			CCPayment payment = new CCPayment(null, userTicket, new BigDecimal(22), "1111111111");
 			var tmp = service.createPaymentForTicket(payment);
 		};
 	}
