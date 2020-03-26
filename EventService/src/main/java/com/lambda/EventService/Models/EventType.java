@@ -2,6 +2,7 @@ package com.lambda.EventService.Models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class EventType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long eventTypeId;
+    @javax.validation.constraints.NotNull(message = "eventTypeDescription can not be null, must be of type String!")
     private String eventTypeDescription;
 
     @OneToMany(mappedBy = "eventType")

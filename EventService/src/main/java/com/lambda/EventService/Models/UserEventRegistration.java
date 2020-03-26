@@ -18,16 +18,15 @@ public class UserEventRegistration {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userEventRegistrationId;
+    @javax.validation.constraints.NotNull(message = "UserEventRegistration userId can not be null, must be of type Long!")
     private Long userId;
-    //veze
-    //@MapsId //šta se mapira
-    @ManyToOne//(fetch= FetchType.LAZY)  //tip veze
-    @JsonIgnore
-    private EnuRegistrationType enuRegistrationType; //instanca klase na koju se veže
 
-    //veze
-    //@MapsId //šta se mapira
-    @ManyToOne//(fetch= FetchType.LAZY) //tip veze
+    @ManyToOne
     @JsonIgnore
-    private Event event; //instanca klase na koju se veže
+    private EnuRegistrationType enuRegistrationType;
+
+
+    @ManyToOne
+    @JsonIgnore
+    private Event event;
 }

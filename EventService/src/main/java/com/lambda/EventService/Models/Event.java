@@ -27,38 +27,35 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long eventId;
 
-    @NotNull
+    @javax.validation.constraints.NotNull(message = "Event name can not be null, must be of type String!")
     private String eventName;
-    @NotNull
+    @javax.validation.constraints.NotNull(message = "Event description can not be null, must be of type String!")
     private String description;
-    //veze
 
     @ManyToOne
     @JsonIgnore
     public Location location;
 
-
-    //veze
     @ManyToOne
     @JsonIgnore
-    private EventType eventType; //instanca klase na koju se veže
+    private EventType eventType;
 
 
-    @NotNull
+    @javax.validation.constraints.NotNull(message = "canBuyTicket can not be null, must be of type Boolean!")
     private Boolean canBuyTicket;
-    @NotNull
+    @javax.validation.constraints.NotNull(message = "ticketPrice can not be null, must be of type Double!")
     private Double ticketPrice;
-    @NotNull
+    @javax.validation.constraints.NotNull(message = "numberOfTicketsAvailable can not be null, must be of type Long!")
     private Long numberOfTicketsAvailable;
-    @NotNull
+    @javax.validation.constraints.NotNull(message = "eventPictureURL can not be null, must be of type String!")
     private String eventPictureURL;
-    @NotNull
+    @javax.validation.constraints.NotNull(message = "createdByUserId can not be null, must be of type Lonng!")
     private Long createdByUserId;
-    //veze
-    @ManyToOne//(fetch= FetchType.LAZY, cascade = CascadeType.ALL)  //tip veze
+
+    @ManyToOne
     @JsonIgnore
-    private EnuEventStatus enuEventStatus; //instanca klase na koju se veže
-    @NotNull
+    private EnuEventStatus enuEventStatus;
+    @javax.validation.constraints.NotNull(message = "ticketPrice can not be null, must be of type SQL date, YYYY-MM-DD!")
     private Date eventTime;
 
     @OneToMany(mappedBy = "event")

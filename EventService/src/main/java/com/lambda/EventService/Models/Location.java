@@ -2,6 +2,7 @@ package com.lambda.EventService.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long locationId;
+    @javax.validation.constraints.NotNull(message = "Location description can not be null, must be of type String!")
     private String description;
 
     @OneToMany(mappedBy = "location")

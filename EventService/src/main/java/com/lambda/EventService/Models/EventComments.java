@@ -21,11 +21,11 @@ public class EventComments {
     private Long eventCommentId;
     private Long userId;
 
-   //veze
-    //@MapsId //šta se mapira
-    @ManyToOne//(fetch= FetchType.LAZY)  //tip veze
-    @JsonIgnore
-    public Event event; //instanca klase na koju se veže
 
+    @ManyToOne
+    @JsonIgnore
+    public Event event;
+
+    @javax.validation.constraints.NotNull(message = "EventComment text can not be null, must be of type String!")
     private String text;
 }

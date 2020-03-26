@@ -2,13 +2,13 @@ package com.lambda.EventService.Models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @AllArgsConstructor
@@ -22,7 +22,7 @@ public class EnuEventStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long eventStatusId;
-    @NotNull
+    @NotNull(message = "Description of EnuEventStatus can not be null!")
     private String description;
     @OneToMany(mappedBy = "enuEventStatus")
     @JsonIgnoreProperties("events")

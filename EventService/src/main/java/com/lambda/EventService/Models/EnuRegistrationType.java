@@ -1,12 +1,11 @@
 package com.lambda.EventService.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.catalina.User;
+import javax.validation.constraints.NotNull;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,7 +20,7 @@ public class EnuRegistrationType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long enuRegistrationTypeId;
-    @NotNull
+    @NotNull(message = "Description of EnuRegistrationType can not be null, and must be of existing types!")
     private String description;
 
     @OneToMany(mappedBy = "enuRegistrationType")
