@@ -11,9 +11,6 @@ public interface IUserTicketService {
     UserTicket getUserTicketById(long id);
     CCPayment createPaymentForTicket(CCPayment ccPayment);
     UserTicket createUserTicket(UserTicket userTicket);
-    void deleteUserTicket(Long id);
     List<UserTicket> getUserTicketsByUserId(long id);
-
-
     List<UserTicket> getUserTicketsByEventId(long eventid);
 }

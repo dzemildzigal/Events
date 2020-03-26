@@ -16,29 +16,19 @@ public class UserTicketController {
     @Autowired
     IUserTicketService userTicketService;
 
-    @GetMapping("/deleteticket/{id}")
-    public void deleteUserTicket(@PathVariable Long id){
-        userTicketService.deleteUserTicket(id);
-    }
-
     @GetMapping("/{id}")
-    public UserTicket getUserTicketInfo(@PathVariable Long id){
+    public UserTicket getUserTicketInfo(@PathVariable Long id) {
         return this.userTicketService.getUserTicketById(id);
     }
 
-    @PostMapping("/newticket")
-    public UserTicket createNewTicket(@RequestBody UserTicket userTicket){
-        return this.userTicketService.createUserTicket(userTicket);
-    }
-    @PostMapping("/eventtickets/{eventid}")
+    @PostMapping("/event-tickets/{eventid}")
     public List<UserTicket> getUserTicketsByEventId(@PathVariable long eventid){
         return this.userTicketService.getUserTicketsByEventId(eventid);
     }
 
 
-    @PostMapping("/newpayment")
-    public CCPayment createNewPayment(@RequestBody CCPayment ccPayment)
-    {
+    @PostMapping("/payment/create")
+    public CCPayment createNewPayment(@RequestBody CCPayment ccPayment) {
         return this.userTicketService.createPaymentForTicket(ccPayment);
     }
 

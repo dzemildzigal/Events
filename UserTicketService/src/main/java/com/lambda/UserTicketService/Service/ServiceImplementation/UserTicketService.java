@@ -24,10 +24,6 @@ public class UserTicketService implements IUserTicketService {
     public UserTicket createUserTicket(UserTicket userTicket){
         return userTicketRepository.save(userTicket);
     }
-     @Override
-     public void deleteUserTicket(Long id){
-         userTicketRepository.deleteById(id);
-     }
 
     @Override
     public UserTicket getUserTicketById(long id) {
