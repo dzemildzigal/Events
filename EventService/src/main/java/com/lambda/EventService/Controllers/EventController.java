@@ -57,7 +57,7 @@ public class EventController {
     }
 
     //Update the whole oldEvent by the newEvent parameters
-    @PostMapping("/update-event")
+    @PutMapping("/update-event")
     public Event updateEvent(@RequestParam Long oldEventId,Event newEvent, EnuEventStatus neweventStatus, Location neweventLocation, EventType neweventType) throws Exception{
         var x = locationService.updateLocation(neweventLocation);
         var y = enuEventStatusService.updateEnuEventStatus(neweventStatus);
@@ -74,7 +74,7 @@ public class EventController {
 
 
     //update the value of the Status of an Event by its ID and corresponding new Status
-    @PostMapping("/update-status/{eventId}")
+    @PutMapping("/update-status/{eventId}")
     public Event updateEventStatus(@PathVariable long eventId, EnuEventStatus status) throws Exception{
         var event = eventService.findById(eventId);
         var oldStatus = event.getEnuEventStatus();
@@ -109,7 +109,7 @@ public class EventController {
     }
 
     //Delete an Existing event by its ID, form-data => @RequestParam
-    @PostMapping("/delete-event")
+    @DeleteMapping("/delete-event")
     public Event deleteEvent(@RequestParam long eventId) throws Exception{
         var event = eventService.findById(eventId);
         var oldStatus = event.getEnuEventStatus();
