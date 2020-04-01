@@ -76,7 +76,7 @@ public class UserService implements IUserService {
                             new ArrayList<>())
             );
         } catch (Exception e ) {
-            e.printStackTrace();
+            //e.printStackTrace();
             return new UserLoginAckDTO(false, "nan");
         }
 
