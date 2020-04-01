@@ -9,6 +9,7 @@ import com.lambda.EventService.Services.IEventService;
 import com.lambda.EventService.Services.IEventTypeService;
 import com.lambda.EventService.Services.ILocationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,13 +28,13 @@ public class EventController {
     IEventTypeService eventTypeService;
 
     //Get the Event by its ID
-    @GetMapping("/{id}")
+    @GetMapping(path = "/{id}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public Event getEvent(@PathVariable long id){
         return eventService.findById(id);
     }
 
     //Get the Event location by the Event ID
-    @GetMapping("/location/{eventId}")
+    @GetMapping(path = "/location/{eventId}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public Location getEventLocation(@PathVariable long eventId) throws Exception{
         var event = eventService.findById(eventId);
         var locId = event.getLocation().getLocationId();
@@ -41,14 +42,14 @@ public class EventController {
     }
 
     //Get the Status of an Event by its ID
-    @GetMapping("/status/{id}")
+    @GetMapping(path = "/status/{id}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public EnuEventStatus getEventStatusByEventId(@PathVariable long id) throws Exception{
         var event = eventService.findById(id);
         return event.getEnuEventStatus();
     }
 
     //Get the type of the Event by the Event ID
-    @GetMapping("/type/{eventId}")
+    @GetMapping(path = "/type/{eventId}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public EventType getEventTypeByEventId(@PathVariable long eventId) throws Exception{
         var event = eventService.findById(eventId);
         var typeId = event.getEventType().getEventTypeId();
@@ -57,7 +58,7 @@ public class EventController {
     }
 
     //Update the whole oldEvent by the newEvent parameters
-    @PutMapping("/update-event")
+    @PutMapping(path = "/update-event",produces = {MediaType.APPLICATION_JSON_VALUE})
     public Event updateEvent(@RequestParam Long oldEventId,Event newEvent, EnuEventStatus neweventStatus, Location neweventLocation, EventType neweventType) throws Exception{
         var x = locationService.updateLocation(neweventLocation);
         var y = enuEventStatusService.updateEnuEventStatus(neweventStatus);
@@ -74,7 +75,7 @@ public class EventController {
 
 
     //update the value of the Status of an Event by its ID and corresponding new Status
-    @PutMapping("/update-status/{eventId}")
+    @PutMapping(path = "/update-status/{eventId}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public Event updateEventStatus(@PathVariable long eventId, EnuEventStatus status) throws Exception{
         var event = eventService.findById(eventId);
         var oldStatus = event.getEnuEventStatus();
@@ -96,7 +97,7 @@ public class EventController {
     }
 
     //Add a new Event by using corresponding new Event data, x-www-urlencoded => @RequestBody
-    @PostMapping("/add-event")
+    @PostMapping(path = "/add-event",produces = {MediaType.APPLICATION_JSON_VALUE})
     public Event addEvent(Event event, EnuEventStatus eventStatus, Location eventLocation, EventType eventType)throws Exception{
         var x = locationService.updateLocation(eventLocation);
         var y = enuEventStatusService.updateEnuEventStatus(eventStatus);
@@ -109,7 +110,7 @@ public class EventController {
     }
 
     //Delete an Existing event by its ID, form-data => @RequestParam
-    @DeleteMapping("/delete-event")
+    @DeleteMapping(path = "/delete-event",produces = {MediaType.APPLICATION_JSON_VALUE})
     public Event deleteEvent(@RequestParam long eventId) throws Exception{
         var event = eventService.findById(eventId);
         var oldStatus = event.getEnuEventStatus();

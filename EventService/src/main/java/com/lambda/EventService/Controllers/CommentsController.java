@@ -6,6 +6,7 @@ import com.lambda.EventService.Models.EventComments;
 import com.lambda.EventService.Services.IEventCommentsService;
 import com.lambda.EventService.Services.IEventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -17,30 +18,30 @@ public class CommentsController {
     @Autowired
     IEventService eventService;
 
-    @GetMapping("/{id}")
+    @GetMapping(path = "/{id}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public EventComments getEventComment(@PathVariable long id)throws  Exception{
         return commentService.findById(id);
     }
 
-    @GetMapping("/user/{userId}")
+    @GetMapping(path = "/user/{userId}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<EventComments> getEventCommentByUserId(@PathVariable long userId) throws Exception{
         var rez = commentService.findByUserId(userId);
         return rez;
     }
 
-    @GetMapping("/containing/{string}")
+    @GetMapping(path = "/containing/{string}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<EventComments> getEventCommentsByContainingStringInComment(@PathVariable String string) throws Exception{
         var rez = commentService.findByTextContainingIgnoreCase(string);
         return rez;
     }
 
-    @GetMapping("/event/{eventId}")
+    @GetMapping(path = "/event/{eventId}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<EventComments> getEventComentsByEventId(@PathVariable long eventId) throws Exception{
         var event = eventService.findById(eventId);
         return event.getEventCommentsList();
     }
 
-    @PostMapping("/post-comment/{eventId}")
+    @PostMapping(path = "/post-comment/{eventId}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public Event updateEventStatus(@PathVariable long eventId, @org.jetbrains.annotations.NotNull EventComments comment) throws Exception{
         var event = eventService.findById(eventId);
         comment.setEvent(event);

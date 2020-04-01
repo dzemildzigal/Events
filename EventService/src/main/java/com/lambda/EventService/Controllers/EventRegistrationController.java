@@ -5,6 +5,7 @@ import com.lambda.EventService.Models.EnuRegistrationType;
 import com.lambda.EventService.Models.UserEventRegistration;
 import com.lambda.EventService.Services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,13 +26,13 @@ public class EventRegistrationController {
 
 
     //Get Event registration by its ID
-    @GetMapping("/{id}")
+    @GetMapping(path = "/{id}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public UserEventRegistration getUserEventRegistrationById(@PathVariable long id){
         var x=userEventRegistrationService.findById(id);
         return x;
     }
     //Get Event Registration type by Event registration ID
-    @GetMapping("/type/{eventRegistrationId}")
+    @GetMapping(path = "/type/{eventRegistrationId}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public EnuRegistrationType getEventRegistrationTypeByEventRegistrationId(@PathVariable long eventRegistrationId){
         var x = userEventRegistrationService.findById(eventRegistrationId);
         var regTypeId = x.getEnuRegistrationType().getEnuRegistrationTypeId();
@@ -39,14 +40,14 @@ public class EventRegistrationController {
     }
 
     //Get Event Registration by the User (user ID)
-    @GetMapping("/user/{userId}")
+    @GetMapping(path = "/user/{userId}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<UserEventRegistration> getEventRegistrationTypeByUserId(@PathVariable long userId) throws Exception{
         var x = userEventRegistrationService.findByUserId(userId);
         return x;
     }
 
     //Register the user with userId to the event with eventId and type of registration with regTypeString
-    @PostMapping("/registerUser")
+    @PostMapping(path = "/registerUser",produces = {MediaType.APPLICATION_JSON_VALUE})
     public UserEventRegistration registerUserToEventByUserIdEventId(@RequestParam long userId, @RequestParam long eventId, @RequestParam String regTypeString) throws Exception{
         var event = eventService.findById(eventId);
         var enuRegTypeArray = enuRegistrationTypeService.findByDescription(regTypeString);
