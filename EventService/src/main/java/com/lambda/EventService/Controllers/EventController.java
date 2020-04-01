@@ -1,5 +1,6 @@
 package com.lambda.EventService.Controllers;
 
+import com.lambda.EventService.ExceptionHandling.CustomEventException;
 import com.lambda.EventService.Models.EnuEventStatus;
 import com.lambda.EventService.Models.Event;
 import com.lambda.EventService.Models.EventType;
@@ -29,7 +30,7 @@ public class EventController {
 
     //Get the Event by its ID
     @GetMapping(path = "/{id}",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Event getEvent(@PathVariable long id){
+    public Event getEvent(@PathVariable long id)throws CustomEventException {
         return eventService.findById(id);
     }
 

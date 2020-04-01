@@ -1,10 +1,11 @@
 package com.lambda.EventService.Services;
 
+import com.lambda.EventService.ExceptionHandling.CustomEventException;
 import com.lambda.EventService.Models.Event;
 
 public interface IEventService {
-    Event createEvent(Event info);
-    Event findById(Long id);
+    Event createEvent(Event info) throws CustomEventException;
+    Event findById(Long id) throws CustomEventException;
 
-    Event updateEventStatus(Event updatedEvent)throws Exception;
+    Event updateEventStatus(Event updatedEvent)throws CustomEventException;
 }
