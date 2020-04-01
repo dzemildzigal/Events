@@ -115,7 +115,7 @@ public class UserControllerTests {
         UserInfo userInfo = new UserInfo(null, "test@test.com", "test", "test");
         UserCredentials userCredentials = new UserCredentials(null, "test1", "testtest", userInfo);
         this.mockMvc.perform(MockMvcRequestBuilders
-                .post(URL + "/sign-up")
+                .post(URL + "user-info/sign-up")
                 .content(objectMapper.writeValueAsString(userCredentials))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -127,10 +127,10 @@ public class UserControllerTests {
         UserInfo userInfo = new UserInfo(null, "test@test.com", "test", "test");
         UserCredentials userCredentials = new UserCredentials(null, null, "testtest", userInfo);
         this.mockMvc.perform(MockMvcRequestBuilders
-                .post(URL + "/sign-up")
+                .post(URL + "user-info/sign-up")
                 .content(objectMapper.writeValueAsString(userCredentials))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is5xxServerError());
     }
 }
