@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -86,28 +87,29 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean isUserAuthorized(long userId, String token) {
+    public UserLoginAckDTO isUserAuthorized(long userId, String token) {
         String username = null;
         String jwt = null;
-
+        UserLoginAckDTO dto = new UserLoginAckDTO(false, "nan");
         if (token != null && token.startsWith(HEADER_PREFIX)) {
             jwt = token.substring(7);
             username = jwtUtil.extractUsername(jwt);
         } else {
-            return false;
+            return dto;
         }
         if (jwtUtil.isTokenExpired(jwt)) {
-            return false;
+            return dto;
         }
         if (username != null) {
             UserInfo userInfo = userRepository.findById(userId);
             UserCredentials userCredentials =  userCredentialsRepository.findByUsername(username);
             if (userInfo == null || userCredentials == null || !userCredentials.getUser().getUserId().equals(userInfo.getUserId())) {
-                return false;
+                return dto;
             }
-            return true;
+            dto.setAuthenticated(true);
+            dto.setToken(token);
         }
-        return false;
+        return dto;
     }
 
     @Override

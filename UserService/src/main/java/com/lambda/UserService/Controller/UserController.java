@@ -41,13 +41,13 @@ public class UserController {
 
     @ApiOperation("Sign in")
     @PostMapping("/sign-in")
-    public UserLoginAckDTO userLogin (UserLoginDTO userLoginDTO) {
+    public UserLoginAckDTO userLogin (@RequestBody UserLoginDTO userLoginDTO) {
         return  this.userService.login(userLoginDTO);
     }
 
     @ApiOperation("Check if the user is authorized by userId and Auth token")
     @GetMapping("/is-user-authorized/{userId}")
-    public boolean isUserAuthorized (@PathVariable long userId, @RequestHeader(value = "Authorization") String authorization) {
+    public UserLoginAckDTO isUserAuthorized (@PathVariable long userId, @RequestHeader(value = "Authorization") String authorization) {
         return this.userService.isUserAuthorized(userId, authorization);
     }
 
