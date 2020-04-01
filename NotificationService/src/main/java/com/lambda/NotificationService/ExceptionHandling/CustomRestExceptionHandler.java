@@ -1,4 +1,4 @@
-package com.lambda.EventService.ExceptionHandling;
+package com.lambda.NotificationService.ExceptionHandling;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
