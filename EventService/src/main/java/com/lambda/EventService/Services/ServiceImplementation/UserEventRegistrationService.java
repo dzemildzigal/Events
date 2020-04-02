@@ -1,5 +1,6 @@
 package com.lambda.EventService.Services.ServiceImplementation;
 
+import com.lambda.EventService.ExceptionHandling.CustomEventException;
 import com.lambda.EventService.Models.EnuRegistrationType;
 import com.lambda.EventService.Services.IUserEventRegistrationService;
 import com.lambda.EventService.Models.UserEventRegistration;
@@ -17,19 +18,19 @@ public class UserEventRegistrationService implements IUserEventRegistrationServi
 
 
     @Override
-    public UserEventRegistration createUserEventRegistration(UserEventRegistration object) {
+    public UserEventRegistration createUserEventRegistration(UserEventRegistration object)throws CustomEventException {
         //test
         var userEventRegistrationRepositoryTemp = userEventRegistrationRepository.save(object);
         return object;
     }
 
     @Override
-    public UserEventRegistration findById(Long id) {
+    public UserEventRegistration findById(Long id)throws CustomEventException {
         long idd=id;
         return userEventRegistrationRepository.findById(idd);
     }
     @Override
-    public List<UserEventRegistration> findByUserId(long userId){
+    public List<UserEventRegistration> findByUserId(long userId)throws CustomEventException{
         long uid = userId;
         return userEventRegistrationRepository.findByUserId(uid);
     }
