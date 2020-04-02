@@ -99,7 +99,4 @@ class CommentsControllerTests {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
-
-
-
 }
