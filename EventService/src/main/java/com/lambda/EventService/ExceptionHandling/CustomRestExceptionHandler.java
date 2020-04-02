@@ -140,24 +140,30 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         var localisedMessage = ex.getLocalizedMessage();
         var typeOfError = localisedMessage.substring(0,3);
         ApiError apiError = new ApiError();
-        /* TODO
-        *  Finnish typeOfError with processing of types:
-        * 400: The server cannot or will not process the request due to an apparent client error (e.g., malformed request syntax, size too large, invalid request message framing, or deceptive request routing).
-        * 401: Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet been provided.
-        * 402: Payment required
-        * 403: The request contained valid data and was understood by the server, but the server is refusing action
-        * 404: The requested resource could not be found but may be available in the future. Subsequent requests by the client are permissible.
-        * 405: A request method is not supported for the requested resource; for example, a GET request on a form that requires data to be presented via POST, or a PUT request on a read-only resource.
-        * 406: The requested resource is capable of generating only content not acceptable according to the Accept headers sent in the request
-        *   */
         switch (typeOfError){
             case "404":
                 //object not found
-                apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), Collections.singletonList("Object not found error occured."));
+                apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), Collections.singletonList("Object not found error occured!"));
                 return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
             case "400":
+                //bad request by the client
+                apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), Collections.singletonList("Bad request sent by the client. Check type of request and parameters!"));
+                return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
+            case "403":
+                //valid data but refusing action
+                apiError = new ApiError(HttpStatus.FORBIDDEN, ex.getLocalizedMessage(), Collections.singletonList("Request is OK, client is forbidden!"));
+                return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
+            case "405":
+                //wrong request method
+                apiError = new ApiError(HttpStatus.METHOD_NOT_ALLOWED, ex.getLocalizedMessage(), Collections.singletonList("Request is using the wrong HTTP method!"));
+                return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
+            case "406":
+                //cannot resolve due to collision in return type headers
+                apiError = new ApiError(HttpStatus.NOT_ACCEPTABLE, ex.getLocalizedMessage(), Collections.singletonList("Request expects datatypes that the server cannot provide!"));
+                return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
             default:
-                apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), Collections.singletonList("Internal server error occured."));
+                //generic response
+                apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), Collections.singletonList("Internal server error occured!"));
                 return new ResponseEntity<Object>(apiError,new HttpHeaders(), apiError.getStatus());
         }
 
