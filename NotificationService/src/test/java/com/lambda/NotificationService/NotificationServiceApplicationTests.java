@@ -69,13 +69,21 @@ class NotificationServiceApplicationTests {
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
-	/*
+
 	@Test
-	void deleteSubscription() throws Exception{
+	public void deleteSubscription() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
-				.post(("/notifications/deletesubscriptions/1"))
-				.andExpect(status().isOk());
-	}*/
+				.delete("/notifications/deletesubscription/2")
+				.accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+	}
+	@Test
+	public void deleteSubscription2() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders
+				.delete("/notifications/deletesubscription/126")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().is5xxServerError());
+	}
 	@Test
 	void updateSeen() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
@@ -85,16 +93,7 @@ class NotificationServiceApplicationTests {
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
-	/*@Test
-	void updateSeen2() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders
-				.put("/notifications/updateseen/-1")
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().());
-	}
 
-*/
 	public static String asJsonString(final Object obj) {
 		try {
 			return new ObjectMapper().writeValueAsString(obj);
