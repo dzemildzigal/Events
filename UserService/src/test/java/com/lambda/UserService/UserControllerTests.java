@@ -133,4 +133,23 @@ public class UserControllerTests {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is5xxServerError());
     }
+
+    @Test
+    void deleteUserInfo() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .delete(URL + "delete/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", authToken)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    void deleteUnAuthorizedUserInfo() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .delete(URL + "delete/3")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
 }

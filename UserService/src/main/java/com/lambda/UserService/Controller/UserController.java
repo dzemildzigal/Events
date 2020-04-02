@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @ApiOperation("Delete user by user id")
-    @PostMapping("delete/{userId}")
+    @DeleteMapping("delete/{userId}")
     public boolean deleteUser(@PathVariable long userId) {
         return this.userService.deleteUser(userId);
     }
