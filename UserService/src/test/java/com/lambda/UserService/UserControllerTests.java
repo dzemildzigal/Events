@@ -131,7 +131,7 @@ public class UserControllerTests {
                 .content(objectMapper.writeValueAsString(userCredentials))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is5xxServerError());
+                .andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -151,5 +151,15 @@ public class UserControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void deleteNotExistingUserInfo() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .delete(URL + "delete/333")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", authToken)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 }

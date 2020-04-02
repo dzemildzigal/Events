@@ -32,7 +32,7 @@ public class UserTicketController {
         return this.userTicketService.createPaymentForTicket(ccPayment);
     }
 
-    @GetMapping("users-tickets/{userId}")
+    @GetMapping("/users-tickets/{userId}")
     public List<UserTicket> getUserTicketsByUserId(@PathVariable  long userId) {
         return this.userTicketService.getUserTicketsByUserId(userId);
     }
