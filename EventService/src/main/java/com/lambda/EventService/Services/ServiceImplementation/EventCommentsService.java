@@ -18,6 +18,8 @@ public class EventCommentsService implements IEventCommentsService {
 
     @Override
     public EventComments createEventComments(EventComments object)throws CustomEventException {
+        if(object == null || object.getEvent() == null || object.getText() == null)
+            throw new CustomEventException("400: One or more attributes of EventComments (possibly whole object) is null!");
         var eventCommentsRepositoryTemp = eventCommentsRepository.save(object);
         return object;
     }
@@ -25,12 +27,16 @@ public class EventCommentsService implements IEventCommentsService {
     @Override
     public EventComments findById(Long id) throws CustomEventException{
         long idd = id;
-        return eventCommentsRepository.findById(idd);
+        var result = eventCommentsRepository.findById(idd);
+        if(result != null) return result;
+        throw new CustomEventException("404: EventComment with ID="+id.toString()+" does not exist in the database!");
     }
     @Override
     public List<EventComments> findByUserId(Long userId)throws CustomEventException{
         long uid = userId;
-        return eventCommentsRepository.findByUserId(uid);
+        var result = eventCommentsRepository.findByUserId(uid);
+        if(result != null) return result;
+        throw new CustomEventException("404: Comments associated with the User with ID="+userId.toString()+" do not exist in the database!");
     }
 
     @Override

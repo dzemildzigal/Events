@@ -17,6 +17,7 @@ public class EventTypeService implements IEventTypeService {
 
     @Override
     public EventType createEventType(EventType object)throws CustomEventException {
+        if(object == null || object.getEventTypeDescription()== null) throw new CustomEventException("400: One or more attributes of class EventType (possibly whole object) is null!");
         var eventTypeRepositoryTemp = eventTypeRepository.save(object);
         return object;
     }
@@ -24,11 +25,15 @@ public class EventTypeService implements IEventTypeService {
     @Override
     public EventType findById(Long id) throws CustomEventException {
         long idd = id;
-        return eventTypeRepository.findById(idd);
+        var result = eventTypeRepository.findById(idd);
+        if(result != null) return result;
+        throw new CustomEventException("404: The EventType with ID="+id.toString()+" does not exist in the database.");
     }
 
     @Override
     public EventType updateEventType(EventType updatedValue)throws CustomEventException{
+        if(updatedValue == null || updatedValue.getEventTypeDescription()== null || updatedValue.getEventTypeId() == null || updatedValue.getEventList().size() == 0)
+            throw new CustomEventException("400: One or more attributes of class EventType (possibly whole object) is null or EventList is empty!");
         return eventTypeRepository.save(updatedValue);
     }
 }

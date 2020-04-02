@@ -20,6 +20,7 @@ public class UserEventRegistrationService implements IUserEventRegistrationServi
     @Override
     public UserEventRegistration createUserEventRegistration(UserEventRegistration object)throws CustomEventException {
         //test
+        if(object == null || object.getEnuRegistrationType() == null || object.getEvent() == null || object.getUserId() == null) throw new CustomEventException("400: One or more attributes of class UserEventRegistration (possibly whole object) is null!");
         var userEventRegistrationRepositoryTemp = userEventRegistrationRepository.save(object);
         return object;
     }
@@ -27,11 +28,15 @@ public class UserEventRegistrationService implements IUserEventRegistrationServi
     @Override
     public UserEventRegistration findById(Long id)throws CustomEventException {
         long idd=id;
-        return userEventRegistrationRepository.findById(idd);
+        var result = userEventRegistrationRepository.findById(idd);
+        if(result != null) return result;
+        throw new CustomEventException("404: UserEventRegistration with ID="+id.toString()+" does not exist in the database!");
     }
     @Override
     public List<UserEventRegistration> findByUserId(long userId)throws CustomEventException{
-        long uid = userId;
-        return userEventRegistrationRepository.findByUserId(uid);
+        Long uid = userId;
+        var result = userEventRegistrationRepository.findByUserId(uid);
+        if(result!=null) return result;
+        throw new CustomEventException("404: List of UserEventRegistrations associated with the User with ID="+uid.toString()+" does not exist in the database!");
     }
 }

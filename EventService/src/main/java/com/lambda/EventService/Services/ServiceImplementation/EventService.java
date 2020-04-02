@@ -18,7 +18,8 @@ public class EventService implements IEventService {
     IEventRepository eventRepository;
     @Override
     public Event createEvent(Event info) throws CustomEventException {
-        //test
+        if(info.getLocation() == null || info.getEventType()==null || info.getCanBuyTicket() == null || info == null)
+            throw new CustomEventException("400: Event is null or one or more attributes of class Event are null!");
         var eventRepositoryTemp = eventRepository.save(info);
         return info;
     }
@@ -28,11 +29,13 @@ public class EventService implements IEventService {
         long idd= id;
         var result = eventRepository.findById(idd);
         if(result != null) return result;
-        throw new CustomEventException("404 : Event with ID="+id.toString()+" not found");
+        throw new CustomEventException("404: Event with ID="+id.toString()+" not found in the database!");
     }
 
     @Override
     public Event updateEventStatus(Event info)throws CustomEventException{
+        if(info.getEventId() == null || info.getLocation() == null || info.getEventType()==null || info.getCanBuyTicket() == null || info == null)
+        throw new CustomEventException("400: Event is null or one or more attributes of class Event are null!");
         return eventRepository.save(info);
     }
 

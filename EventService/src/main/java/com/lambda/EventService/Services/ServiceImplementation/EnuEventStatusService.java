@@ -18,6 +18,8 @@ public class EnuEventStatusService implements IEnuEventStatusService {
     @Override
     public EnuEventStatus createEnuEventStatus(EnuEventStatus object)throws CustomEventException {
         //test
+        if(object == null || object.getDescription() == null)
+            throw new CustomEventException("400: One or more attributes of class EnuEventStatus (possibly whole object) is null!");
         var enuEventStatusTemp = enuEventStatusRepository.save(object);
         return enuEventStatusTemp;
     }
@@ -25,12 +27,15 @@ public class EnuEventStatusService implements IEnuEventStatusService {
     @Override
     public EnuEventStatus findById(Long id)throws CustomEventException {
         long idd= id;
-        return enuEventStatusRepository.findById(idd);
+        var result = enuEventStatusRepository.findById(idd);
+        if(result!=null) return  result;
+        throw new CustomEventException("404: EnuEventStatus with ID="+id.toString()+" does not exist in the database!");
     }
 
     @Override
     public EnuEventStatus updateEnuEventStatus(EnuEventStatus newVal)throws CustomEventException{
-
+        if(newVal == null || newVal.getEventStatusId() == null || newVal.getDescription() == null)
+            throw new CustomEventException("400: One or more attributes of class EnuEventStatus (possibly whole object) is null!");
         if(newVal.getEventStatusId() != null) {
             long idd = newVal.getEventStatusId();
             var old = enuEventStatusRepository.findById(idd);
@@ -45,7 +50,8 @@ public class EnuEventStatusService implements IEnuEventStatusService {
     @Override
     public EnuEventStatus findByDescription(String description)throws CustomEventException{
         var statusOut = enuEventStatusRepository.findByDescription(description);
-        return statusOut;
+        if(statusOut!=null) return statusOut;
+        throw new CustomEventException("404: EnuEventStatus with the given Description=\""+description+"\" does not exist in the database");
     }
 
 }

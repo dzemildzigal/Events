@@ -79,23 +79,27 @@ public class EventController {
     //update the value of the Status of an Event by its ID and corresponding new Status
     @PutMapping(path = "/update-status/{eventId}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public Event updateEventStatus(@PathVariable long eventId, EnuEventStatus status) throws Exception{
-        var event = eventService.findById(eventId);
-        var oldStatus = event.getEnuEventStatus();
+        if(status!=null && status.getDescription() != null && status.getEventStatusId()!= null) {
+            var event = eventService.findById(eventId);
+            var oldStatus = event.getEnuEventStatus();
 
-        oldStatus.getEvents().remove(event);
-        var newStatus = enuEventStatusService.findByDescription(status.getDescription());
-        if (newStatus == null){
-                if(status.getEvents()==null)
+            oldStatus.getEvents().remove(event);
+            var newStatus = enuEventStatusService.findByDescription(status.getDescription());
+            if (newStatus == null) {
+                if (status.getEvents() == null)
                     status.setEvents(new ArrayList<Event>());
                 enuEventStatusService.createEnuEventStatus(status);
                 newStatus = enuEventStatusService.findByDescription(status.getDescription());
+            }
+            newStatus.getEvents().add(event);
+            event.setEnuEventStatus(newStatus);
+            enuEventStatusService.updateEnuEventStatus(newStatus);
+            eventService.updateEventStatus(event);
+            return event;
         }
-        newStatus.getEvents().add(event);
-        event.setEnuEventStatus(newStatus);
-        enuEventStatusService.updateEnuEventStatus(newStatus);
-        eventService.updateEventStatus(event);
-
-        return event;
+        else
+            enuEventStatusService.updateEnuEventStatus(status);
+        return null;
     }
 
     //Add a new Event by using corresponding new Event data, x-www-urlencoded => @RequestBody

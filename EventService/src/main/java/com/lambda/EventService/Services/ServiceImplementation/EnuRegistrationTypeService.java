@@ -18,6 +18,7 @@ public class EnuRegistrationTypeService implements IEnuRegistrationTypeService {
     @Override
     public EnuRegistrationType createEnuRegistrationType(EnuRegistrationType object) throws CustomEventException {
         //test
+        if(object==null || object.getDescription() == null) throw new CustomEventException("400: One or more attributes of EnuRegistrationType (possibly whole object) is null");
         var enuRegistrationTypeTemp = enuRegistrationTypeRepository.save(object);
         return object;
     }
@@ -25,13 +26,17 @@ public class EnuRegistrationTypeService implements IEnuRegistrationTypeService {
     @Override
     public EnuRegistrationType findById(Long id)throws CustomEventException {
         long idd = id;
-        return enuRegistrationTypeRepository.findById(idd);
+        var result = enuRegistrationTypeRepository.findById(idd);
+        if(result != null) return result;
+        throw new CustomEventException("404: EnuRegistrationType with ID="+id.toString()+" does not exist in the database!");
     }
 
     @Override
     public List<EnuRegistrationType> findByDescription(String desc)throws CustomEventException{
         String description = desc;
-        return enuRegistrationTypeRepository.findByDescription(description);
+        var result = enuRegistrationTypeRepository.findByDescription(description);
+        if(result != null) return result;
+        throw new CustomEventException("404: List of EnuRegistrationType's associated with the Description=\""+desc+"\" does not exist in the database!");
     }
 
 }

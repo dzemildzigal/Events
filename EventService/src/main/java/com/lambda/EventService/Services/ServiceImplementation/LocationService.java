@@ -17,6 +17,7 @@ public class LocationService implements ILocationService {
     @Override
     public Location createLocation(Location object) throws CustomEventException{
         //test
+        if(object.getDescription() == null || object == null) throw new CustomEventException("400: One or more parameters (or whole object) Location is null!");
         var eventLocationRepositoryTemp = eventLocationRepository.save(object);
         return object;
     }
@@ -24,11 +25,15 @@ public class LocationService implements ILocationService {
     @Override
     public Location findById(Long id)throws CustomEventException {
         long idd=id;
-        return eventLocationRepository.findById(idd);
+        var result = eventLocationRepository.findById(idd);
+        if(result != null) return result;
+        else throw new CustomEventException("404: Location with ID="+id.toString()+" does not exist in the database!");
     }
 
     @Override
     public Location updateLocation(Location updateVal)throws CustomEventException{
+        if(updateVal.getLocationId() == null || updateVal.getDescription() == null || updateVal == null)
+            throw new CustomEventException("400: One or more parameters (or whole object) Location is null!");
         return eventLocationRepository.save(updateVal);
     }
 
