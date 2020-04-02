@@ -1,5 +1,5 @@
-package com.lambda.EventService.ExceptionHandling;
-import com.sun.jersey.api.NotFoundException;
+package com.lambda.UserTicketService.ExceptionHandling;
+
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +18,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
@@ -127,46 +128,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({ Exception.class })
     public ResponseEntity<Object> handleAll(final Exception ex, final WebRequest request) {
         logger.info(ex.getClass().getName());
-        var haa = ex.getLocalizedMessage();
         logger.error("error", ex);
         final ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), Collections.singletonList("error occurred"));
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
-    }
-
-    @ExceptionHandler({CustomEventException.class})
-    public ResponseEntity<Object> handleCustomEventException(final CustomEventException ex, final WebRequest request){
-        logger.info(ex.getClass().getName());
-        logger.error("error",ex);
-        var localisedMessage = ex.getLocalizedMessage();
-        var typeOfError = localisedMessage.substring(0,3);
-        ApiError apiError = new ApiError();
-        switch (typeOfError){
-            case "404":
-                //object not found
-                apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), Collections.singletonList("Object not found error occured!"));
-                return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
-            case "400":
-                //bad request by the client
-                apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), Collections.singletonList("Bad request sent by the client. Check type of request and parameters!"));
-                return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
-            case "403":
-                //valid data but refusing action
-                apiError = new ApiError(HttpStatus.FORBIDDEN, ex.getLocalizedMessage(), Collections.singletonList("Request is OK, client is forbidden!"));
-                return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
-            case "405":
-                //wrong request method
-                apiError = new ApiError(HttpStatus.METHOD_NOT_ALLOWED, ex.getLocalizedMessage(), Collections.singletonList("Request is using the wrong HTTP method!"));
-                return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
-            case "406":
-                //cannot resolve due to collision in return type headers
-                apiError = new ApiError(HttpStatus.NOT_ACCEPTABLE, ex.getLocalizedMessage(), Collections.singletonList("Request expects datatypes that the server cannot provide!"));
-                return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
-            default:
-                //generic response
-                apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), Collections.singletonList("Internal server error occured!"));
-                return new ResponseEntity<Object>(apiError,new HttpHeaders(), apiError.getStatus());
-        }
-
-
     }
 }

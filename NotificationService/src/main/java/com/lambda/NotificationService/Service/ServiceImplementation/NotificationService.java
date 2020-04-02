@@ -38,6 +38,7 @@ public class NotificationService implements INotificationService {
     public List<UserNotification> updateSeen(Long id) {
 
           List<UserNotification> lista = userNotificationRepository.findByUserId(id);
+
         for (int i=0; i < lista.size(); i++){
             lista.get(i).setSeen(true);
 

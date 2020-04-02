@@ -1,5 +1,6 @@
 package com.lambda.EventService.Services.ServiceImplementation;
 
+import com.lambda.EventService.ExceptionHandling.CustomEventException;
 import com.lambda.EventService.Services.IEventTypeService;
 import com.lambda.EventService.Models.EventType;
 import com.lambda.EventService.Repositories.IEventTypeRepository;
@@ -15,19 +16,19 @@ public class EventTypeService implements IEventTypeService {
 
 
     @Override
-    public EventType createEventType(EventType object) {
+    public EventType createEventType(EventType object)throws CustomEventException {
         var eventTypeRepositoryTemp = eventTypeRepository.save(object);
         return object;
     }
 
     @Override
-    public EventType findById(Long id) {
+    public EventType findById(Long id) throws CustomEventException {
         long idd = id;
         return eventTypeRepository.findById(idd);
     }
 
     @Override
-    public EventType updateEventType(EventType updatedValue){
+    public EventType updateEventType(EventType updatedValue)throws CustomEventException{
         return eventTypeRepository.save(updatedValue);
     }
 }

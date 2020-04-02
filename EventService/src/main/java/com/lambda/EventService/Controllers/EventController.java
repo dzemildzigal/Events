@@ -1,5 +1,6 @@
 package com.lambda.EventService.Controllers;
 
+import com.lambda.EventService.ExceptionHandling.CustomEventException;
 import com.lambda.EventService.Models.EnuEventStatus;
 import com.lambda.EventService.Models.Event;
 import com.lambda.EventService.Models.EventType;
@@ -29,13 +30,14 @@ public class EventController {
 
     //Get the Event by its ID
     @GetMapping(path = "/{id}",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Event getEvent(@PathVariable long id){
+    public Event getEvent(@PathVariable long id)throws CustomEventException {
         return eventService.findById(id);
     }
 
     //Get the Event location by the Event ID
     @GetMapping(path = "/location/{eventId}",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Location getEventLocation(@PathVariable long eventId) throws Exception{
+    public Location getEventLocation(@PathVariable long eventId) throws CustomEventException{
+        Long eid = eventId;
         var event = eventService.findById(eventId);
         var locId = event.getLocation().getLocationId();
         return locationService.findById(locId);
@@ -43,14 +45,14 @@ public class EventController {
 
     //Get the Status of an Event by its ID
     @GetMapping(path = "/status/{id}",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public EnuEventStatus getEventStatusByEventId(@PathVariable long id) throws Exception{
+    public EnuEventStatus getEventStatusByEventId(@PathVariable long id) throws CustomEventException{
         var event = eventService.findById(id);
         return event.getEnuEventStatus();
     }
 
     //Get the type of the Event by the Event ID
     @GetMapping(path = "/type/{eventId}",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public EventType getEventTypeByEventId(@PathVariable long eventId) throws Exception{
+    public EventType getEventTypeByEventId(@PathVariable long eventId) throws CustomEventException{
         var event = eventService.findById(eventId);
         var typeId = event.getEventType().getEventTypeId();
         return eventTypeService.findById(typeId);
