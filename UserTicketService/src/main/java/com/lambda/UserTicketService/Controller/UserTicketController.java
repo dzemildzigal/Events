@@ -21,7 +21,7 @@ public class UserTicketController {
         return this.userTicketService.getUserTicketById(id);
     }
 
-    @PostMapping("/event-tickets/{eventid}")
+    @GetMapping("/event-tickets/{eventid}")
     public List<UserTicket> getUserTicketsByEventId(@PathVariable long eventid){
         return this.userTicketService.getUserTicketsByEventId(eventid);
     }
