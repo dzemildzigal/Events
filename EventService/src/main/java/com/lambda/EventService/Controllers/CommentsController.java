@@ -1,13 +1,21 @@
 package com.lambda.EventService.Controllers;
 
 
+import com.lambda.EventService.ExceptionHandling.CustomEventException;
+import com.lambda.EventService.Helpers.UserServiceHelper;
 import com.lambda.EventService.Models.Event;
 import com.lambda.EventService.Models.EventComments;
+import com.lambda.EventService.Models.UserLoginAckDTO;
 import com.lambda.EventService.Services.IEventCommentsService;
 import com.lambda.EventService.Services.IEventService;
+import com.netflix.discovery.converters.Auto;
+import org.apache.catalina.User;
+import org.aspectj.weaver.patterns.IToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.List;
 
 @RestController
@@ -17,6 +25,9 @@ public class CommentsController {
     IEventCommentsService commentService;
     @Autowired
     IEventService eventService;
+    @Autowired
+    UserServiceHelper userServiceHelper;
+
 
     @GetMapping(path = "/{id}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public EventComments getEventComment(@PathVariable long id)throws  Exception{
@@ -24,9 +35,12 @@ public class CommentsController {
     }
 
     @GetMapping(path = "/user/{userId}",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<EventComments> getEventCommentByUserId(@PathVariable long userId) throws Exception{
-        var rez = commentService.findByUserId(userId);
-        return rez;
+    public List<EventComments> getEventCommentByUserId(@PathVariable Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
+        if(userServiceHelper.CheckUserAuthorised(userId.toString(), authorizationToken)) {
+            var rez = commentService.findByUserId(userId);
+            return rez;
+        }
+        throw new CustomEventException("403: User with ID="+userId.toString()+" is unauthorized.");
     }
 
     @GetMapping(path = "/containing/{string}",produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -42,7 +56,8 @@ public class CommentsController {
     }
 
     @PostMapping(path = "/post-comment/{eventId}",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Event updateEventStatus(@PathVariable long eventId, @org.jetbrains.annotations.NotNull EventComments comment) throws Exception{
+    public Event updateEventStatus(@PathVariable long eventId, @org.jetbrains.annotations.NotNull EventComments comment,@RequestHeader(value = "Authorization") String authorization) throws Exception{
+
         var event = eventService.findById(eventId);
         comment.setEvent(event);
         commentService.createEventComments(comment);

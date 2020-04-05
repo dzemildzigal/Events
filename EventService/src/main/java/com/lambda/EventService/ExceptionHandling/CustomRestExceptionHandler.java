@@ -151,7 +151,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                 return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
             case "403":
                 //valid data but refusing action
-                apiError = new ApiError(HttpStatus.FORBIDDEN, ex.getLocalizedMessage(), Collections.singletonList("Request is OK, client is forbidden!"));
+                apiError = new ApiError(HttpStatus.UNAUTHORIZED, ex.getLocalizedMessage(), Collections.singletonList("Request is OK, client is unauthorised!"));
                 return new ResponseEntity<Object>(apiError,new HttpHeaders(),apiError.getStatus());
             case "405":
                 //wrong request method
