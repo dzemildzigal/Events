@@ -34,7 +34,7 @@ public class EnuEventStatusService implements IEnuEventStatusService {
 
     @Override
     public EnuEventStatus updateEnuEventStatus(EnuEventStatus newVal)throws CustomEventException{
-        if(newVal == null || newVal.getEventStatusId() == null || newVal.getDescription() == null)
+        if(newVal == null|| newVal.getDescription() == null)
             throw new CustomEventException("400: One or more attributes of class EnuEventStatus (possibly whole object) is null!");
         if(newVal.getEventStatusId() != null) {
             long idd = newVal.getEventStatusId();
@@ -50,8 +50,7 @@ public class EnuEventStatusService implements IEnuEventStatusService {
     @Override
     public EnuEventStatus findByDescription(String description)throws CustomEventException{
         var statusOut = enuEventStatusRepository.findByDescription(description);
-        if(statusOut!=null) return statusOut;
-        throw new CustomEventException("404: EnuEventStatus with the given Description=\""+description+"\" does not exist in the database");
+        return statusOut;
     }
 
 }

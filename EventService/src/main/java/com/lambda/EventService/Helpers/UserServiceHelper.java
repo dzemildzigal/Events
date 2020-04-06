@@ -17,14 +17,12 @@ public class UserServiceHelper {
     private RestTemplate restTemplate;
     private HttpHeaders httpHeaders = new HttpHeaders();
 
+
     public boolean CheckUserAuthorised(String uid, String token) {
+        httpHeaders.clear();
         httpHeaders.add("Authorization",token);
-        //httpHeaders.add("Content-Type","application/json");
-        //httpHeaders.add("Accept","*/*");
-        //    UserLoginAckDTO rez = restTemplate.getForObject("http://localhost:8080/users/is-user-authorized/"+uid,UserLoginAckDTO.class,httpHeaders);
         HttpEntity entity = new HttpEntity(httpHeaders);
         ResponseEntity<UserLoginAckDTO> rez = restTemplate.exchange("http://UserService/users/is-user-authorized/"+uid, HttpMethod.GET,entity,UserLoginAckDTO.class);
-        var res = rez.getClass();
         return rez.getBody().isAuthenticated();
     }
 

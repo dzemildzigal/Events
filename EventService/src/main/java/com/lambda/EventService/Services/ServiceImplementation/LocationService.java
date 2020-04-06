@@ -32,7 +32,7 @@ public class LocationService implements ILocationService {
 
     @Override
     public Location updateLocation(Location updateVal)throws CustomEventException{
-        if(updateVal.getLocationId() == null || updateVal.getDescription() == null || updateVal == null)
+        if(updateVal.getDescription() == null || updateVal == null)
             throw new CustomEventException("400: One or more parameters (or whole object) Location is null!");
         return eventLocationRepository.save(updateVal);
     }
