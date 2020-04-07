@@ -115,6 +115,17 @@ public class EventController {
         throw new CustomEventException("500: Unexpected outcome of updateEventStatus() method.");
     }
 
+
+    @PutMapping(path = "/buy-ticket",produces = {MediaType.APPLICATION_JSON_VALUE})
+    public Event buyTicket(Long eventId, Long numberOfTickets, Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
+        if(userServiceHelper.CheckUserAuthorised(userId.toString(),authorizationToken)){
+           var event = eventService.findById(eventId);
+           event.setNumberOfTicketsAvailable(event.getNumberOfTicketsAvailable()-numberOfTickets);
+           return eventService.updateEventStatus(event);
+        }
+        else throw new CustomEventException("403: User with ID="+userId.toString()+" is unauthorized to edit the Event with ID="+eventId.toString());
+    }
+
     //Add a new Event by using corresponding new Event data, x-www-urlencoded => @RequestBody
     @PostMapping(path = "/add-event",produces = {MediaType.APPLICATION_JSON_VALUE})
     public Event addEvent(Event event, EnuEventStatus eventStatus, Location eventLocation, EventType eventType, @NotNull Long userId, @RequestHeader(value = "Authorization") String authorizationToken)throws Exception{

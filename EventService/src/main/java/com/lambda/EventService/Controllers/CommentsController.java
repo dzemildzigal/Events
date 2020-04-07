@@ -5,16 +5,11 @@ import com.lambda.EventService.ExceptionHandling.CustomEventException;
 import com.lambda.EventService.Helpers.UserServiceHelper;
 import com.lambda.EventService.Models.Event;
 import com.lambda.EventService.Models.EventComments;
-import com.lambda.EventService.Models.UserLoginAckDTO;
 import com.lambda.EventService.Services.IEventCommentsService;
 import com.lambda.EventService.Services.IEventService;
-import com.netflix.discovery.converters.Auto;
-import org.apache.catalina.User;
-import org.aspectj.weaver.patterns.IToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
