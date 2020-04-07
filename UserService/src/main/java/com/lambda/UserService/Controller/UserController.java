@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
+
 @RestController
 @RequestMapping("users")
 public class UserController {
@@ -23,7 +25,11 @@ public class UserController {
 
     @ApiOperation("Get user info by userId")
     @GetMapping("user-info/{id}")
-    public UserInfo getUserInfo(@PathVariable long id) throws Exception {
+    public UserInfo getUserInfo(@PathVariable long id, @RequestHeader(value = "Authorization") String authorization) throws Exception {
+        UserLoginAckDTO userLoginAckDTO = this.userService.isUserAuthorized(id, authorization);
+        if (!userLoginAckDTO.isAuthenticated()) {
+            throw new AccessDeniedException("User is not authorized");
+        }
         return this.userService.findById(id);
     }
 
@@ -35,7 +41,12 @@ public class UserController {
 
     @ApiOperation("Update user info")
     @PutMapping("/user-info/update")
-    public UserInfo updateUserInfo (@RequestBody UserInfo info) {
+    public UserInfo updateUserInfo (@RequestBody UserInfo info, @RequestHeader(value = "Authorization") String authorization) throws AccessDeniedException {
+        Long id = info.getUserId();
+        UserLoginAckDTO userLoginAckDTO = this.userService.isUserAuthorized(id, authorization);
+        if (!userLoginAckDTO.isAuthenticated()) {
+            throw new AccessDeniedException("User is not authorized");
+        }
         return  this.userService.updateUserInfo(info);
     }
 
@@ -53,7 +64,11 @@ public class UserController {
 
     @ApiOperation("Delete user by user id")
     @DeleteMapping("delete/{userId}")
-    public boolean deleteUser(@PathVariable long userId) {
+    public boolean deleteUser(@PathVariable long userId, @RequestHeader(value = "Authorization") String authorization) throws AccessDeniedException {
+        UserLoginAckDTO userLoginAckDTO = this.userService.isUserAuthorized(userId, authorization);
+        if (!userLoginAckDTO.isAuthenticated()) {
+            throw new AccessDeniedException("User is not authorized");
+        }
         return this.userService.deleteUser(userId);
     }
 }

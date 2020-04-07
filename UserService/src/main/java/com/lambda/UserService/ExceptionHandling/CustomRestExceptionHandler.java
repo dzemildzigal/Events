@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -111,7 +112,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
 
-    @ExceptionHandler({ MethodArgumentTypeMismatchException.class })
+    @ExceptionHandler({ MethodArgumentTypeMismatchException.class})
     public ResponseEntity<Object> handleMethodArgumentTypeMismatch(final MethodArgumentTypeMismatchException ex, final WebRequest request) {
         logger.info(ex.getClass().getName());
         final String error = ex.getName() + " should be of type " + ex.getRequiredType().getName();
@@ -143,6 +144,12 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({ JpaSystemException.class, TransactionSystemException.class,  InvalidDataAccessApiUsageException.class})
     public ResponseEntity<Object> handleJpa(final Exception ex, final WebRequest request) {
         var haa = ex.getLocalizedMessage();
+        final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), Collections.singletonList("error occurred"));
+        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
+    @ExceptionHandler({AccessDeniedException.class})
+    public ResponseEntity<Object> handleAccessDenied(final Exception ex, final WebRequest request) {
         final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), Collections.singletonList("error occurred"));
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }

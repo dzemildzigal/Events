@@ -74,11 +74,38 @@ public class UserControllerTests {
     @Test
     void getExistingUserInfo() throws Exception {
         ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders
-                .get(URL + "user-info/1")
+                .get(URL + "/user-info/1")
                 .header("Authorization", authToken)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
+    }
+
+
+    @Order(3)
+    @Test
+    void updateUserInfo() throws Exception {
+        UserInfo userInfo = new UserInfo(1L, "test1@test.com", "test", "test");
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .put(URL + "/user-info/update")
+                .content(objectMapper.writeValueAsString(userInfo))
+                .header("Authorization", authToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Order(4)
+    @Test
+    void updateUserInfoWrongParams() throws Exception {
+        UserInfo userInfo = new UserInfo(1L, "t", "test", "test");
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .put(URL + "/user-info/update")
+                .content(objectMapper.writeValueAsString(userInfo))
+                .header("Authorization", authToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
     }
 
     @Test
