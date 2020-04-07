@@ -120,6 +120,8 @@ public class EventController {
     public Event buyTicket(Long eventId, Long numberOfTickets, Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
         if(userServiceHelper.CheckUserAuthorised(userId.toString(),authorizationToken)){
            var event = eventService.findById(eventId);
+           if(event.getNumberOfTicketsAvailable()-numberOfTickets<0)
+               throw new CustomEventException("400: Bad request by the client. The needed number of tickets "+numberOfTickets.toString()+" can not be bought. This event has only "+event.getNumberOfTicketsAvailable().toString()+" tickets available to sell." );
            event.setNumberOfTicketsAvailable(event.getNumberOfTicketsAvailable()-numberOfTickets);
            return eventService.updateEventStatus(event);
         }
