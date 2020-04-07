@@ -56,12 +56,14 @@ public class CommentsController {
     }
 
     @PostMapping(path = "/post-comment/{eventId}",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Event updateEventStatus(@PathVariable long eventId, @org.jetbrains.annotations.NotNull EventComments comment,@RequestHeader(value = "Authorization") String authorization) throws Exception{
-
-        var event = eventService.findById(eventId);
-        comment.setEvent(event);
-        commentService.createEventComments(comment);
-        return eventService.findById(eventId);
+    public Event postCommentOnEvent(@PathVariable long eventId, @org.jetbrains.annotations.NotNull EventComments comment,@RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
+        if(userServiceHelper.CheckUserAuthorised(comment.getUserId().toString(), authorizationToken)) {
+            var event = eventService.findById(eventId);
+            comment.setEvent(event);
+            commentService.createEventComments(comment);
+            return eventService.findById(eventId);
+        }
+        throw new CustomEventException("500: Unexpected outcome of method postCommentOnEvent.");
     }
 
 }
