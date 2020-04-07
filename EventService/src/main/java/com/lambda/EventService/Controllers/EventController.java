@@ -1,6 +1,7 @@
 package com.lambda.EventService.Controllers;
 
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
+import com.lambda.EventService.Helpers.NotificationServiceHelper;
 import com.lambda.EventService.Helpers.UserServiceHelper;
 import com.lambda.EventService.Models.EnuEventStatus;
 import com.lambda.EventService.Models.Event;
@@ -10,6 +11,7 @@ import com.lambda.EventService.Services.IEnuEventStatusService;
 import com.lambda.EventService.Services.IEventService;
 import com.lambda.EventService.Services.IEventTypeService;
 import com.lambda.EventService.Services.ILocationService;
+import com.netflix.discovery.converters.Auto;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -31,6 +33,8 @@ public class EventController {
     IEventTypeService eventTypeService;
     @Autowired
     UserServiceHelper userServiceHelper;
+    @Autowired
+    NotificationServiceHelper notificationServiceHelper;
     //Get the Event by its ID
     @GetMapping(path = "/{id}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public Event getEvent(@PathVariable long id)throws CustomEventException {
@@ -139,6 +143,7 @@ public class EventController {
             event.setEnuEventStatus(y);
             event.setEventType(z);
             if(!event.getCreatedByUserId().equals(userId)) throw new CustomEventException("403: New Event does not have the attribute createdByUserId set to the value of the authenticated User!");
+            notificationServiceHelper.notifyUsersOfEventCreation(event);
             return eventService.createEvent(event);
         }
         throw new CustomEventException("500: Unexpected outcome of addEvent() method.");

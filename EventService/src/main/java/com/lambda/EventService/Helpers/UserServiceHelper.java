@@ -1,7 +1,6 @@
 package com.lambda.EventService.Helpers;
 
 import com.lambda.EventService.Models.UserLoginAckDTO;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
