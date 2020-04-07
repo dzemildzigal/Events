@@ -32,16 +32,14 @@ public class CommentsController {
     @GetMapping(path = "/user/{userId}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<EventComments> getEventCommentByUserId(@PathVariable Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
         if(userServiceHelper.CheckUserAuthorised(userId.toString(), authorizationToken)) {
-            var rez = commentService.findByUserId(userId);
-            return rez;
+            return commentService.findByUserId(userId);
         }
         throw new CustomEventException("403: User with ID="+userId.toString()+" is unauthorized.");
     }
 
     @GetMapping(path = "/containing/{string}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<EventComments> getEventCommentsByContainingStringInComment(@PathVariable String string) throws Exception{
-        var rez = commentService.findByTextContainingIgnoreCase(string);
-        return rez;
+        return commentService.findByTextContainingIgnoreCase(string);
     }
 
     @GetMapping(path = "/event/{eventId}",produces = {MediaType.APPLICATION_JSON_VALUE})

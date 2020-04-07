@@ -2,9 +2,11 @@ package com.lambda.EventService.Controllers;
 
 
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
+import com.lambda.EventService.Helpers.UserServiceHelper;
 import com.lambda.EventService.Models.EnuRegistrationType;
 import com.lambda.EventService.Models.UserEventRegistration;
 import com.lambda.EventService.Services.*;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +26,13 @@ public class EventRegistrationController {
     IEventTypeService eventTypeService;
     @Autowired
     IUserEventRegistrationService userEventRegistrationService;
-
+    @Autowired
+    UserServiceHelper userServiceHelper;
 
     //Get Event registration by its ID
     @GetMapping(path = "/{id}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public UserEventRegistration getUserEventRegistrationById(@PathVariable long id) throws CustomEventException {
-        var x=userEventRegistrationService.findById(id);
-        return x;
+        return userEventRegistrationService.findById(id);
     }
     //Get Event Registration type by Event registration ID
     @GetMapping(path = "/type/{eventRegistrationId}",produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -42,21 +44,26 @@ public class EventRegistrationController {
 
     //Get Event Registration by the User (user ID)
     @GetMapping(path = "/user/{userId}",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<UserEventRegistration> getEventRegistrationTypeByUserId(@PathVariable long userId) throws CustomEventException{
-        var x = userEventRegistrationService.findByUserId(userId);
-        return x;
+    public List<UserEventRegistration> getEventRegistrationByUserId(@PathVariable Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws CustomEventException{
+        if(userServiceHelper.CheckUserAuthorised(userId.toString(),authorizationToken)) {
+            return userEventRegistrationService.findByUserId(userId);
+        }
+        throw new CustomEventException("500: Unexpected outcome of method getEventRegistrationByUserId");
     }
 
     //Register the user with userId to the event with eventId and type of registration with regTypeString
     @PostMapping(path = "/registerUser",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public UserEventRegistration registerUserToEventByUserIdEventId(@RequestParam long userId, @RequestParam long eventId, @RequestParam String regTypeString) throws CustomEventException{
-        var event = eventService.findById(eventId);
-        var enuRegTypeArray = enuRegistrationTypeService.findByDescription(regTypeString);
-        var enuRegType = enuRegTypeArray.get(0);
-        var newEventReg = new UserEventRegistration();
-        newEventReg.setEnuRegistrationType(enuRegType);
-        newEventReg.setEvent(event);
-        newEventReg.setUserId(userId);
-        return userEventRegistrationService.createUserEventRegistration(newEventReg);
+    public UserEventRegistration registerUserToEventByUserIdEventId(Long eventId, @RequestParam String regTypeString,@PathVariable Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws CustomEventException{
+        if(userServiceHelper.CheckUserAuthorised(userId.toString(),authorizationToken)) {
+            var event = eventService.findById(eventId);
+            var enuRegTypeArray = enuRegistrationTypeService.findByDescription(regTypeString);
+            var enuRegType = enuRegTypeArray.get(0);
+            var newEventReg = new UserEventRegistration();
+            newEventReg.setEnuRegistrationType(enuRegType);
+            newEventReg.setEvent(event);
+            newEventReg.setUserId(userId);
+            return userEventRegistrationService.createUserEventRegistration(newEventReg);
+        }
+        throw new CustomEventException("500: Unexpected outcome of method registerUserToEventByUserIdEventId");
     }
 }

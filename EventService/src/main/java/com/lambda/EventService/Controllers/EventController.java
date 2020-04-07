@@ -82,7 +82,7 @@ public class EventController {
                 var q = eventService.updateEventStatus(oldEvent);
                 return q;
         }
-        else throw new CustomEventException("403: User with ID="+userId.toString()+" is unauthorized to edit the Event with ID="+oldEventId.toString());
+        throw new CustomEventException("403: User with ID="+userId.toString()+" is unauthorized to edit the Event with ID="+oldEventId.toString());
     }
 
 
@@ -125,25 +125,22 @@ public class EventController {
            event.setNumberOfTicketsAvailable(event.getNumberOfTicketsAvailable()-numberOfTickets);
            return eventService.updateEventStatus(event);
         }
-        else throw new CustomEventException("403: User with ID="+userId.toString()+" is unauthorized to edit the Event with ID="+eventId.toString());
+        throw new CustomEventException("403: User with ID="+userId.toString()+" is unauthorized to edit the Event with ID="+eventId.toString());
     }
 
     //Add a new Event by using corresponding new Event data, x-www-urlencoded => @RequestBody
     @PostMapping(path = "/add-event",produces = {MediaType.APPLICATION_JSON_VALUE})
     public Event addEvent(Event event, EnuEventStatus eventStatus, Location eventLocation, EventType eventType, @NotNull Long userId, @RequestHeader(value = "Authorization") String authorizationToken)throws Exception{
         if(userServiceHelper.CheckUserAuthorised(userId.toString(),authorizationToken)){
-
-        var x = locationService.updateLocation(eventLocation);
-        var y = enuEventStatusService.updateEnuEventStatus(eventStatus);
-        var z = eventTypeService.updateEventType(eventType);
-        event.setLocation(x);
-        event.setEnuEventStatus(y);
-        event.setEventType(z);
-        if(!event.getCreatedByUserId().equals(userId)) throw new CustomEventException("403: New Event does not have the attribute createdByUserId set to the value of the authenticated User!");
-        var q = eventService.createEvent(event);
-        return q;
+            var x = locationService.updateLocation(eventLocation);
+            var y = enuEventStatusService.updateEnuEventStatus(eventStatus);
+            var z = eventTypeService.updateEventType(eventType);
+            event.setLocation(x);
+            event.setEnuEventStatus(y);
+            event.setEventType(z);
+            if(!event.getCreatedByUserId().equals(userId)) throw new CustomEventException("403: New Event does not have the attribute createdByUserId set to the value of the authenticated User!");
+            return eventService.createEvent(event);
         }
-
         throw new CustomEventException("500: Unexpected outcome of addEvent() method.");
     }
 
