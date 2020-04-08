@@ -3,6 +3,8 @@ package com.lambda.NotificationService.repository;
 import com.lambda.NotificationService.model.UserSubscription;
 import org.springframework.data.repository.CrudRepository;
 
-public interface IUserSubscriptionRepository extends CrudRepository<UserSubscription, Long> {
+import java.util.List;
 
+public interface IUserSubscriptionRepository extends CrudRepository<UserSubscription, Long> {
+List<UserSubscription> findByEventTypeId (Long eventTypeId);
 }

@@ -33,7 +33,17 @@ public class NotificationService implements INotificationService {
 
        return createdUserSubscription;
     }
+    @Override
+    public boolean notifyUsersOfCreation(Long EventTypeId, String description){
+        List<UserSubscription> lista = userSubscriptionRepository.findByEventTypeId(EventTypeId);
 
+        for(int i=0;i< lista.size();i++){
+            UserNotification usernotification = new UserNotification(null,lista.get(i).getUserId(),description,false);
+            usernotification = this.userNotificationRepository.save(usernotification);
+        }
+         return true;
+
+    }
     @Override
     public List<UserNotification> updateSeen(Long id) {
 

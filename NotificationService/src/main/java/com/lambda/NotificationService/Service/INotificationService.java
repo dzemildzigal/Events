@@ -10,5 +10,6 @@ public interface INotificationService {
     UserSubscription createUserSubscription(UserSubscription userSubscription);
     List<UserNotification> updateSeen(Long id);
     void deleteSubscription(Long usersubscriptionid);
+    boolean notifyUsersOfCreation(Long EventTypeId, String description);
    // void subscribeToACategory(Long id);
 }

@@ -1,7 +1,9 @@
 
 package com.lambda.NotificationService.Controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lambda.NotificationService.Service.INotificationService;
+import com.lambda.NotificationService.model.CreatedNotification;
 import com.lambda.NotificationService.model.UserNotification;
 import com.lambda.NotificationService.model.UserSubscription;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,22 +17,24 @@ import java.util.List;
 public class NotificationController {
     @Autowired
     INotificationService notificationservice;
+
     @PostMapping("/newsubscription")
-    public UserSubscription createSubscription (@RequestBody UserSubscription info) {
+    public UserSubscription createSubscription(@RequestBody UserSubscription info) {
         return this.notificationservice.createUserSubscription(info);
     }
 
     @PostMapping("/newnotification")
-    public UserNotification createNotification (@RequestBody UserNotification info) {
+    public UserNotification createNotification(@RequestBody UserNotification info) {
         return this.notificationservice.createUserNotification(info);
 
     }
-    /*
-    @PostMapping("/subscribetoacategory/{id}")
-    public void subscribeToCategory (@PathVariable Long id)
-    {
-        notificationservice.subscribeToACategory(id);
-    }*/
+
+    @PostMapping("/notify-users-of-event-creation")
+    public boolean notifyUsers(@RequestBody CreatedNotification notification){
+
+        return this.notificationservice.notifyUsersOfCreation(notification.getEventTypeId(), notification.getDescription());
+    }
+
 
 
     @DeleteMapping("/deletesubscription/{usersubscriptionid}")
