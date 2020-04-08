@@ -53,7 +53,7 @@ public class EventRegistrationController {
 
     //Register the user with userId to the event with eventId and type of registration with regTypeString
     @PostMapping(path = "/registerUser",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public UserEventRegistration registerUserToEventByUserIdEventId(Long eventId, @RequestParam String regTypeString,@PathVariable Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws CustomEventException{
+    public UserEventRegistration registerUserToEventByUserIdEventId(@RequestBody Long eventId, @RequestParam String regTypeString,@RequestBody Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws CustomEventException{
         if(userServiceHelper.CheckUserAuthorised(userId.toString(),authorizationToken)) {
             var event = eventService.findById(eventId);
             var enuRegTypeArray = enuRegistrationTypeService.findByDescription(regTypeString);

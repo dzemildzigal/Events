@@ -3,21 +3,22 @@ package com.lambda.EventService.Helpers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
 import com.lambda.EventService.Models.UserLoginAckDTO;
+import com.lambda.EventService.Models.UserLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.print.attribute.standard.Media;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class UserServiceHelper {
 
-    private RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private RestTemplate restTemplate;
     private HttpHeaders httpHeaders = new HttpHeaders();
 
 
@@ -30,21 +31,23 @@ public class UserServiceHelper {
     }
     public UserLoginAckDTO loginUser(String username, String password) throws Exception {
         httpHeaders.clear();
-        httpHeaders.add("Content-Type","application/json");
-        HttpEntity entity = new HttpEntity(httpHeaders);
-        ObjectMapper payload = new ObjectMapper();
-        Map<String,String> info = new HashMap<String,String>();
-        info.put("username", username);
-        info.put("password", password);
-        payload.writeValueAsString(info);
+        httpHeaders.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+        //httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        UserLoginDTO info = new UserLoginDTO(username,password);
+        HttpEntity<UserLoginDTO> entity = new HttpEntity<>(info,httpHeaders);
         try {
-            ResponseEntity<UserLoginAckDTO> rez = restTemplate.exchange("http://UserService/users/sign-in", HttpMethod.POST, entity, UserLoginAckDTO.class, payload);
+            ResponseEntity<UserLoginAckDTO> rez = restTemplate.exchange(
+                    "http://UserService/users/sign-in",
+                         HttpMethod.POST,
+                         entity,
+                         UserLoginAckDTO.class);
             return rez.getBody();
         }catch (Exception ex){
             var a = ex.getMessage();
             a.length();
+            throw new CustomEventException(a);
         }
-        throw new CustomEventException("500: Whoopsie!");
+
     }
 
 }

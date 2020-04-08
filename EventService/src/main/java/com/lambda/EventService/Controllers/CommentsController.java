@@ -49,7 +49,7 @@ public class CommentsController {
     }
 
     @PostMapping(path = "/post-comment/{eventId}",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Event postCommentOnEvent(@PathVariable long eventId, @org.jetbrains.annotations.NotNull EventComments comment,@RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
+    public Event postCommentOnEvent(@PathVariable long eventId,@RequestBody  @org.jetbrains.annotations.NotNull EventComments comment,@RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
         if(userServiceHelper.CheckUserAuthorised(comment.getUserId().toString(), authorizationToken)) {
             var event = eventService.findById(eventId);
             comment.setEvent(event);

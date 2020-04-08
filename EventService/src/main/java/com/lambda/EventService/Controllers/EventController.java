@@ -68,7 +68,7 @@ public class EventController {
 
     //Update the whole oldEvent by the newEvent parameters
     @PutMapping(path = "/update-event",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Event updateEvent(@RequestParam Long oldEventId, Event newEvent, EnuEventStatus neweventStatus, Location newEventLocation, EventType neweventType, @NotNull Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
+    public Event updateEvent(@RequestParam Long oldEventId,@RequestBody Event newEvent,@RequestBody EnuEventStatus neweventStatus,@RequestBody Location newEventLocation,@RequestBody EventType neweventType,@RequestBody @NotNull Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
         if(userServiceHelper.CheckUserAuthorised(userId.toString(),authorizationToken)){
             var oldEvent = eventService.findById(oldEventId);
             if(!oldEvent.getCreatedByUserId().equals(userId)) throw new CustomEventException("403: User with ID="+userId.toString()+" is unauthorized to edit the Event with ID="+oldEvent.getEventId().toString()+" because it's been created by the User with ID="+oldEvent.getCreatedByUserId().toString());
@@ -92,7 +92,7 @@ public class EventController {
 
     //update the value of the Status of an Event by its ID and corresponding new Status
     @PutMapping(path = "/update-status/{eventId}",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Event updateEventStatus(@PathVariable long eventId, EnuEventStatus status, @NotNull Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
+    public Event updateEventStatus(@PathVariable long eventId,@RequestBody EnuEventStatus status,@RequestBody @NotNull Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
         if(userServiceHelper.CheckUserAuthorised(userId.toString(),authorizationToken)){
             if(status!=null && status.getDescription() != null && status.getEventStatusId()!= null) {
                 var event = eventService.findById(eventId);
@@ -121,7 +121,7 @@ public class EventController {
 
 
     @PutMapping(path = "/buy-ticket",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Event buyTicket(Long eventId, Long numberOfTickets, Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
+    public Event buyTicket(@RequestBody Long eventId,@RequestBody  Long numberOfTickets, @RequestBody Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
         if(userServiceHelper.CheckUserAuthorised(userId.toString(),authorizationToken)){
            var event = eventService.findById(eventId);
            if(event.getNumberOfTicketsAvailable()-numberOfTickets<0)
@@ -134,7 +134,7 @@ public class EventController {
 
     //Add a new Event by using corresponding new Event data, x-www-urlencoded => @RequestBody
     @PostMapping(path = "/add-event",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Event addEvent(Event event, EnuEventStatus eventStatus, Location eventLocation, EventType eventType, @NotNull Long userId, @RequestHeader(value = "Authorization") String authorizationToken)throws Exception{
+    public Event addEvent(@RequestBody Event event,@RequestBody EnuEventStatus eventStatus,@RequestBody Location eventLocation,@RequestBody EventType eventType,@RequestBody @NotNull Long userId, @RequestHeader(value = "Authorization") String authorizationToken)throws Exception{
         if(userServiceHelper.CheckUserAuthorised(userId.toString(),authorizationToken)){
             var x = locationService.updateLocation(eventLocation);
             var y = enuEventStatusService.updateEnuEventStatus(eventStatus);
@@ -151,7 +151,7 @@ public class EventController {
 
     //Delete an Existing event by its ID, form-data => @RequestParam
     @DeleteMapping(path = "/delete-event",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Event deleteEvent(@RequestParam long eventId, @NotNull Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
+    public Event deleteEvent(@RequestParam long eventId,@RequestBody @NotNull Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
         if(userServiceHelper.CheckUserAuthorised(userId.toString(),authorizationToken)){
 
             var event = eventService.findById(eventId);
