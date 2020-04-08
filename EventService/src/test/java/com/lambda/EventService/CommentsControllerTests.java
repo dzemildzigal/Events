@@ -3,12 +3,15 @@ package com.lambda.EventService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lambda.EventService.Controllers.CommentsController;
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
+import com.lambda.EventService.Helpers.UserServiceHelper;
 import com.lambda.EventService.Models.EventComments;
+import com.lambda.EventService.Models.UserLoginAckDTO;
 import org.codehaus.jettison.json.JSONStringer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -23,7 +26,8 @@ class CommentsControllerTests {
     private final String URL = "/comment";
 
     private ObjectMapper objectMapper = new ObjectMapper();
-
+    private HttpHeaders httpHeaders = new HttpHeaders();
+    private UserServiceHelper userServiceHelper = new UserServiceHelper();
 
     @Autowired
     private MockMvc mockMvc;
@@ -38,6 +42,7 @@ class CommentsControllerTests {
 
     @Test
     void assertCommentsExists() throws Exception {
+
         //Comments with ID = 0 does not exist
         this.mockMvc.perform(MockMvcRequestBuilders
                 .get(URL + "/0")
@@ -52,9 +57,10 @@ class CommentsControllerTests {
 
     @Test
     void assertCommentsFromUserExists() throws Exception{
+        UserLoginAckDTO response = userServiceHelper.loginUser("test","testtest");
         this.mockMvc.perform(MockMvcRequestBuilders
                 .get(URL+"/user/0")
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
 
         this.mockMvc.perform(MockMvcRequestBuilders
                 .get(URL+"/user/1")

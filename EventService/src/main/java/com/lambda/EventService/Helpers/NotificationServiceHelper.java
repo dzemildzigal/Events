@@ -2,9 +2,7 @@ package com.lambda.EventService.Helpers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lambda.EventService.Models.Event;
-import com.lambda.EventService.Models.EventType;
-import com.lambda.EventService.Models.UserLoginAckDTO;
-import org.hibernate.mapping.Any;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
