@@ -22,17 +22,14 @@ public class NotificationServiceHelper {
         info.put("eventTypeId", newCreatedEvent.getEventType().getEventTypeId().toString());
         info.put("description",newCreatedEvent.getLocation().getDescription()+" will take place at the location "+ newCreatedEvent.getLocation().getDescription()+" and begin at the time of "+newCreatedEvent.getEventTime().toString());
         HttpEntity<Map<String,String>> entity = new HttpEntity<>(info,httpHeaders);
-        //try {
+
             ResponseEntity<MessageDTO> rez = restTemplate.exchange("http://NotificationService/notifications/notify-users-of-event-creation",
                                                                     HttpMethod.POST,
                                                                     entity,
                                                                     MessageDTO.class);
 
             return rez.getStatusCode().is2xxSuccessful();
-       // }catch (Exception ex){
-       //     var a = ex.getMessage();;
-      //      throw new CustomEventException(a);
-       // }
+
     }
 
 

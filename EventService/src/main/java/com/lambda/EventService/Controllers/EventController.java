@@ -140,14 +140,12 @@ public class EventController {
         event.setEventType(eventW.eventType);
         event.setLocation(eventW.location);
         if(userServiceHelper.CheckUserAuthorised(userId.toString(),authorizationToken)){
-            var succ = notificationServiceHelper.notifyUsersOfEventCreation(event);
             var x = locationService.updateLocation(event.getLocation());
             var y = enuEventStatusService.updateEnuEventStatus(event.getEnuEventStatus());
             var z = eventTypeService.updateEventType(event.getEventType());
             event.setLocation(x);
             event.setEnuEventStatus(y);
             event.setEventType(z);
-            if(!event.getCreatedByUserId().equals(userId)) throw new CustomEventException("403: New Event does not have the attribute createdByUserId set to the value of the authenticated User!");
             notificationServiceHelper.notifyUsersOfEventCreation(event);
             return eventService.createEvent(event);
         }
