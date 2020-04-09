@@ -74,11 +74,12 @@ class UserTicketServiceApplicationTests {
 	}
 
 	@Test
+	@Order(2)
 	void createPayment2() throws Exception {
 
 		mockMvc.perform(MockMvcRequestBuilders
 				.post("/usertickets/payment/create")
-				.content(asJsonString(new CCPayment(null, new UserTicket(null, 1L, 1L ), BigDecimal.TEN , "12345799255658")))
+				.content(asJsonString(new CCPayment(null, new UserTicket(null, 1L, 4L ), BigDecimal.TEN , "12345799255658")))
 				.contentType(MediaType.APPLICATION_JSON)
 				.header("Authorization", auth)
 				.accept(MediaType.APPLICATION_JSON))
@@ -86,11 +87,14 @@ class UserTicketServiceApplicationTests {
 	}
 
 	@Test
+	@Order(3)
 	void getTicketsByUserId() throws Exception {
 
 		mockMvc.perform(MockMvcRequestBuilders
 				.get("/usertickets/users-tickets/1")
-				.accept(MediaType.APPLICATION_JSON))
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON)
+				.header("Authorization", auth))
 				.andExpect(status().isOk());
 	}
 
@@ -100,7 +104,7 @@ class UserTicketServiceApplicationTests {
 		mockMvc.perform(MockMvcRequestBuilders
 				.get("/usertickets/users-tickets/588")
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().is2xxSuccessful());
+				.andExpect(status().is4xxClientError());
 	}
 
 	@Test
@@ -109,14 +113,17 @@ class UserTicketServiceApplicationTests {
 		mockMvc.perform(MockMvcRequestBuilders
 				.get("/usertickets/588")
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isNotFound());
+				.andExpect(status().is4xxClientError());
 	}
 
 	@Test
+	@Order(5)
 	void getTicketsById2() throws Exception {
 
 		mockMvc.perform(MockMvcRequestBuilders
 				.get("/usertickets/1")
+				.contentType(MediaType.APPLICATION_JSON)
+				.header("Authorization", auth)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}

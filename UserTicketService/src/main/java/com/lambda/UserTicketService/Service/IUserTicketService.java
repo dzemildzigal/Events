@@ -10,9 +10,9 @@ import java.util.Optional;
 
 public interface IUserTicketService {
 
-    UserTicket getUserTicketById(long id);
+    UserTicket getUserTicketById(long id, String authorizationToken) throws AccessDeniedException;
     CCPayment createPaymentForTicket(CCPayment ccPayment, String authorizationToken) throws AccessDeniedException, JsonProcessingException;
     UserTicket createUserTicket(UserTicket userTicket);
-    List<UserTicket> getUserTicketsByUserId(long id);
+    List<UserTicket> getUserTicketsByUserId(long id, String authorizationToken) throws AccessDeniedException;
     List<UserTicket> getUserTicketsByEventId(long eventid);
 }

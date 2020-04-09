@@ -34,9 +34,13 @@ public class UserTicketService implements IUserTicketService {
     }
 
     @Override
-    public UserTicket getUserTicketById(long id) {
-        return this.userTicketRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    public UserTicket getUserTicketById(long id, String authorizationToken) throws AccessDeniedException {
+        if (this.communicationHelper.checkIsUserAuthorized(Long.toString(id), authorizationToken)) {
+            return this.userTicketRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        }
+        throw new AccessDeniedException("User is not authorized");
     }
+
     @Override
     public List<UserTicket> getUserTicketsByEventId(long eventid)
     {
@@ -44,8 +48,11 @@ public class UserTicketService implements IUserTicketService {
     }
 
     @Override
-    public List<UserTicket> getUserTicketsByUserId(long id) {
-        return this.userTicketRepository.findByUserId(id);
+    public List<UserTicket> getUserTicketsByUserId(long id, String authorizationToken) throws AccessDeniedException {
+        if (this.communicationHelper.checkIsUserAuthorized(Long.toString(id), authorizationToken)) {
+            return this.userTicketRepository.findByUserId(id);
+        }
+        throw new AccessDeniedException("User is not authorized");
     }
 
     @Override

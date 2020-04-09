@@ -16,20 +16,21 @@ import java.util.List;
 @RestController
 @RequestMapping("usertickets")
 public class UserTicketController {
+
     @Autowired
     IUserTicketService userTicketService;
 
-
-
     @GetMapping("/{id}")
-    public UserTicket getUserTicketInfo(@PathVariable Long id) {
-        return this.userTicketService.getUserTicketById(id);
+    public UserTicket getUserTicketInfo(@PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationToken) throws AccessDeniedException {
+        return this.userTicketService.getUserTicketById(id, authorizationToken);
     }
 
+    /*
+    -- not used in the application
     @GetMapping("/event-tickets/{eventid}")
     public List<UserTicket> getUserTicketsByEventId(@PathVariable long eventid) {
         return this.userTicketService.getUserTicketsByEventId(eventid);
-    }
+    }*/
 
 
     @PostMapping("/payment/create")
@@ -38,7 +39,7 @@ public class UserTicketController {
     }
 
     @GetMapping("/users-tickets/{userId}")
-    public List<UserTicket> getUserTicketsByUserId(@PathVariable  long userId ) throws AccessDeniedException {
-        return this.userTicketService.getUserTicketsByUserId(userId);
+    public List<UserTicket> getUserTicketsByUserId(@PathVariable  long userId, @RequestHeader(value = "Authorization") String authorizationToken ) throws AccessDeniedException {
+        return this.userTicketService.getUserTicketsByUserId(userId, authorizationToken);
     }
 }
