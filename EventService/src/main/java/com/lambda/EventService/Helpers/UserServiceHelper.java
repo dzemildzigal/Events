@@ -1,18 +1,12 @@
 package com.lambda.EventService.Helpers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
-import com.lambda.EventService.Models.UserLoginAckDTO;
-import com.lambda.EventService.Models.UserLoginDTO;
+import com.lambda.EventService.Models.Api.UserLoginAckDTO;
+import com.lambda.EventService.Models.Api.UserLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import javax.print.attribute.standard.Media;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class UserServiceHelper {
@@ -32,7 +26,6 @@ public class UserServiceHelper {
     public UserLoginAckDTO loginUser(String username, String password) throws Exception {
         httpHeaders.clear();
         httpHeaders.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
-        //httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         UserLoginDTO info = new UserLoginDTO(username,password);
         HttpEntity<UserLoginDTO> entity = new HttpEntity<>(info,httpHeaders);
         try {

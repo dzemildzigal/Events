@@ -2,12 +2,11 @@ package com.lambda.EventService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lambda.EventService.Controllers.EventController;
-import com.lambda.EventService.ExceptionHandling.CustomEventException;
+import com.lambda.EventService.Helpers.NotificationServiceHelper;
 import com.lambda.EventService.Helpers.UserServiceHelper;
 import com.lambda.EventService.Models.EnuEventStatus;
 import com.lambda.EventService.Models.Event;
-import com.lambda.EventService.Models.UserLoginAckDTO;
-import org.codehaus.jettison.json.JSONStringer;
+import com.lambda.EventService.Models.Api.UserLoginAckDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,7 +15,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -35,6 +33,8 @@ class EventControllerTests {
 	private UserServiceHelper userServiceHelper;
 	@Autowired
 	private EventController eventController;
+	@Autowired
+	private NotificationServiceHelper notificationServiceHelper;
 
 	@Test
 	void contextLoads() {
@@ -56,6 +56,7 @@ class EventControllerTests {
 		        .accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
+
 
 	@Test
 	void assertEventLocationExists() throws Exception{
@@ -101,6 +102,7 @@ class EventControllerTests {
 		UserLoginAckDTO response = userServiceHelper.loginUser("test","testtest");
 		authToken = response.getToken();
 		String content = objectMapper.writeValueAsString(new Event());
+
 		this.mockMvc.perform(MockMvcRequestBuilders
 				.put(URL+"/update-event?oldEventId=4").header("Authorization", "Bearer " + authToken)
 				.content(content)

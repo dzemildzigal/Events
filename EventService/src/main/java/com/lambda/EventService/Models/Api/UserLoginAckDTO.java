@@ -1,4 +1,4 @@
-package com.lambda.EventService.Models;
+package com.lambda.EventService.Models.Api;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

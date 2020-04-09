@@ -1,14 +1,10 @@
 package com.lambda.EventService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lambda.EventService.Controllers.CommentsController;
 import com.lambda.EventService.Controllers.EventRegistrationController;
-import com.lambda.EventService.ExceptionHandling.CustomEventException;
 import com.lambda.EventService.Helpers.UserServiceHelper;
-import com.lambda.EventService.Models.EventComments;
 import com.lambda.EventService.Models.UserEventRegistration;
-import com.lambda.EventService.Models.UserLoginAckDTO;
-import org.codehaus.jettison.json.JSONStringer;
+import com.lambda.EventService.Models.Api.UserLoginAckDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,7 +13,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

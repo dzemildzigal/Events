@@ -3,11 +3,8 @@ package com.lambda.EventService.Controllers;
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
 import com.lambda.EventService.Helpers.NotificationServiceHelper;
 import com.lambda.EventService.Helpers.UserServiceHelper;
+import com.lambda.EventService.Models.*;
 import com.lambda.EventService.Models.Api.BuyATicketDTO;
-import com.lambda.EventService.Models.EnuEventStatus;
-import com.lambda.EventService.Models.Event;
-import com.lambda.EventService.Models.EventType;
-import com.lambda.EventService.Models.Location;
 import com.lambda.EventService.Services.IEnuEventStatusService;
 import com.lambda.EventService.Services.IEventService;
 import com.lambda.EventService.Services.IEventTypeService;
@@ -135,11 +132,18 @@ public class EventController {
 
     //Add a new Event by using corresponding new Event data, x-www-urlencoded => @RequestBody
     @PostMapping(path = "/add-event",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Event addEvent(@RequestBody Event event,@RequestBody EnuEventStatus eventStatus,@RequestBody Location eventLocation,@RequestBody EventType eventType,@RequestBody @NotNull Long userId, @RequestHeader(value = "Authorization") String authorizationToken)throws Exception{
+    public Event addEvent(@RequestBody EventWrapper eventW, @RequestHeader(value = "Authorization") String authorizationToken)throws Exception{
+
+        var event = eventW.event;
+        var userId = event.getCreatedByUserId();
+        event.setEnuEventStatus(eventW.enuEventStatus);
+        event.setEventType(eventW.eventType);
+        event.setLocation(eventW.location);
         if(userServiceHelper.CheckUserAuthorised(userId.toString(),authorizationToken)){
-            var x = locationService.updateLocation(eventLocation);
-            var y = enuEventStatusService.updateEnuEventStatus(eventStatus);
-            var z = eventTypeService.updateEventType(eventType);
+            var succ = notificationServiceHelper.notifyUsersOfEventCreation(event);
+            var x = locationService.updateLocation(event.getLocation());
+            var y = enuEventStatusService.updateEnuEventStatus(event.getEnuEventStatus());
+            var z = eventTypeService.updateEventType(event.getEventType());
             event.setLocation(x);
             event.setEnuEventStatus(y);
             event.setEventType(z);
