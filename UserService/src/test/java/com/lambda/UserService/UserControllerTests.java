@@ -70,6 +70,7 @@ public class UserControllerTests {
 
         this.authToken = HEADER_PREFIX + dto.getToken();
     }
+
     @Order(2)
     @Test
     void getExistingUserInfo() throws Exception {

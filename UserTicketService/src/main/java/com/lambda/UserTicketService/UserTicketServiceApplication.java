@@ -3,6 +3,7 @@ package com.lambda.UserTicketService;
 import com.lambda.UserTicketService.Service.IUserTicketService;
 import com.lambda.UserTicketService.model.CCPayment;
 import com.lambda.UserTicketService.model.UserTicket;
+import com.lambda.UserTicketService.repository.ICCPaymentRepository;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -11,10 +12,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -28,12 +31,18 @@ public class UserTicketServiceApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(IUserTicketService service) {
+	@LoadBalanced
+	public RestTemplate getRestTemplate(){
+		return  new RestTemplate();
+	}
+
+	@Bean
+	public CommandLineRunner demo(ICCPaymentRepository service) {
 		return (args) -> {
 
 			UserTicket userTicket = new UserTicket(null, 1L, 1L);
 			CCPayment payment = new CCPayment(null, userTicket, new BigDecimal(22), "1111111111");
-			var tmp = service.createPaymentForTicket(payment);
+			var tmp = service.save(payment);
 		};
 	}
 }

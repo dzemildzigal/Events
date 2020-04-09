@@ -40,10 +40,9 @@ public class NotificationController {
     @DeleteMapping("/deletesubscription/{usersubscriptionid}")
     public void DeleteSubscription (@PathVariable Long usersubscriptionid){
      notificationservice.deleteSubscription(usersubscriptionid); }
+
     @PutMapping("/updateseen/{userid}")
     public List<UserNotification> updateSeen (@PathVariable Long userid){
         return this.notificationservice.updateSeen(userid);
     }
-
-
 }
