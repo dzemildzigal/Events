@@ -2,11 +2,8 @@ package com.lambda.EventService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lambda.EventService.Controllers.CommentsController;
-import com.lambda.EventService.ExceptionHandling.CustomEventException;
 import com.lambda.EventService.Helpers.UserServiceHelper;
-import com.lambda.EventService.Models.EventComments;
-import com.lambda.EventService.Models.UserLoginAckDTO;
-import org.codehaus.jettison.json.JSONStringer;
+import com.lambda.EventService.Models.Api.UserLoginAckDTO;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
