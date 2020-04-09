@@ -16,7 +16,7 @@ public class UserServiceHelper {
     private HttpHeaders httpHeaders = new HttpHeaders();
 
 
-    public boolean CheckUserAuthorised(String uid, String token) {
+    public  boolean CheckUserAuthorised(String uid, String token) {
         httpHeaders.clear();
         httpHeaders.add("Authorization",token);
         HttpEntity entity = new HttpEntity(httpHeaders);
