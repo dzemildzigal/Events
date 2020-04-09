@@ -6,10 +6,12 @@ import com.lambda.NotificationService.Service.INotificationService;
 import com.lambda.NotificationService.model.CreatedNotification;
 import com.lambda.NotificationService.model.UserNotification;
 import com.lambda.NotificationService.model.UserSubscription;
+import com.lambda.NotificationService.model.api.MessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("notifications")
@@ -30,9 +32,10 @@ public class NotificationController {
     }
 
     @PostMapping("/notify-users-of-event-creation")
-    public boolean notifyUsers(@RequestBody CreatedNotification notification){
+    public MessageDTO notifyUsers(@RequestBody CreatedNotification notification){
 
-        return this.notificationservice.notifyUsersOfCreation(notification.getEventTypeId(), notification.getDescription());
+         this.notificationservice.notifyUsersOfCreation(notification.getEventTypeId(), notification.getDescription());
+         return new MessageDTO("Notifications have been created!");
     }
 
 
