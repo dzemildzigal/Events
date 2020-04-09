@@ -1,10 +1,12 @@
 package com.lambda.NotificationService.Service.ServiceImplementation;
 
+import com.lambda.NotificationService.Helpers.UserServiceHelper;
 import com.lambda.NotificationService.Service.INotificationService;
 import com.lambda.NotificationService.model.UserNotification;
 import com.lambda.NotificationService.model.UserSubscription;
 import com.lambda.NotificationService.repository.IUserNotificationRepository;
 import com.lambda.NotificationService.repository.IUserSubscriptionRepository;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,21 @@ public class NotificationService implements INotificationService {
         return createdUserNotification;
 
     }
+    @Override
+    public List<UserNotification> getNotifications(Long userId)
+    {
+
+        return this.userNotificationRepository.findByUserId(userId);
+
+    }
+    @Override
+    public List<UserSubscription> getSubscriptions(Long userId)
+    {
+
+        return this.userSubscriptionRepository.findByUserId(userId);
+
+    }
+
 
     @Override
     public UserSubscription createUserSubscription(UserSubscription userSubscription) {

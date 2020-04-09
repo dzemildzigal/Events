@@ -8,4 +8,5 @@ import java.util.List;
 public interface IUserNotificationRepository extends CrudRepository<UserNotification, Long> {
 
     List<UserNotification> findByUserId(Long userId);
+
 }

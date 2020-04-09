@@ -11,5 +11,7 @@ public interface INotificationService {
     List<UserNotification> updateSeen(Long id);
     void deleteSubscription(Long usersubscriptionid);
     boolean notifyUsersOfCreation(Long EventTypeId, String description);
-   // void subscribeToACategory(Long id);
+    List<UserNotification> getNotifications(Long userId);
+    List<UserSubscription> getSubscriptions(Long userId);
+
 }
