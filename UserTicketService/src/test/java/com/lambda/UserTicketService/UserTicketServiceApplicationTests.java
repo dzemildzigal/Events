@@ -2,39 +2,20 @@ package com.lambda.UserTicketService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lambda.UserTicketService.Controller.UserTicketController;
-import com.lambda.UserTicketService.Helpers.CommunicationHelper;
-import com.lambda.UserTicketService.Helpers.ICommunicationHelper;
-import com.lambda.UserTicketService.Helpers.model.UserLoginAckDTO;
-import com.lambda.UserTicketService.Service.IUserTicketService;
-import com.lambda.UserTicketService.Service.ServiceImplementation.UserTicketService;
-import com.lambda.UserTicketService.model.CCPayment;
-import com.lambda.UserTicketService.model.UserTicket;
-import org.apache.http.client.methods.HttpHead;
-import org.aspectj.lang.annotation.Before;
+import com.lambda.UserTicketService.Helpers.Model.UserLoginAckDTO;
+import com.lambda.UserTicketService.Model.CCPayment;
+import com.lambda.UserTicketService.Model.UserTicket;
 import org.junit.jupiter.api.*;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.*;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
 
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -63,7 +44,7 @@ class UserTicketServiceApplicationTests {
 
 
 	@Test
-	void createPayment() throws Exception {
+	void createPaymentWrongInputData() throws Exception {
 
 		mockMvc.perform(MockMvcRequestBuilders
 				.post("/usertickets/payment/create")
@@ -74,8 +55,22 @@ class UserTicketServiceApplicationTests {
 	}
 
 	@Test
+	@Order(7)
+	void createPaymentWrongInputDataEventIdMissing() throws Exception {
+		// test added to handle not existing event exception in eventService
+		UserTicket userTicket = new UserTicket(null, 1L, 9999L);
+		mockMvc.perform(MockMvcRequestBuilders
+				.post("/usertickets/payment/create")
+				.content(asJsonString(new CCPayment(null, userTicket, BigDecimal.TEN, "1")))
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.header("Authorization", auth))
+				.andExpect(status().is4xxClientError());
+	}
+
+	@Test
 	@Order(2)
-	void createPayment2() throws Exception {
+	void createPaymentSuccessfully() throws Exception {
 
 		mockMvc.perform(MockMvcRequestBuilders
 				.post("/usertickets/payment/create")
@@ -99,26 +94,28 @@ class UserTicketServiceApplicationTests {
 	}
 
 	@Test
-	void getTicketsByUserId2() throws Exception {
+	void getTicketsByUserIdNotAuthorized() throws Exception {
 
 		mockMvc.perform(MockMvcRequestBuilders
-				.get("/usertickets/users-tickets/588")
+				.get("/usertickets/users-tickets/1")
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().is4xxClientError());
 	}
 
 	@Test
-	void getTicketsById() throws Exception {
+	@Order(6)
+	void getNotExistingUserTicketsById() throws Exception {
 
 		mockMvc.perform(MockMvcRequestBuilders
-				.get("/usertickets/588")
-				.accept(MediaType.APPLICATION_JSON))
+				.get("/usertickets/users-tickets/588")
+				.accept(MediaType.APPLICATION_JSON)
+				.header("Authorization", auth))
 				.andExpect(status().is4xxClientError());
 	}
 
 	@Test
 	@Order(5)
-	void getTicketsById2() throws Exception {
+	void getTicketByIdSuccessfully() throws Exception {
 
 		mockMvc.perform(MockMvcRequestBuilders
 				.get("/usertickets/1")

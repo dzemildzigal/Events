@@ -1,4 +1,4 @@
-package com.lambda.UserService.model.entity;
+package com.lambda.UserService.Model.Entity;
 
 import com.sun.istack.Nullable;
 import lombok.AllArgsConstructor;

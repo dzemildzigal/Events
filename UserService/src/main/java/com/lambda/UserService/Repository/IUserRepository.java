@@ -1,6 +1,6 @@
-package com.lambda.UserService.repository;
+package com.lambda.UserService.Repository;
 
-import com.lambda.UserService.model.entity.UserInfo;
+import com.lambda.UserService.Model.Entity.UserInfo;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

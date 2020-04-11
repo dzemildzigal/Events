@@ -1,16 +1,13 @@
 package com.lambda.UserService.Controller;
 
 
-import com.lambda.UserService.Security.JwtUtil;
 import com.lambda.UserService.Service.IUserService;
-import com.lambda.UserService.model.api.UserLoginAckDTO;
-import com.lambda.UserService.model.api.UserLoginDTO;
-import com.lambda.UserService.model.entity.UserCredentials;
-import com.lambda.UserService.model.entity.UserInfo;
-import io.swagger.annotations.Api;
+import com.lambda.UserService.Model.Api.UserLoginAckDTO;
+import com.lambda.UserService.Model.Api.UserLoginDTO;
+import com.lambda.UserService.Model.Entity.UserCredentials;
+import com.lambda.UserService.Model.Entity.UserInfo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.AccessDeniedException;
@@ -42,6 +39,9 @@ public class UserController {
     @ApiOperation("Update user info")
     @PutMapping("/user-info/update")
     public UserInfo updateUserInfo (@RequestBody UserInfo info, @RequestHeader(value = "Authorization") String authorization) throws AccessDeniedException {
+        if (info.getUserId() == null) {
+            throw new IllegalArgumentException("UserId cannot be null");
+        }
         Long id = info.getUserId();
         UserLoginAckDTO userLoginAckDTO = this.userService.isUserAuthorized(id, authorization);
         if (!userLoginAckDTO.isAuthenticated()) {

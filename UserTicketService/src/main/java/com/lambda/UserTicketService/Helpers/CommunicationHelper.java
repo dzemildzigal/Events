@@ -2,10 +2,9 @@ package com.lambda.UserTicketService.Helpers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lambda.UserTicketService.Helpers.model.BuyATicketDTO;
-import com.lambda.UserTicketService.Helpers.model.UserLoginAckDTO;
+import com.lambda.UserTicketService.Helpers.Model.BuyATicketDTO;
+import com.lambda.UserTicketService.Helpers.Model.UserLoginAckDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

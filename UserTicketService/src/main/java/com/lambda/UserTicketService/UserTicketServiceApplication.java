@@ -1,10 +1,8 @@
 package com.lambda.UserTicketService;
 
-import com.lambda.UserTicketService.Service.IUserTicketService;
-import com.lambda.UserTicketService.model.CCPayment;
-import com.lambda.UserTicketService.model.UserTicket;
-import com.lambda.UserTicketService.repository.ICCPaymentRepository;
-import org.apache.catalina.User;
+import com.lambda.UserTicketService.Model.CCPayment;
+import com.lambda.UserTicketService.Model.UserTicket;
+import com.lambda.UserTicketService.Repository.ICCPaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

@@ -1,7 +1,7 @@
 package com.lambda.UserService.Service.ServiceImplementation;
 
-import com.lambda.UserService.model.entity.UserCredentials;
-import com.lambda.UserService.repository.IUserCredentialsRepository;
+import com.lambda.UserService.Model.Entity.UserCredentials;
+import com.lambda.UserService.Repository.IUserCredentialsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -2,22 +2,19 @@ package com.lambda.UserService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lambda.UserService.Controller.UserController;
-import com.lambda.UserService.model.api.UserLoginAckDTO;
-import com.lambda.UserService.model.api.UserLoginDTO;
-import com.lambda.UserService.model.entity.UserCredentials;
-import com.lambda.UserService.model.entity.UserInfo;
+import com.lambda.UserService.Model.Api.UserLoginAckDTO;
+import com.lambda.UserService.Model.Api.UserLoginDTO;
+import com.lambda.UserService.Model.Entity.UserCredentials;
+import com.lambda.UserService.Model.Entity.UserInfo;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import javax.persistence.EntityNotFoundException;
 
 import static com.lambda.UserService.Security.SecurityConstants.HEADER_PREFIX;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -99,7 +96,7 @@ public class UserControllerTests {
     @Order(4)
     @Test
     void updateUserInfoWrongParams() throws Exception {
-        UserInfo userInfo = new UserInfo(1L, "t", "test", "test");
+        UserInfo userInfo = new UserInfo(null, null, "test", "test");
         this.mockMvc.perform(MockMvcRequestBuilders
                 .put(URL + "/user-info/update")
                 .content(objectMapper.writeValueAsString(userInfo))

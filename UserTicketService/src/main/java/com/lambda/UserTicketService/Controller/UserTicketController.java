@@ -2,12 +2,10 @@ package com.lambda.UserTicketService.Controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.lambda.UserTicketService.Helpers.CommunicationHelper;
 import com.lambda.UserTicketService.Service.IUserTicketService;
-import com.lambda.UserTicketService.model.CCPayment;
-import com.lambda.UserTicketService.model.UserTicket;
+import com.lambda.UserTicketService.Model.CCPayment;
+import com.lambda.UserTicketService.Model.UserTicket;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.web.JsonPath;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.AccessDeniedException;

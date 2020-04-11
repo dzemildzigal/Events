@@ -1,7 +1,6 @@
-package com.lambda.UserTicketService.repository;
+package com.lambda.UserTicketService.Repository;
 
-import com.lambda.UserTicketService.model.UserTicket;
-import org.apache.catalina.User;
+import com.lambda.UserTicketService.Model.UserTicket;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

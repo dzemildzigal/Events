@@ -1,5 +1,7 @@
 package com.lambda.UserService.ExceptionHandling;
 
+import io.jsonwebtoken.MalformedJwtException;
+import org.hibernate.AssertionFailure;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpHeaders;
@@ -141,7 +143,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
-    @ExceptionHandler({ JpaSystemException.class, TransactionSystemException.class,  InvalidDataAccessApiUsageException.class})
+    @ExceptionHandler({ AssertionFailure.class, JpaSystemException.class, TransactionSystemException.class,  InvalidDataAccessApiUsageException.class})
     public ResponseEntity<Object> handleJpa(final Exception ex, final WebRequest request) {
         var haa = ex.getLocalizedMessage();
         final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), Collections.singletonList("error occurred"));
@@ -151,6 +153,18 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({AccessDeniedException.class})
     public ResponseEntity<Object> handleAccessDenied(final Exception ex, final WebRequest request) {
         final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), Collections.singletonList("error occurred"));
+        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
+    @ExceptionHandler({ IllegalArgumentException.class })
+    public ResponseEntity<Object> handleIllegalArgument(final IllegalArgumentException ex, final WebRequest request) {
+        final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage(), Collections.singletonList("error occurred"));
+        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
+    @ExceptionHandler({ MalformedJwtException.class })
+    public ResponseEntity<Object> illegalJWTHandler(final IllegalArgumentException ex, final WebRequest request) {
+        final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage(), Collections.singletonList("error occurred"));
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 

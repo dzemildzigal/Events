@@ -1,8 +1,8 @@
 package com.lambda.UserService;
 
 import com.lambda.UserService.Service.IUserService;
-import com.lambda.UserService.model.entity.UserCredentials;
-import com.lambda.UserService.model.entity.UserInfo;
+import com.lambda.UserService.Model.Entity.UserCredentials;
+import com.lambda.UserService.Model.Entity.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

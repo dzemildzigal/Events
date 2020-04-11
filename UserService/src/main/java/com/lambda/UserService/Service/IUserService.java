@@ -1,9 +1,9 @@
 package com.lambda.UserService.Service;
 
-import com.lambda.UserService.model.api.UserLoginAckDTO;
-import com.lambda.UserService.model.api.UserLoginDTO;
-import com.lambda.UserService.model.entity.UserCredentials;
-import com.lambda.UserService.model.entity.UserInfo;
+import com.lambda.UserService.Model.Api.UserLoginAckDTO;
+import com.lambda.UserService.Model.Api.UserLoginDTO;
+import com.lambda.UserService.Model.Entity.UserCredentials;
+import com.lambda.UserService.Model.Entity.UserInfo;
 
 public interface IUserService {
     UserInfo createUser(UserCredentials userDTO);

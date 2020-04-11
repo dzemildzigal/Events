@@ -1,15 +1,13 @@
 package com.lambda.UserService.Service.ServiceImplementation;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lambda.UserService.Security.JwtUtil;
 import com.lambda.UserService.Service.IUserService;
-import com.lambda.UserService.model.api.UserLoginAckDTO;
-import com.lambda.UserService.model.api.UserLoginDTO;
-import com.lambda.UserService.model.entity.UserCredentials;
-import com.lambda.UserService.model.entity.UserInfo;
-import com.lambda.UserService.repository.IUserCredentialsRepository;
-import com.lambda.UserService.repository.IUserRepository;
-import org.apache.catalina.User;
+import com.lambda.UserService.Model.Api.UserLoginAckDTO;
+import com.lambda.UserService.Model.Api.UserLoginDTO;
+import com.lambda.UserService.Model.Entity.UserCredentials;
+import com.lambda.UserService.Model.Entity.UserInfo;
+import com.lambda.UserService.Repository.IUserCredentialsRepository;
+import com.lambda.UserService.Repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,9 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.NoHandlerFoundException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static com.lambda.UserService.Security.SecurityConstants.HEADER_PREFIX;
@@ -49,8 +45,12 @@ public class UserService implements IUserService {
     public UserInfo createUser(UserCredentials userDTO) {
 
        userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
-        var userCred = userCredentialsRepository.save(userDTO);
-        return userCred.getUser();
+       try {
+           var userCred = userCredentialsRepository.save(userDTO);
+           return userCred.getUser();
+       } catch (Exception ex) {
+           throw new IllegalArgumentException("Illegal arguments provided");
+       }
     }
 
     @Override

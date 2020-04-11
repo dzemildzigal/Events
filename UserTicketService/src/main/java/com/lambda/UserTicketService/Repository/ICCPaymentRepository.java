@@ -1,6 +1,6 @@
-package com.lambda.UserTicketService.repository;
+package com.lambda.UserTicketService.Repository;
 
-import com.lambda.UserTicketService.model.CCPayment;
+import com.lambda.UserTicketService.Model.CCPayment;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

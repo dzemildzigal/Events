@@ -1,6 +1,6 @@
-package com.lambda.UserService.repository;
+package com.lambda.UserService.Repository;
 
-import com.lambda.UserService.model.entity.UserCredentials;
+import com.lambda.UserService.Model.Entity.UserCredentials;
 import org.springframework.data.repository.CrudRepository;
 
 public interface IUserCredentialsRepository extends CrudRepository<UserCredentials, Long> {

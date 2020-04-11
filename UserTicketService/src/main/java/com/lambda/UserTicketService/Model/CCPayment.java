@@ -1,4 +1,4 @@
-package com.lambda.UserTicketService.model;
+package com.lambda.UserTicketService.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

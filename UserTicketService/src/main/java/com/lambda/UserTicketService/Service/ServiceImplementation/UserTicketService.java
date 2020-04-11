@@ -1,20 +1,18 @@
 package com.lambda.UserTicketService.Service.ServiceImplementation;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.lambda.UserTicketService.Helpers.CommunicationHelper;
 import com.lambda.UserTicketService.Helpers.ICommunicationHelper;
 import com.lambda.UserTicketService.Service.IUserTicketService;
-import com.lambda.UserTicketService.model.CCPayment;
-import com.lambda.UserTicketService.model.UserTicket;
-import com.lambda.UserTicketService.repository.ICCPaymentRepository;
-import com.lambda.UserTicketService.repository.IUserTicketRepository;
+import com.lambda.UserTicketService.Model.CCPayment;
+import com.lambda.UserTicketService.Model.UserTicket;
+import com.lambda.UserTicketService.Repository.ICCPaymentRepository;
+import com.lambda.UserTicketService.Repository.IUserTicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserTicketService implements IUserTicketService {
@@ -34,23 +32,24 @@ public class UserTicketService implements IUserTicketService {
     }
 
     @Override
-    public UserTicket getUserTicketById(long id, String authorizationToken) throws AccessDeniedException {
-        if (this.communicationHelper.checkIsUserAuthorized(Long.toString(id), authorizationToken)) {
-            return this.userTicketRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    public UserTicket getUserTicketById(long userTicketId, String authorizationToken) throws AccessDeniedException {
+        UserTicket userTicket = this.userTicketRepository.findById(userTicketId).orElseThrow(EntityNotFoundException::new);
+        if (this.communicationHelper.checkIsUserAuthorized(Long.toString(userTicket.getUserId()), authorizationToken)) {
+            return userTicket;
         }
         throw new AccessDeniedException("User is not authorized");
     }
 
     @Override
-    public List<UserTicket> getUserTicketsByEventId(long eventid)
+    public List<UserTicket> getUserTicketsByEventId(long eventId)
     {
-        return this.userTicketRepository.findByEventId(eventid);
+        return this.userTicketRepository.findByEventId(eventId);
     }
 
     @Override
-    public List<UserTicket> getUserTicketsByUserId(long id, String authorizationToken) throws AccessDeniedException {
-        if (this.communicationHelper.checkIsUserAuthorized(Long.toString(id), authorizationToken)) {
-            return this.userTicketRepository.findByUserId(id);
+    public List<UserTicket> getUserTicketsByUserId(long userId, String authorizationToken) throws AccessDeniedException {
+        if (this.communicationHelper.checkIsUserAuthorized(Long.toString(userId), authorizationToken)) {
+            return this.userTicketRepository.findByUserId(userId);
         }
         throw new AccessDeniedException("User is not authorized");
     }
