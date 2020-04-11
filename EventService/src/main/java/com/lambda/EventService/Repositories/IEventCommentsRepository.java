@@ -1,7 +1,7 @@
 package com.lambda.EventService.Repositories;
 
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
-import com.lambda.EventService.Models.EventComments;
+import com.lambda.EventService.Models.Entity.EventComments;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

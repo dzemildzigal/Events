@@ -1,5 +1,5 @@
 package com.lambda.EventService.Helpers;
-import com.lambda.EventService.Models.Event;
+import com.lambda.EventService.Models.Entity.Event;
 import com.lambda.EventService.Models.Api.MessageDTO;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;

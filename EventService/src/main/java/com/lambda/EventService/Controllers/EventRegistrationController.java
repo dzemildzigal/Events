@@ -3,10 +3,9 @@ package com.lambda.EventService.Controllers;
 
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
 import com.lambda.EventService.Helpers.UserServiceHelper;
-import com.lambda.EventService.Models.EnuRegistrationType;
-import com.lambda.EventService.Models.UserEventRegistration;
+import com.lambda.EventService.Models.Entity.EnuRegistrationType;
+import com.lambda.EventService.Models.Entity.UserEventRegistration;
 import com.lambda.EventService.Services.*;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -52,11 +51,12 @@ public class EventRegistrationController {
     }
 
     //Register the user with userId to the event with eventId and type of registration with regTypeString
-    @PostMapping(path = "/registerUser",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public UserEventRegistration registerUserToEventByUserIdEventId(@RequestBody Long eventId, @RequestParam String regTypeString,@RequestBody Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws CustomEventException{
+    @PostMapping(path = "{eventId}/registerUser/{userId}",produces = {MediaType.APPLICATION_JSON_VALUE})
+    public UserEventRegistration registerUserToEventByUserIdEventId(@PathVariable Long eventId, @RequestParam String regTypeString, @PathVariable Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws CustomEventException{
         if(userServiceHelper.CheckUserAuthorised(userId.toString(),authorizationToken)) {
             var event = eventService.findById(eventId);
             var enuRegTypeArray = enuRegistrationTypeService.findByDescription(regTypeString);
+            if(enuRegTypeArray.size()==0) throw new CustomEventException("404: No Registration types described by: "+regTypeString);
             var enuRegType = enuRegTypeArray.get(0);
             var newEventReg = new UserEventRegistration();
             newEventReg.setEnuRegistrationType(enuRegType);

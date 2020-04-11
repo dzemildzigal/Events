@@ -1,9 +1,9 @@
 package com.lambda.EventService.Services.ServiceImplementation;
 
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
-import com.lambda.EventService.Models.Event;
+import com.lambda.EventService.Models.Entity.Event;
 import com.lambda.EventService.Services.IEventTypeService;
-import com.lambda.EventService.Models.EventType;
+import com.lambda.EventService.Models.Entity.EventType;
 import com.lambda.EventService.Repositories.IEventTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

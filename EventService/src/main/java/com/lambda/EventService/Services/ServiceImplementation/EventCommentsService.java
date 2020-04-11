@@ -2,7 +2,7 @@ package com.lambda.EventService.Services.ServiceImplementation;
 
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
 import com.lambda.EventService.Services.IEventCommentsService;
-import com.lambda.EventService.Models.EventComments;
+import com.lambda.EventService.Models.Entity.EventComments;
 import com.lambda.EventService.Repositories.IEventCommentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

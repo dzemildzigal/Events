@@ -1,9 +1,8 @@
 package com.lambda.EventService.Services.ServiceImplementation;
 
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
-import com.lambda.EventService.Models.EnuRegistrationType;
 import com.lambda.EventService.Services.IUserEventRegistrationService;
-import com.lambda.EventService.Models.UserEventRegistration;
+import com.lambda.EventService.Models.Entity.UserEventRegistration;
 import com.lambda.EventService.Repositories.IUserEventRegistrationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

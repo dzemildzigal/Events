@@ -1,4 +1,4 @@
-package com.lambda.EventService.Models;
+package com.lambda.EventService.Models.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;

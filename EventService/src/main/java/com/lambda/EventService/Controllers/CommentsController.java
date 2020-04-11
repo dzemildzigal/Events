@@ -3,8 +3,8 @@ package com.lambda.EventService.Controllers;
 
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
 import com.lambda.EventService.Helpers.UserServiceHelper;
-import com.lambda.EventService.Models.Event;
-import com.lambda.EventService.Models.EventComments;
+import com.lambda.EventService.Models.Entity.Event;
+import com.lambda.EventService.Models.Entity.EventComments;
 import com.lambda.EventService.Services.IEventCommentsService;
 import com.lambda.EventService.Services.IEventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class CommentsController {
     }
 
     @PostMapping(path = "/post-comment/{eventId}",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Event postCommentOnEvent(@PathVariable long eventId,@RequestBody  @org.jetbrains.annotations.NotNull EventComments comment,@RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
+    public Event postCommentOnEvent(@PathVariable long eventId, @RequestBody  @org.jetbrains.annotations.NotNull EventComments comment, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
         if(userServiceHelper.CheckUserAuthorised(comment.getUserId().toString(), authorizationToken)) {
             var event = eventService.findById(eventId);
             comment.setEvent(event);

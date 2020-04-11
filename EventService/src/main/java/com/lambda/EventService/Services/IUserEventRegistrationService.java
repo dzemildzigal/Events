@@ -1,7 +1,7 @@
 package com.lambda.EventService.Services;
 
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
-import com.lambda.EventService.Models.UserEventRegistration;
+import com.lambda.EventService.Models.Entity.UserEventRegistration;
 import java.util.List;
 
 public interface IUserEventRegistrationService {

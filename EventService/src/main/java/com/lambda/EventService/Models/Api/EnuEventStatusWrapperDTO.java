@@ -1,16 +1,16 @@
 package com.lambda.EventService.Models.Api;
 
+import com.lambda.EventService.Models.Entity.EnuEventStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
 @Getter
 @Setter
 @NoArgsConstructor
-public class BuyATicketDTO {
-    private Long eventId;
+@AllArgsConstructor
+public class EnuEventStatusWrapperDTO {
     private Long userId;
-    private Long numberOfTickets;
+    private EnuEventStatus enuEventStatus;
 }
