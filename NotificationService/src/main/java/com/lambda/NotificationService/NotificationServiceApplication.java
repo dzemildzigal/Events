@@ -1,10 +1,7 @@
 package com.lambda.NotificationService;
 import com.lambda.NotificationService.Service.INotificationService;
-import com.lambda.NotificationService.model.UserSubscription;
-import com.lambda.NotificationService.model.UserNotification;
-import com.lambda.NotificationService.repository.IUserNotificationRepository;
-import com.lambda.NotificationService.repository.IUserSubscriptionRepository;
-import org.apache.catalina.User;
+import com.lambda.NotificationService.Model.Entity.UserSubscription;
+import com.lambda.NotificationService.Model.Entity.UserNotification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,9 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 

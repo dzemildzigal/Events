@@ -1,11 +1,10 @@
 package com.lambda.NotificationService.Helpers;
 
-import com.lambda.NotificationService.model.api.UserLoginAckDTO;
-import com.lambda.NotificationService.model.api.UserLoginDTO;
+import com.lambda.NotificationService.Model.Api.UserLoginAckDTO;
+import com.lambda.NotificationService.Model.Api.UserLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.RestTemplate;
 
 @Service

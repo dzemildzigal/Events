@@ -1,106 +1,118 @@
 package com.lambda.NotificationService;
 import com.lambda.NotificationService.Helpers.UserServiceHelper;
-import com.lambda.NotificationService.model.UserSubscription;
-import com.lambda.NotificationService.model.api.UserLoginAckDTO;
+import com.lambda.NotificationService.Model.Entity.UserSubscription;
+import com.lambda.NotificationService.Model.Api.UserLoginAckDTO;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lambda.NotificationService.Controller.NotificationController;
-import com.lambda.NotificationService.model.UserNotification;
+import com.lambda.NotificationService.Model.Entity.UserNotification;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 @AutoConfigureMockMvc
 @SpringBootTest
 class NotificationServiceApplicationTests {
+
 	final String url = "/notifications/";
+
 	private  static String authToken;
+
 	@Autowired
 	private NotificationController notificationController;
+
 	@Autowired
 	private MockMvc mockMvc;
+
 	@Autowired
 	private UserServiceHelper userServiceHelper;
+
 	@Test
 	void contextLoads() throws Exception {
 	}
+
 	@Test
-	void createNotification() throws Exception {
+	void createNotificationWithError() throws Exception {
 
 		mockMvc.perform(MockMvcRequestBuilders
 				.post("/notifications/newnotification")
 				.content(asJsonString(new UserNotification(null, null,null,false)))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().is5xxServerError());
+				.andExpect(status().is4xxClientError());
 	}
-	@Test
-	void createNotification2() throws Exception {
 
+	@Test
+	void createNotificationSuccessful() throws Exception {
+		UserLoginAckDTO response = userServiceHelper.loginUser("test","testtest");
+		authToken = response.getToken();
 		mockMvc.perform(MockMvcRequestBuilders
-				.post("/notifications/newnotification")
-				.content(asJsonString(new UserNotification(null, 2L,"SpringBoot",false)))
+				.post("/notifications/newnotification").header("Authorization", "Bearer " + authToken)
+				.content(asJsonString(new UserNotification(null, 1L,"SpringBoot",false)))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
 
 	@Test
-	void createSubscription() throws Exception {
+	void createSubscriptionWithError() throws Exception {
 
 		mockMvc.perform(MockMvcRequestBuilders
 				.post("/notifications/newsubscription")
 				.content(asJsonString(new UserSubscription(null, null,null)))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().is5xxServerError());
+				.andExpect(status().is4xxClientError());
 	}
+
 	@Test
-	void createSubscription2() throws Exception {
+	void createSubscriptionSuccessful() throws Exception {
+		UserLoginAckDTO response = userServiceHelper.loginUser("test","testtest");
+		authToken = response.getToken();
 
 		mockMvc.perform(MockMvcRequestBuilders
-				.post("/notifications/newsubscription")
-				.content(asJsonString(new UserSubscription(null, 2L,3L)))
+				.post("/notifications/newsubscription").header("Authorization", "Bearer " + authToken)
+				.content(asJsonString(new UserSubscription(null, 1L,3L)))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
 
 	@Test
-	public void deleteSubscription() throws Exception {
+	public void deleteSubscriptionSuccessful() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
 				.delete("/notifications/deletesubscription/2")
 				.accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 	}
+
 	@Test
-	public void deleteSubscription2() throws Exception {
+	public void deleteSubscriptionWithError() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
 				.delete("/notifications/deletesubscription/126")
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().is5xxServerError());
+				.andExpect(status().is4xxClientError());
 	}
+
 	@Test
 	void updateSeen() throws Exception {
+		UserLoginAckDTO response = userServiceHelper.loginUser("test","testtest");
+		authToken = response.getToken();
 		mockMvc.perform(MockMvcRequestBuilders
-				.put("/notifications/updateseen/2")
+				.put("/notifications/updateseen/1").header("Authorization", "Bearer " + authToken)
 				.content(asJsonString(new UserSubscription(1L,1L ,2L)))
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
+
 		@Test
-		void AuthoTest() throws Exception{
+		void AuthorizationTestWithGetNotificationsSuccessful() throws Exception{
 
 		UserLoginAckDTO response = userServiceHelper.loginUser("test","testtest");
 			authToken = response.getToken();
@@ -110,8 +122,9 @@ class NotificationServiceApplicationTests {
 					.accept(MediaType.APPLICATION_JSON))
 					.andExpect(status().isOk());
 		}
+
 	@Test
-	void AuthoTest2() throws Exception{
+	void AuthorizationTestWithGetNotificationsWithError() throws Exception{
 
 		UserLoginAckDTO response = userServiceHelper.loginUser("Lejla","testtest");
 		authToken = response.getToken();
@@ -121,8 +134,9 @@ class NotificationServiceApplicationTests {
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().is5xxServerError());
 	}
+
 	@Test
-	void AuthoTest3GetSubscriptions() throws Exception{
+	void AuthorizationTestGetSubscriptionsWithError() throws Exception{
 
 		UserLoginAckDTO response = userServiceHelper.loginUser("Lejla","testtest");
 		authToken = response.getToken();
@@ -132,8 +146,9 @@ class NotificationServiceApplicationTests {
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().is5xxServerError());
 	}
+
 	@Test
-	void AuthoTestGetSubscriptions() throws Exception{
+	void AuthorizationTestGetSubscriptionsSuccessful() throws Exception{
 
 		UserLoginAckDTO response = userServiceHelper.loginUser("test","testtest");
 		authToken = response.getToken();
@@ -143,6 +158,7 @@ class NotificationServiceApplicationTests {
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
+
 	public static String asJsonString(final Object obj) {
 		try {
 			return new ObjectMapper().writeValueAsString(obj);

@@ -1,7 +1,7 @@
 package com.lambda.NotificationService.Service;
 
-import com.lambda.NotificationService.model.UserNotification;
-import com.lambda.NotificationService.model.UserSubscription;
+import com.lambda.NotificationService.Model.Entity.UserNotification;
+import com.lambda.NotificationService.Model.Entity.UserSubscription;
 
 import java.util.List;
 
