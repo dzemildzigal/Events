@@ -3,7 +3,7 @@ package com.lambda.EventService.Services.ServiceImplementation;
 
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
 import com.lambda.EventService.Services.IEnuEventStatusService;
-import com.lambda.EventService.Models.EnuEventStatus;
+import com.lambda.EventService.Models.Entity.EnuEventStatus;
 import com.lambda.EventService.Repositories.IEnuEventStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

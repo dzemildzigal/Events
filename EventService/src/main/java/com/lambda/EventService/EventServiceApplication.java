@@ -1,6 +1,6 @@
 package com.lambda.EventService;
 
-import com.lambda.EventService.Models.*;
+import com.lambda.EventService.Models.Entity.*;
 import com.lambda.EventService.Services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

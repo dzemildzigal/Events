@@ -1,7 +1,7 @@
 package com.lambda.EventService.Services;
 
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
-import com.lambda.EventService.Models.EnuEventStatus;
+import com.lambda.EventService.Models.Entity.EnuEventStatus;
 
 public interface IEnuEventStatusService {
     EnuEventStatus createEnuEventStatus(EnuEventStatus object)throws CustomEventException;

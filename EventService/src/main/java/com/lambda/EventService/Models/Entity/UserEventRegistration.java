@@ -1,6 +1,8 @@
-package com.lambda.EventService.Models;
+package com.lambda.EventService.Models.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.lambda.EventService.Models.Entity.EnuRegistrationType;
+import com.lambda.EventService.Models.Entity.Event;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

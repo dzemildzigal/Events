@@ -50,13 +50,20 @@ class CommentsControllerTests {
     void assertCommentsFromUserExists() throws Exception{
         UserLoginAckDTO response = userServiceHelper.loginUser("test","testtest");
         authToken = response.getToken();
+        //User with ID = 5 is unauthorized by using the token assigned to User with ID = 1
         this.mockMvc.perform(MockMvcRequestBuilders
-                .get(URL+"/user/0").header("Authorization", "Bearer " + authToken)
+                .get(URL+"/user/5").header("Authorization", "Bearer " + authToken)
                 .accept(MediaType.APPLICATION_JSON)).andExpect(status().isUnauthorized());
 
+        //User with ID = 1 is authorized by using the token provided to them
         this.mockMvc.perform(MockMvcRequestBuilders
                 .get(URL+"/user/1").header("Authorization", "Bearer " + response.getToken())
                 .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+
+        //User with ID = 1 is unauthorized by using the token provided to them that has been altered, middleware (JWT) will throw a 500 error
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .get(URL + "/user/1").header("Authorization", "Bearer " + authToken + "asldal")
+                .accept(MediaType.APPLICATION_JSON)).andExpect(status().is5xxServerError());
     }
 
     @Test

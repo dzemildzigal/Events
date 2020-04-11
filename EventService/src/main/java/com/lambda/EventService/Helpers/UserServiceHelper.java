@@ -19,6 +19,7 @@ public class UserServiceHelper {
     public boolean CheckUserAuthorised(String uid, String token) {
         httpHeaders.clear();
         httpHeaders.add("Authorization",token);
+        //httpHeaders.add("Content-Type","application/json");
         HttpEntity entity = new HttpEntity(httpHeaders);
         ResponseEntity<UserLoginAckDTO> rez = restTemplate.exchange("http://UserService/users/is-user-authorized/"+uid, HttpMethod.GET,entity,UserLoginAckDTO.class);
         return rez.getBody().isAuthenticated();

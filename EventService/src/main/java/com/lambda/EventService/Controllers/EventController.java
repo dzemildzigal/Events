@@ -3,13 +3,17 @@ package com.lambda.EventService.Controllers;
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
 import com.lambda.EventService.Helpers.NotificationServiceHelper;
 import com.lambda.EventService.Helpers.UserServiceHelper;
-import com.lambda.EventService.Models.*;
 import com.lambda.EventService.Models.Api.BuyATicketDTO;
+import com.lambda.EventService.Models.Api.EnuEventStatusWrapperDTO;
+import com.lambda.EventService.Models.Api.EventWrapperDTO;
+import com.lambda.EventService.Models.Entity.EnuEventStatus;
+import com.lambda.EventService.Models.Entity.Event;
+import com.lambda.EventService.Models.Entity.EventType;
+import com.lambda.EventService.Models.Entity.Location;
 import com.lambda.EventService.Services.IEnuEventStatusService;
 import com.lambda.EventService.Services.IEventService;
 import com.lambda.EventService.Services.IEventTypeService;
 import com.lambda.EventService.Services.ILocationService;
-import com.netflix.discovery.converters.Auto;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -66,7 +70,17 @@ public class EventController {
 
     //Update the whole oldEvent by the newEvent parameters
     @PutMapping(path = "/update-event",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Event updateEvent(@RequestParam Long oldEventId,@RequestBody Event newEvent,@RequestBody EnuEventStatus neweventStatus,@RequestBody Location newEventLocation,@RequestBody EventType neweventType,@RequestBody @NotNull Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
+    public Event updateEvent(@RequestParam Long oldEventId, @RequestBody EventWrapperDTO eventWrapper, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
+        if(eventWrapper.getEnuEventStatus() == null || eventWrapper.getEvent()== null || eventWrapper.getEventType() == null || eventWrapper.getLocation() == null)
+            throw new CustomEventException("400: Bad request. One or more properties of the class EventWrapperDTO are null!");
+        if(eventWrapper.getUserId() == null)
+            throw new CustomEventException("400: Bad request. userId property of EventWrapperDTO (for authorization) is null!");
+
+        var userId = eventWrapper.getUserId();
+        var newEvent = eventWrapper.getEvent();
+        var newEventLocation = eventWrapper.getLocation();
+        var neweventStatus = eventWrapper.getEnuEventStatus();
+        var neweventType = eventWrapper.getEventType();
         if(userServiceHelper.CheckUserAuthorised(userId.toString(),authorizationToken)){
             var oldEvent = eventService.findById(oldEventId);
             if(!oldEvent.getCreatedByUserId().equals(userId)) throw new CustomEventException("403: User with ID="+userId.toString()+" is unauthorized to edit the Event with ID="+oldEvent.getEventId().toString()+" because it's been created by the User with ID="+oldEvent.getCreatedByUserId().toString());
@@ -81,8 +95,7 @@ public class EventController {
 
                 oldEvent = newEvent;
                 oldEvent.setEventId(oldEventId);
-                var q = eventService.updateEventStatus(oldEvent);
-                return q;
+            return eventService.updateEventStatus(oldEvent);
         }
         throw new CustomEventException("403: User with ID="+userId.toString()+" is unauthorized to edit the Event with ID="+oldEventId.toString());
     }
@@ -90,13 +103,19 @@ public class EventController {
 
     //update the value of the Status of an Event by its ID and corresponding new Status
     @PutMapping(path = "/update-status/{eventId}",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Event updateEventStatus(@PathVariable long eventId,@RequestBody EnuEventStatus status,@RequestBody @NotNull Long userId, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
+    public Event updateEventStatus(@PathVariable long eventId, @RequestBody EnuEventStatusWrapperDTO enuEventStatusWrapper, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
+        if(enuEventStatusWrapper.getEnuEventStatus() == null)
+            throw new CustomEventException("400: Bad request. Property enuEventStatus of EnuEventStatusWrapperDTO class is null!!");
+        if(enuEventStatusWrapper.getUserId() == null)
+            throw new CustomEventException("400: Bad request. userId property of EnuEventStatusWrapperDTO (for authorization) is null!");
+
+        var userId = enuEventStatusWrapper.getUserId();
+        var status = enuEventStatusWrapper.getEnuEventStatus();
         if(userServiceHelper.CheckUserAuthorised(userId.toString(),authorizationToken)){
             if(status!=null && status.getDescription() != null && status.getEventStatusId()!= null) {
                 var event = eventService.findById(eventId);
                     if(!event.getCreatedByUserId().equals(userId)) throw  new CustomEventException("403: User with ID="+userId.toString()+" can not update the status of an Event that they didn't create!");
                 var oldStatus = event.getEnuEventStatus();
-
                 oldStatus.getEvents().remove(event);
                 var newStatus = enuEventStatusService.findByDescription(status.getDescription());
                 if (newStatus == null) {
@@ -111,8 +130,12 @@ public class EventController {
                 eventService.updateEventStatus(event);
                 return event;
             }
-            else
-                enuEventStatusService.updateEnuEventStatus(status);
+            else {
+                var event = eventService.findById(eventId);
+                status.getEvents().add(event);
+                event.setEnuEventStatus(enuEventStatusService.updateEnuEventStatus(status));
+                return event;
+            }
         }
         throw new CustomEventException("500: Unexpected outcome of updateEventStatus() method.");
     }
@@ -132,8 +155,12 @@ public class EventController {
 
     //Add a new Event by using corresponding new Event data, x-www-urlencoded => @RequestBody
     @PostMapping(path = "/add-event",produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Event addEvent(@RequestBody EventWrapper eventW, @RequestHeader(value = "Authorization") String authorizationToken)throws Exception{
+    public Event addEvent(@RequestBody EventWrapperDTO eventW, @RequestHeader(value = "Authorization") String authorizationToken)throws Exception{
 
+        if(eventW.getEnuEventStatus() == null || eventW.getEvent()== null || eventW.getEventType() == null || eventW.getLocation() == null)
+            throw new CustomEventException("400: Bad request. One or more properties of the class EventWrapperDTO are null!");
+        if(eventW.getUserId() == null)
+            throw new CustomEventException("400: Bad request. userId property of EventWrapperDTO (for authorization) is null!");
         var event = eventW.event;
         var userId = event.getCreatedByUserId();
         event.setEnuEventStatus(eventW.enuEventStatus);

@@ -1,7 +1,7 @@
 package com.lambda.EventService.Services;
 
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
-import com.lambda.EventService.Models.EventType;
+import com.lambda.EventService.Models.Entity.EventType;
 
 public interface IEventTypeService {
     EventType createEventType(EventType object)throws CustomEventException;
