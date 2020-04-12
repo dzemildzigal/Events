@@ -11,5 +11,5 @@ Events - Napredne Web Tehnologije
 - UserTicket Service
 
 
-# Guide to run a service is provided in README.md file in the service directory
+ #### Guide to run a service is provided in README.md file in the service directory
 

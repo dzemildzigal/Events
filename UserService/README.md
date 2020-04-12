@@ -3,7 +3,7 @@
 # Requirements
 - Java 13 
 - Meaven
-- Existing SQL database(prefered PostgreSQL 12)
+- Existing SQL database(preferred PostgreSQL 12)
 # Guide to run the application
 
 - CREATE database on you server 
