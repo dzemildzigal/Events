@@ -2,7 +2,7 @@
 
 # Requirements
 - Java 13 
-- Meaven
+- Maven
 
 # Guide to run
 
