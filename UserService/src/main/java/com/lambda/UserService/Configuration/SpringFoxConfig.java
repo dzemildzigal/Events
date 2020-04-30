@@ -19,13 +19,14 @@ import java.util.Collections;
 @Configuration
 @EnableSwagger2
 public class SpringFoxConfig {
+
     @Bean
     public Docket api() {
         ParameterBuilder aParameterBuilder = new ParameterBuilder();
         aParameterBuilder.name("Authorization")                 // name of header
                 .modelRef(new ModelRef("string"))
                 .parameterType("header")               // type - header
-                .required(false)                // for compulsory
+                .required(false)
                 .build();
         java.util.List<Parameter> aParameters = new ArrayList<>();
         aParameters.add(aParameterBuilder.build());

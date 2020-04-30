@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+package com.lambda.grpc.systemevent;
+
+message Greeting {
+  string message = 1;
+}
+
+message Reply {
+ string message = 1;
+}
+
+service HelloWorldService {
+  rpc sayHello (Greeting) returns (Reply);
+}
+
