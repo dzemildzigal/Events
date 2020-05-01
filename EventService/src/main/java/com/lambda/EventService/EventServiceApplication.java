@@ -2,6 +2,8 @@ package com.lambda.EventService;
 
 import com.lambda.EventService.Models.Entity.*;
 import com.lambda.EventService.Services.*;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,6 +24,7 @@ public class EventServiceApplication {
 
 	private java.util.List<UserEventRegistration> listUserEventRegistration;
 
+
 	public static void main(String[] args) {
 		SpringApplication.run(EventServiceApplication.class, args);
 	}
@@ -32,6 +35,10 @@ public class EventServiceApplication {
 		return  new RestTemplate();
 	}
 
+	@Bean
+	public ManagedChannel getManagedChannel(){
+		return ManagedChannelBuilder.forAddress("localhost",8086).usePlaintext().build();
+	}
 
 	@Bean
 	public CommandLineRunner insertNewEvent(IEventService service,

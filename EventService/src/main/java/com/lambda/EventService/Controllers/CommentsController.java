@@ -7,6 +7,7 @@ import com.lambda.EventService.Models.Entity.Event;
 import com.lambda.EventService.Models.Entity.EventComments;
 import com.lambda.EventService.Services.IEventCommentsService;
 import com.lambda.EventService.Services.IEventService;
+import com.lambda.EventService.grpc.GRPCEventServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,12 @@ public class CommentsController {
     @Autowired
     UserServiceHelper userServiceHelper;
 
+    @Autowired
+    GRPCEventServiceClient grpcEventServiceClient;
 
     @GetMapping(path = "/{id}",produces = {MediaType.APPLICATION_JSON_VALUE})
     public EventComments getEventComment(@PathVariable long id)throws  Exception{
+        grpcEventServiceClient.createSystemEvent(null);
         return commentService.findById(id);
     }
 
