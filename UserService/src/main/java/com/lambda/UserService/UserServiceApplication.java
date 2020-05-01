@@ -3,6 +3,8 @@ package com.lambda.UserService;
 import com.lambda.UserService.Service.IUserService;
 import com.lambda.UserService.Model.Entity.UserCredentials;
 import com.lambda.UserService.Model.Entity.UserInfo;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -40,6 +42,11 @@ public class UserServiceApplication {
 	@LoadBalanced
 	public RestTemplate getRestTemplate(){
 		return  new RestTemplate();
+	}
+
+	@Bean
+	public ManagedChannel getManagedChannel(){
+		return ManagedChannelBuilder.forAddress("localhost",8086).usePlaintext().build();
 	}
 
 	@Bean

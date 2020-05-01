@@ -7,7 +7,7 @@ import com.lambda.EventService.Models.Entity.Event;
 import com.lambda.EventService.Models.Entity.EventComments;
 import com.lambda.EventService.Services.IEventCommentsService;
 import com.lambda.EventService.Services.IEventService;
-import com.lambda.EventService.grpc.GRPCEventServiceClient;
+import com.lambda.EventService.Grpc.GRPCEventServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

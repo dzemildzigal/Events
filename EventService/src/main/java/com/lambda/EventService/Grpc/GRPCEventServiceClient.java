@@ -1,14 +1,11 @@
-package com.lambda.EventService.grpc;
+package com.lambda.EventService.Grpc;
 
 import com.lambda.grpc.systemevent.Ack;
 import com.lambda.grpc.systemevent.SystemEventMessage;
 import com.lambda.grpc.systemevent.SystemEventsServiceGrpc;
 import com.netflix.discovery.EurekaClientConfig;
-import com.netflix.discovery.converters.Auto;
 import io.grpc.ManagedChannel;
 import io.grpc.stub.StreamObserver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,8 @@
-package com.lambda.EventService.Configuration;
+package com.lambda.UserService.Configuration;
 
-import com.lambda.EventService.Grpc.CustomInterceptor;
-import com.lambda.EventService.Grpc.GRPCEventServiceClient;
+
+import com.lambda.UserService.Grpc.CustomInterceptor;
+import com.lambda.UserService.Grpc.GRPCEventServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

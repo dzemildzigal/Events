@@ -1,4 +1,4 @@
-package com.lambda.EventService.grpc;
+package com.lambda.EventService.Grpc;
 
 import com.lambda.grpc.systemevent.SystemEventMessage;
 import lombok.NoArgsConstructor;
