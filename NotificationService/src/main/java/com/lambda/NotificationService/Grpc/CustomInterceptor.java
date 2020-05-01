@@ -1,4 +1,5 @@
-package com.lambda.EventService.Grpc;
+package com.lambda.NotificationService.Grpc;
+
 import com.lambda.grpc.systemevent.SystemEventMessage;
 import lombok.NoArgsConstructor;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -9,9 +10,9 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 public class CustomInterceptor extends HandlerInterceptorAdapter {
-    GRPCEventServiceClient grpcEventServiceClient;
-    public CustomInterceptor(GRPCEventServiceClient client){
-        this.grpcEventServiceClient =  client;
+    GRPCNotificationServiceClient grpcNotificationServiceClient;
+    public CustomInterceptor(GRPCNotificationServiceClient client){
+        this.grpcNotificationServiceClient =  client;
     }
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception) throws Exception
@@ -24,7 +25,7 @@ public class CustomInterceptor extends HandlerInterceptorAdapter {
                 setTimeStamp(LocalDateTime.now().toString()).setActionResult(Integer.toString(response.getStatus())).
                 setActionType(request.getMethod()).setServiceName("EventService").setResourceObject(request.getRequestURI()).build();
 
-        grpcEventServiceClient.createSystemEvent(systemEventMessage);
+        grpcNotificationServiceClient.createSystemEvent(systemEventMessage);
         System.out.println("MINIMAL: INTERCEPTOR AFTERCOMPLETION CALLED");
     }
 }

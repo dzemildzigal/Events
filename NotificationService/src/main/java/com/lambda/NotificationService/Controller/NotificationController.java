@@ -2,6 +2,7 @@
 package com.lambda.NotificationService.Controller;
 
 import com.lambda.NotificationService.ExceptionHandling.CustomException;
+import com.lambda.NotificationService.Grpc.GRPCNotificationServiceClient;
 import com.lambda.NotificationService.Helpers.UserServiceHelper;
 import com.lambda.NotificationService.Service.INotificationService;
 import com.lambda.NotificationService.Model.Api.CreatedNotificationDTO;
@@ -25,9 +26,14 @@ public class NotificationController {
     @Autowired
     UserServiceHelper userServiceHelper;
 
+    @Autowired
+    GRPCNotificationServiceClient grpcNotificationServiceClient;
+
     @PostMapping("/newsubscription")
     public UserSubscription createSubscription(@RequestBody UserSubscription info, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
+        grpcNotificationServiceClient.createSystemEvent(null);
         if(userServiceHelper.CheckUserAuthorised(info.getUserId().toString(), authorizationToken)) {
+
             return this.notificationservice.createUserSubscription(info);
         }
         throw new AccessDeniedException("403: User with ID=" + info.getUserId().toString() + " is unauthorized.");
