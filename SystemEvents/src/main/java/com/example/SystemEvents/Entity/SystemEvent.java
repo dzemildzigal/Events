@@ -22,7 +22,7 @@ public class SystemEvent {
     private Long systemEventId;
     private LocalDateTime timeStamp;
     private String serviceName;
-    private Long userId;
+    private String userAuthToken;
     private String actionType;
     private String resourceObject;
     private String actionResult;

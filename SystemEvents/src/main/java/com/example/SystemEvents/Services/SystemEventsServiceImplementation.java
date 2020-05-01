@@ -23,7 +23,7 @@ public class SystemEventsServiceImplementation extends SystemEventsServiceGrpc.S
         LocalDateTime dateTime = LocalDateTime.parse(request.getTimeStamp());
 
 
-        SystemEvent systemEvent = new SystemEvent(null, dateTime , request.getServiceName(), Long.valueOf(request.getUserId()), request.getActionType(), request.getResourceObject(), request.getActionResult());
+        SystemEvent systemEvent = new SystemEvent(null, dateTime , request.getServiceName(), request.getUserAuthToken(), request.getActionType(), request.getResourceObject(), request.getActionResult());
         iSystemEventRepository.save(systemEvent);
         Ack.Builder builder = Ack.newBuilder();
         builder.setMessage("System Event Saved");

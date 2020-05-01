@@ -2,7 +2,7 @@ syntax = "proto3";
 import "google/protobuf/timestamp.proto";
 
 option java_multiple_files = true;
-package com.lambda.EventService.grpc.systemevent;
+package com.lambda.grpc.systemevent;
 
 message Ack {
  string message = 1;
@@ -15,7 +15,7 @@ service SystemEventsService {
 message SystemEventMessage {
   string timeStamp = 1;
   string serviceName = 2;
-  int32 userId = 3;
+  string userAuthToken = 3;
   string actionType = 4;
   string resourceObject = 5;
   string actionResult = 6;

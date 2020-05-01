@@ -45,9 +45,7 @@ public class GRPCEventServiceClient {
             }
         };
 
-        systemEventMessage = SystemEventMessage.newBuilder().setUserId(1).
-                setTimeStamp("2015-08-04T10:11:30").setActionResult("200 OK").
-                setActionType("GET").setServiceName("EventService").build();
+
 
         systemEventsServiceStub.saveSystemEvent(systemEventMessage,streamObserver);
 
