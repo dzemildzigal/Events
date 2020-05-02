@@ -3,12 +3,12 @@
         <mat-card-header class="flex-center" >
             <mat-card-title style="font-size: 2em;">Login</mat-card-title>
         </mat-card-header>
-        <form class="flex-container flex-column-direction" style="margin:5%;">
+        <form class="flex-container flex-column-direction" style="margin:5%;" [formGroup]="loginForm" (submit)="submit()">
             <mat-form-field class="flex-item">
-                <input placeholder="username" matInput />
+                <input placeholder="username" matInput formControlName="username" />
             </mat-form-field>  
             <mat-form-field class="flex-item">
-                <input type="password" placeholder="Password" matInput />
+                <input type="password" placeholder="Password" formControlName="password" matInput   />
             </mat-form-field>
             <div class="flex-container flex-center">
                 <button type="submit" mat-raised-button color="primary" class="button-size">Login</button>

@@ -78,19 +78,20 @@ public class UserService implements IUserService {
             );
         } catch (Exception e ) {
             //e.printStackTrace();
-            return new UserLoginAckDTO(false, "nan");
+            return new UserLoginAckDTO(false, "nan", null);
         }
 
          final UserDetails userDetails = this.userAuthDetailsService.loadUserByUsername(userLoginDTO.getUsername());
          final String jwt = jwtUtil.generateToken(userDetails);
-         return  new UserLoginAckDTO(true, jwt);
+         final UserCredentials userCredentials = this.userCredentialsRepository.findByUsername(userLoginDTO.getUsername());
+         return  new UserLoginAckDTO(true, jwt, userCredentials.getUser().getUserId());
     }
 
     @Override
     public UserLoginAckDTO isUserAuthorized(long userId, String token) {
         String username = null;
         String jwt = null;
-        UserLoginAckDTO dto = new UserLoginAckDTO(false, "nan");
+        UserLoginAckDTO dto = new UserLoginAckDTO(false, "nan", userId);
         if (token != null && token.startsWith(HEADER_PREFIX)) {
             jwt = token.substring(7);
             username = jwtUtil.extractUsername(jwt);

@@ -10,22 +10,40 @@ import {MaterialsModule} from './materials/materials.module';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { EventsComponent } from './components/events/events.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { UserService } from './services/user.service';
+import { TokenInterceptor } from './util/http.interceptor';
+import { LocalStorageService } from './util/local-storage.service';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     RegisterComponent,
     NavigationComponent,
     EventsComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
     BrowserAnimationsModule,
-    MaterialsModule
+    MaterialsModule,
+    HttpClientModule,
+    
   ],
-  providers: [],
+  providers: [
+    UserService,
+    LocalStorageService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true 
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
