@@ -17,4 +17,6 @@ public class CustomInterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(new CustomInterceptor(client));
 
     }
+
+
 }

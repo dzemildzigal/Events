@@ -4,13 +4,14 @@ package com.example.SystemEvents.Services;
 
 import com.example.SystemEvents.Repository.ISystemEventRepository;
 import com.lambda.grpc.systemevent.Greeting;
+
 import com.lambda.grpc.systemevent.HelloWorldServiceGrpc;
 import com.lambda.grpc.systemevent.Reply;
 import io.grpc.stub.StreamObserver;
-import net.devh.boot.grpc.server.service.GrpcService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.lognet.springboot.grpc.GRpcService;
 
-@GrpcService
+
+@GRpcService
 public class HelloWorldServiceImplementation extends HelloWorldServiceGrpc.HelloWorldServiceImplBase {
 
 

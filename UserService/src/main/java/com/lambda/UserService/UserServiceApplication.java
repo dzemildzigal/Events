@@ -44,10 +44,7 @@ public class UserServiceApplication {
 		return  new RestTemplate();
 	}
 
-	@Bean
-	public ManagedChannel getManagedChannel(){
-		return ManagedChannelBuilder.forAddress("localhost",8086).usePlaintext().build();
-	}
+
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {

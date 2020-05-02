@@ -6,12 +6,12 @@ import com.lambda.grpc.systemevent.Ack;
 import com.lambda.grpc.systemevent.SystemEventMessage;
 import com.lambda.grpc.systemevent.SystemEventsServiceGrpc;
 import io.grpc.stub.StreamObserver;
-import net.devh.boot.grpc.server.service.GrpcService;
+import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
-@GrpcService
+@GRpcService
 public class SystemEventsServiceImplementation extends SystemEventsServiceGrpc.SystemEventsServiceImplBase {
 
     @Autowired
