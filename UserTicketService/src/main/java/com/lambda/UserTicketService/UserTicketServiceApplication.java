@@ -36,10 +36,6 @@ public class UserTicketServiceApplication {
 		return  new RestTemplate();
 	}
 	@Bean
-	public ManagedChannel getManagedChannel(){
-		return ManagedChannelBuilder.forAddress("localhost",8086).usePlaintext().build();
-	}
-	@Bean
 	public CommandLineRunner demo(ICCPaymentRepository service) {
 		return (args) -> {
 

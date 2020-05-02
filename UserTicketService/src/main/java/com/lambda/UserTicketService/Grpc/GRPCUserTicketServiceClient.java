@@ -3,8 +3,11 @@ package com.lambda.UserTicketService.Grpc;
 import com.lambda.grpc.systemevent.Ack;
 import com.lambda.grpc.systemevent.SystemEventMessage;
 import com.lambda.grpc.systemevent.SystemEventsServiceGrpc;
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.EurekaClientConfig;
 import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +18,7 @@ import javax.annotation.PostConstruct;
 public class GRPCUserTicketServiceClient {
 
     @Autowired
-    EurekaClientConfig eurekaClientConfig;
-    @Autowired
-    ManagedChannel managedChannel;
-
+    EurekaClient eurekaClient;
     SystemEventsServiceGrpc.SystemEventsServiceStub systemEventsServiceStub;
 
 
@@ -49,10 +49,11 @@ public class GRPCUserTicketServiceClient {
 
     }
 
-
     @PostConstruct
     private void initializeClient(){
-        systemEventsServiceStub = SystemEventsServiceGrpc.newStub(managedChannel);
-    }
+        final InstanceInfo instanceInfo = eurekaClient.getNextServerFromEureka("SystemEvent", false);
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(instanceInfo.getIPAddr(), instanceInfo.getPort()).usePlaintext().build();
+        systemEventsServiceStub = SystemEventsServiceGrpc.newStub(channel);
 
+    }
 }
