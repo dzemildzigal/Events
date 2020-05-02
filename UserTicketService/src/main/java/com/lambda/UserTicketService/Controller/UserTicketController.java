@@ -2,6 +2,7 @@ package com.lambda.UserTicketService.Controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.lambda.UserTicketService.Grpc.GRPCUserTicketServiceClient;
 import com.lambda.UserTicketService.Service.IUserTicketService;
 import com.lambda.UserTicketService.Model.CCPayment;
 import com.lambda.UserTicketService.Model.UserTicket;
@@ -18,8 +19,11 @@ public class UserTicketController {
     @Autowired
     IUserTicketService userTicketService;
 
+    @Autowired
+    GRPCUserTicketServiceClient grpcUserTicketServiceClient;
     @GetMapping("/{id}")
     public UserTicket getUserTicketInfo(@PathVariable Long id, @RequestHeader(value = "Authorization") String authorizationToken) throws AccessDeniedException {
+        grpcUserTicketServiceClient.createSystemEvent(null);
         return this.userTicketService.getUserTicketById(id, authorizationToken);
     }
 

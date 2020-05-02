@@ -2,6 +2,8 @@ package com.lambda.NotificationService;
 import com.lambda.NotificationService.Service.INotificationService;
 import com.lambda.NotificationService.Model.Entity.UserSubscription;
 import com.lambda.NotificationService.Model.Entity.UserNotification;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -24,10 +26,15 @@ public class NotificationServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(NotificationServiceApplication.class, args);
     }
+
     @Bean
     @LoadBalanced
     public RestTemplate getRestTemplate(){
         return  new RestTemplate();
+    }
+    @Bean
+    public ManagedChannel getManagedChannel(){
+        return ManagedChannelBuilder.forAddress("localhost",8086).usePlaintext().build();
     }
     @Bean
     public CommandLineRunner demo(INotificationService service) {

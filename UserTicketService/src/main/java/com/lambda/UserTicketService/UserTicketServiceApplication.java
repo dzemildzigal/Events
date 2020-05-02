@@ -3,6 +3,8 @@ package com.lambda.UserTicketService;
 import com.lambda.UserTicketService.Model.CCPayment;
 import com.lambda.UserTicketService.Model.UserTicket;
 import com.lambda.UserTicketService.Repository.ICCPaymentRepository;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -33,7 +35,10 @@ public class UserTicketServiceApplication {
 	public RestTemplate getRestTemplate(){
 		return  new RestTemplate();
 	}
-
+	@Bean
+	public ManagedChannel getManagedChannel(){
+		return ManagedChannelBuilder.forAddress("localhost",8086).usePlaintext().build();
+	}
 	@Bean
 	public CommandLineRunner demo(ICCPaymentRepository service) {
 		return (args) -> {
