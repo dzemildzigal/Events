@@ -32,10 +32,7 @@ public class NotificationServiceApplication {
     public RestTemplate getRestTemplate(){
         return  new RestTemplate();
     }
-    @Bean
-    public ManagedChannel getManagedChannel(){
-        return ManagedChannelBuilder.forAddress("localhost",8086).usePlaintext().build();
-    }
+
     @Bean
     public CommandLineRunner demo(INotificationService service) {
         return (args) -> {

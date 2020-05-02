@@ -35,10 +35,7 @@ public class EventServiceApplication {
 		return  new RestTemplate();
 	}
 
-	@Bean
-	public ManagedChannel getManagedChannel(){
-		return ManagedChannelBuilder.forAddress("localhost",8086).usePlaintext().build();
-	}
+
 
 	@Bean
 	public CommandLineRunner insertNewEvent(IEventService service,

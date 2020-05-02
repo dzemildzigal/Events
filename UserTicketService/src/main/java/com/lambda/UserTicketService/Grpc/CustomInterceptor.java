@@ -23,7 +23,7 @@ public class CustomInterceptor extends HandlerInterceptorAdapter {
         }
         var systemEventMessage = SystemEventMessage.newBuilder().setUserAuthToken(authToken).
                 setTimeStamp(LocalDateTime.now().toString()).setActionResult(Integer.toString(response.getStatus())).
-                setActionType(request.getMethod()).setServiceName("EventService").setResourceObject(request.getRequestURI()).build();
+                setActionType(request.getMethod()).setServiceName("UserTicketService").setResourceObject(request.getRequestURI()).build();
 
         grpcUserTicketServiceClient.createSystemEvent(systemEventMessage);
         System.out.println("MINIMAL: INTERCEPTOR AFTERCOMPLETION CALLED");
