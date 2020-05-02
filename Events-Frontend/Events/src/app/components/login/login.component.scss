@@ -2,13 +2,12 @@
     width: 20%;
     height: auto;
     min-width: 500px;
-    margin: 20%;
     padding: 1%;
     border: 1px solid black;
 }
 
 .form-wrapper {
-    height: 100%;
+    height: 90%;
     width: 100%;
 }
 
@@ -16,11 +15,7 @@
     width: 30%;
     max-height: 20%;
 }
-:host {
-    display: flex;
-    justify-content: center;
-    margin: 100px 0px;
-  }
+
 
   .mat-form-field {
     width: 100%;

@@ -1,0 +1,31 @@
+<mat-toolbar color="primary" style="justify-content: space-between;">
+    <div>
+        <span style="margin-right: 5%; font-size: 1.5em">Events</span>
+        <mat-icon>event</mat-icon>
+    </div>
+
+    <div style="width: 5em; padding-right: 1em; justify-content: space-between;">
+        <button mat-icon-button routerLink="/notifications">
+            <mat-icon>notifications</mat-icon>
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>perm_identity</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" style="min-width: 300px;">
+            <button mat-menu-item routerLink="/login">
+              <mat-icon>accessibility</mat-icon>
+              <span>Login</span>
+            </button>
+          
+            <button mat-menu-item routerLink="/notifications" style="min-width: 250px;">
+              <mat-icon>notifications</mat-icon>
+              <span>Notifications</span>
+            </button>
+            <button mat-menu-item disabled routerLink="/login">
+                <mat-icon>emoji_people</mat-icon>
+                <span>Logout</span>
+            </button>
+          </mat-menu>
+    </div>
+   
+  </mat-toolbar>

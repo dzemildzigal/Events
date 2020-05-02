@@ -1,17 +1,23 @@
  <div class="flex-center form-wrapper">
      <mat-card class="form-size">
-        <mat-card-header>
-            <mat-card-title>Login</mat-card-title>
+        <mat-card-header class="flex-center" >
+            <mat-card-title style="font-size: 2em;">Login</mat-card-title>
         </mat-card-header>
-        <form class="flex-container flex-column-direction">
+        <form class="flex-container flex-column-direction" style="margin:5%;">
             <mat-form-field class="flex-item">
                 <input placeholder="username" matInput />
             </mat-form-field>  
             <mat-form-field class="flex-item">
-                <input type="password" placeholder="password" matInput />
+                <input type="password" placeholder="Password" matInput />
             </mat-form-field>
-            <button type="submit" mat-raised-button color="primary" class="button-size flex-item">Login</button>
+            <div class="flex-container flex-center">
+                <button type="submit" mat-raised-button color="primary" class="button-size">Login</button>
+            </div>
         </form>
+        <div style="margin-top: 10%;">
+            <span>Don't have an account?</span>
+            <span style="font-size: 110%; color:blue; margin-left: 2%;" routerLink="/register" >Register Here!</span>
+        </div>
      </mat-card>
 </div> 
 
