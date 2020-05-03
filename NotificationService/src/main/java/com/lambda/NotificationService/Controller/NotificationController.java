@@ -31,7 +31,6 @@ public class NotificationController {
 
     @PostMapping("/newsubscription")
     public UserSubscription createSubscription(@RequestBody UserSubscription info, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
-        grpcNotificationServiceClient.createSystemEvent(null);
         if(userServiceHelper.CheckUserAuthorised(info.getUserId().toString(), authorizationToken)) {
 
             return this.notificationservice.createUserSubscription(info);
