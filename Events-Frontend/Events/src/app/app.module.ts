@@ -15,6 +15,7 @@ import { UserService } from './services/user.service';
 import { TokenInterceptor } from './util/http.interceptor';
 import { LocalStorageService } from './util/local-storage.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { EventsLiveFeedComponent } from './components/events/events-live-feed/events-live-feed.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     EventsComponent,
     NotificationsComponent,
     LoginComponent,
+    EventsLiveFeedComponent,
   ],
   imports: [
     BrowserModule,
