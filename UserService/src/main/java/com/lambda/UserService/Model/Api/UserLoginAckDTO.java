@@ -13,4 +13,5 @@ public class UserLoginAckDTO {
     boolean isAuthenticated;
     String token;
     Long userId;
+    String username;
 }

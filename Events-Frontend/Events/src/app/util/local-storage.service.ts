@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class LocalStorageService {
+ 
+  public userLoginChange: Subject<any>;
 
-  constructor() { }
+  constructor() { 
+    this.userLoginChange = new Subject<any>();
+  }
 
 
   public setUserInfo(userInfo: any): void {
-    if (userInfo) {
-      localStorage.setItem("userInfo", JSON.stringify(userInfo));
-    }
+    localStorage.setItem("userInfo", JSON.stringify(userInfo));
+    this.userLoginChange.next(userInfo);
   }
 
   public getUserInfo(): any {

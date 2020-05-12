@@ -4,24 +4,25 @@
         <mat-icon>event</mat-icon>
     </div>
 
-    <div style="width: 5em; padding-right: 1em; justify-content: space-between;">
-        <button mat-icon-button routerLink="/notifications">
+    <div >
+        <span *ngIf="userDetails">{{userDetails.username}}</span>
+        <button mat-icon-button routerLink="/notifications" [disabled]="!userDetails" style="padding-right: 0px;">
             <mat-icon>notifications</mat-icon>
         </button>
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <button mat-icon-button [matMenuTriggerFor]="menu" style="padding-right: 0px;" aria-label="Example icon-button with a menu">
             <mat-icon>perm_identity</mat-icon>
           </button>
-          <mat-menu #menu="matMenu" style="min-width: 300px;">
-            <button mat-menu-item routerLink="/login">
+          <mat-menu #menu="matMenu"  >
+            <button mat-menu-item [disabled]="userDetails" routerLink="/login">
               <mat-icon>accessibility</mat-icon>
               <span>Login</span>
             </button>
           
-            <button mat-menu-item routerLink="/notifications" style="min-width: 250px;">
+            <button mat-menu-item routerLink="/notifications" [disabled]="!userDetails" style="min-width: 250px;">
               <mat-icon>notifications</mat-icon>
               <span>Notifications</span>
             </button>
-            <button mat-menu-item disabled routerLink="/login">
+            <button mat-menu-item [disabled]="!userDetails" routerLink="/login" (click)="logout()">
                 <mat-icon>emoji_people</mat-icon>
                 <span>Logout</span>
             </button>
