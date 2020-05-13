@@ -172,13 +172,30 @@ public class EventController {
         event.setEventType(eventW.eventType);
         event.setLocation(eventW.location);
         if(userServiceHelper.CheckUserAuthorised(userId.toString(),authorizationToken)){
-            var x = locationService.updateLocation(event.getLocation());
-            var y = enuEventStatusService.updateEnuEventStatus(event.getEnuEventStatus());
-            var z = eventTypeService.updateEventType(event.getEventType());
-            event.setLocation(x);
-            event.setEnuEventStatus(y);
-            event.setEventType(z);
-            // notificationServiceHelper.notifyUsersOfEventCreation(event);
+            try {
+                locationService.findById(event.getLocation().getLocationId());
+            }catch(Exception ex){
+                locationService.createLocation(event.getLocation());
+            }
+            try {
+                enuEventStatusService.findById(event.getEnuEventStatus().getEventStatusId());
+
+            }catch(Exception ex){
+                enuEventStatusService.createEnuEventStatus(event.getEnuEventStatus());
+            }
+            try {
+                eventTypeService.findById(event.getEventType().getEventTypeId());
+
+            }catch(Exception ex){
+                eventTypeService.createEventType(event.getEventType());
+            }
+            //var x = locationService.updateLocation(event.getLocation());
+            //var y = enuEventStatusService.updateEnuEventStatus(event.getEnuEventStatus());
+            //var z = eventTypeService.updateEventType(event.getEventType());
+            //event.setLocation(x);
+            //event.setEnuEventStatus(y);
+            //event.setEventType(z);
+            event.setEventType(eventTypeService.findByEventTypeDescription(event.getEventType().getEventTypeDescription()).get(0));
             producerService.send(event);
             return eventService.createEvent(event);
         }

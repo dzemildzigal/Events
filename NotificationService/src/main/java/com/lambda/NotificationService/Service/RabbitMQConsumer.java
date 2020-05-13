@@ -5,6 +5,7 @@ import com.lambda.NotificationService.Helpers.UserServiceHelper;
 import com.lambda.NotificationService.Service.INotificationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lambda.NotificationService.Model.Api.CreatedNotificationDTO;
+import lombok.NoArgsConstructor;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +16,13 @@ import java.io.ByteArrayInputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 @Service
-
-
+@NoArgsConstructor
 public class RabbitMQConsumer implements MessageListener {
-    @Autowired
-    INotificationService notificationservice;
-    @Autowired
-    UserServiceHelper userServiceHelper;
 
-    @Autowired
-    GRPCNotificationServiceClient grpcNotificationServiceClient;
+    public INotificationService notificationservice;
+    public RabbitMQConsumer(INotificationService i){
+        this.notificationservice = i;
+    }
     @Override
     public void onMessage(Message message) {
         try {

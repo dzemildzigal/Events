@@ -1,5 +1,7 @@
 package com.lambda.NotificationService.Configuration;
+import com.lambda.NotificationService.Service.INotificationService;
 import com.lambda.NotificationService.Service.RabbitMQConsumer;
+import com.netflix.discovery.converters.Auto;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -9,12 +11,15 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.MessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.amqp.core.Queue;
 @Configuration
     public class RabbitMQConfiguration {
+        @Autowired
+        INotificationService notificationService;
 
         @Value("${rmq.queue}")
         String queueName;
@@ -49,7 +54,7 @@ import org.springframework.amqp.core.Queue;
         SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
         simpleMessageListenerContainer.setConnectionFactory(connectionFactory);
         simpleMessageListenerContainer.setQueues(queue());
-        simpleMessageListenerContainer.setMessageListener(new RabbitMQConsumer());
+        simpleMessageListenerContainer.setMessageListener(new RabbitMQConsumer(notificationService));
         return simpleMessageListenerContainer;
 
           }
