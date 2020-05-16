@@ -3,24 +3,29 @@
         <mat-card-header class="flex-center">
             <mat-card-title style="font-size: 2em;">Register</mat-card-title>
         </mat-card-header>
-        <form class="flex-container flex-column-direction" style="margin:5%;">
+        <form class="flex-container flex-column-direction" style="margin:5%;" [formGroup]="formGroup" #form (submit)="onSubmit()" >
             <mat-form-field class="flex-item">
-                <input placeholder="Username" matInput />
+                <input placeholder="Username" matInput formControlName="username" />
+                <mat-error *ngIf="formGroup.controls.username.invalid" > Username lenght must me atleast 8 characters</mat-error>
             </mat-form-field>  
             <mat-form-field class="flex-item">
-                <input type="password" placeholder="Password" matInput />
+                <input type="password"  placeholder="Password" matInput formControlName="password" />
+                <mat-error *ngIf="formGroup.controls.password.invalid" > Password lenght must me atleast 8 characters</mat-error>
             </mat-form-field>
             <mat-form-field class="flex-item">
-                <input type="password" placeholder="Confirm Password" matInput />
+                <input type="password" placeholder="Confirm Password" matInput formControlName="confirmPassword" (change)="confirmPasswordChange()"/>
+                <mat-error *ngIf="formGroup.controls.confirmPassword.errors?.incorrect" > Password confirmation doesn't match to the password</mat-error>
             </mat-form-field>
             <mat-form-field class="flex-item">
-                <input type="email" placeholder="Email" matInput />
+                <input type="email" placeholder="Email" formControlName="email" matInput />
+                <mat-error *ngIf="formGroup.controls.email.invalid" > Please enter valid email address</mat-error>
             </mat-form-field>
             <mat-form-field class="flex-item">
-                <input placeholder="Full Name" matInput />
+                <input placeholder="Full Name" matInput formControlName="fullName" />
+                <mat-error *ngIf="formGroup.controls.fullName.invalid" > Full Name lenght must me atleast 3 characters</mat-error>
             </mat-form-field>
             <mat-form-field class="flex-item">
-                <input placeholder="Profile Picture URL" matInput />
+                <input placeholder="Profile Picture URL" matInput formControlName="profilePictureURL" />
             </mat-form-field>
             <div class="flex-container flex-center">
                 <button type="submit" mat-raised-button color="primary" class="button-size ">Register</button>

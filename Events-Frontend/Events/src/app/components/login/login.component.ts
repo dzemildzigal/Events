@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
-
+  public errorMessage: string;
+  
   constructor(private userService: UserService,
               private localStorage: LocalStorageService,
               private router: Router) { }
@@ -28,8 +29,12 @@ export class LoginComponent implements OnInit {
     this.loginForm.updateValueAndValidity();
     if (this.loginForm.valid) {
       this.userService.userSignIn(this.loginForm.value).subscribe(result => {
-         this.localStorage.setUserInfo(result);
-         this.router.navigateByUrl("/");
+        if (result.authenticated) {
+          this.localStorage.setUserInfo(result);
+          this.router.navigateByUrl("/");
+          return;
+        }
+        this.errorMessage = "User with provided credentials doesn't exist";
       });
     }
   }

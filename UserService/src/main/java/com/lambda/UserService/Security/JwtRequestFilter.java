@@ -32,7 +32,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         final String authorizationHeader = request.getHeader(HEADER_STRING);
-
+        String uri = request.getRequestURI();
+        if (uri.contains("sign-in") || uri.contains("sign-up")) {
+            chain.doFilter(request, response);
+            return;
+        }
         String username = null;
         String jwt = null;
 
