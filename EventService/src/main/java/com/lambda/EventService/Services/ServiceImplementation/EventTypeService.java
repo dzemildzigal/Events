@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class EventTypeService implements IEventTypeService {
@@ -24,7 +25,12 @@ public class EventTypeService implements IEventTypeService {
         var eventTypeRepositoryTemp = eventTypeRepository.save(object);
         return object;
     }
-
+    @Override
+    public List<EventType> findByEventTypeDescription(String desc) throws CustomEventException{
+        if(desc == null || desc == "") throw new CustomEventException("400: Description of EventType is either null or an empty string.");
+        var eventTypeRepositoryTemp = eventTypeRepository.findByEventTypeDescription(desc);
+        return eventTypeRepositoryTemp;
+    }
     @Override
     public EventType findById(Long id) throws CustomEventException {
         long idd = id;
