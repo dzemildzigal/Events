@@ -37,7 +37,7 @@ public class Event {
 
     @ManyToOne
     @JsonIgnore
-    private EventType eventType;
+    public EventType eventType;
 
 
     @javax.validation.constraints.NotNull(message = "canBuyTicket can not be null, must be of type Boolean!")
@@ -55,7 +55,7 @@ public class Event {
     @JsonIgnore
     private EnuEventStatus enuEventStatus;
     @javax.validation.constraints.NotNull(message = "ticketPrice can not be null, must be of type SQL date, YYYY-MM-DD!")
-    private Date eventTime;
+    public  Date eventTime;
 
     @OneToMany(mappedBy = "event")
     @JsonIgnoreProperties("eventCommentsList")
@@ -63,6 +63,6 @@ public class Event {
 
     @OneToMany(mappedBy = "event")
     @JsonIgnoreProperties("userEventRegistrationList")
-    private List<UserEventRegistration> userEventRegistrationList;
+        private List<UserEventRegistration> userEventRegistrationList;
 
 }

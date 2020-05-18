@@ -32,7 +32,7 @@ public class EventType {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long eventTypeId;
     @javax.validation.constraints.NotNull(message = "eventTypeDescription can not be null, must be of type String!")
-    private String eventTypeDescription;
+    public String eventTypeDescription;
 
     @OneToMany(mappedBy = "eventType")
     @JsonIgnoreProperties("eventList")

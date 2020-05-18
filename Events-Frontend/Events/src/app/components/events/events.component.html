@@ -1,2 +1,2 @@
 <h1>Welcome to Events</h1>
-<app-events-live-feed></app-events-live-feed>
+<app-event-info *ngFor="let event of events" [event]="event"></app-event-info>

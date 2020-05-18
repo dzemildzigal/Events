@@ -1,11 +1,21 @@
 package com.lambda.EventService.Services.ServiceImplementation;
 
 import com.lambda.EventService.ExceptionHandling.CustomEventException;
+import com.lambda.EventService.Models.Api.EventFilterDTO;
+import com.lambda.EventService.Models.Entity.EventType;
 import com.lambda.EventService.Services.IEventService;
 import com.lambda.EventService.Models.Entity.Event;
 import com.lambda.EventService.Repositories.IEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class EventService implements IEventService {
@@ -34,5 +44,21 @@ public class EventService implements IEventService {
         throw new CustomEventException("400: Event is null or one or more attributes of class Event are null!");
         return eventRepository.save(info);
     }
+    @Override
+    public List<Event> findAll(EventFilterDTO eventFilterDTO) throws CustomEventException{
+        return eventRepository.findAll(new Specification<Event>() {
+            @Override
+            public Predicate toPredicate(Root<Event> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> predicates = new ArrayList<>();
+                if(eventFilterDTO != null){
+                    predicates.add(criteriaBuilder.like(criteriaBuilder.upper(root.get("eventName")),"%"+eventFilterDTO.eventNameField.toUpperCase()+"%"));
+                    predicates.add(criteriaBuilder.like(criteriaBuilder.upper(root.get("eventType").get("eventTypeDescription")),"%"+eventFilterDTO.eventTypeDropDownMenuItem.toUpperCase()+"%"));
+                    predicates.add(criteriaBuilder.like(criteriaBuilder.upper(root.get("location").get("description")),"%"+eventFilterDTO.locationNameField.toUpperCase()+"%"));
+                }
+                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+            }
+        });
+    }
+
 
 }

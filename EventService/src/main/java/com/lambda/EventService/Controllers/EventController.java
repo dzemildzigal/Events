@@ -5,6 +5,7 @@ import com.lambda.EventService.Helpers.NotificationServiceHelper;
 import com.lambda.EventService.Helpers.UserServiceHelper;
 import com.lambda.EventService.Models.Api.BuyATicketDTO;
 import com.lambda.EventService.Models.Api.EnuEventStatusWrapperDTO;
+import com.lambda.EventService.Models.Api.EventFilterDTO;
 import com.lambda.EventService.Models.Api.EventWrapperDTO;
 import com.lambda.EventService.Models.Entity.EnuEventStatus;
 import com.lambda.EventService.Models.Entity.Event;
@@ -17,10 +18,12 @@ import com.lambda.EventService.Services.ILocationService;
 import com.lambda.EventService.Services.ServiceImplementation.ProducerService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -41,6 +44,12 @@ public class EventController {
 
     @Autowired
     ProducerService producerService;
+
+    @PostMapping(path="/search",produces={MediaType.APPLICATION_JSON_VALUE})
+    public List<Event> getFilteredEvents(@RequestBody EventFilterDTO filter) throws CustomEventException{
+        List<Event> output = eventService.findAll(filter);
+        return output;
+    }
 
     //Get the Event by its ID
     @GetMapping(path = "/{id}",produces = {MediaType.APPLICATION_JSON_VALUE})
