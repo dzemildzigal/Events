@@ -15,7 +15,6 @@ import { UserService } from './services/user.service';
 import { TokenInterceptor } from './util/http.interceptor';
 import { LocalStorageService } from './util/local-storage.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { EventsLiveFeedComponent } from './components/events/components/events-live-feed/events-live-feed.component';
 import { EventInfoComponent } from './components/events/components/event-info/event-info.component';
 import { EventService } from './services/event.service';
 
@@ -27,7 +26,6 @@ import { EventService } from './services/event.service';
     EventsComponent,
     NotificationsComponent,
     LoginComponent,
-    EventsLiveFeedComponent,
     EventInfoComponent,
   ],
   imports: [

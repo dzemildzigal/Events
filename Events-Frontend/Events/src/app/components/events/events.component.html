@@ -1,2 +1,8 @@
-<h1>Welcome to Events</h1>
-<app-event-info *ngFor="let event of events" [event]="event"></app-event-info>
+<div class="flex-container">
+<div style="flex: 1; background-color: green; padding-right: 10%;">Events filter
+    <button (click)="filterData()">Search</button>
+</div>
+<div style="flex: 5; flex-wrap: wrap;" class="flex-container">
+     <app-event-info style="max-width: 300px; margin: 1em; min-width: 300px; " class="flex-item" *ngFor="let event of events"  [event]="event"></app-event-info> 
+</div>
+</div>
