@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  userServiceAPI: "http://localhost:8080/users/"
+  userServiceAPI: "http://localhost:8080/users/",
+  eventServiceAPI:"http://localhost:8090/eventservice/"
+
 };
 
 /*

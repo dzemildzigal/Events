@@ -13,6 +13,7 @@ public class CustomInterceptor extends HandlerInterceptorAdapter {
     public CustomInterceptor(GRPCEventServiceClient client){
         this.grpcEventServiceClient =  client;
     }
+
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception exception) throws Exception
     {

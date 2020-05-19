@@ -51,8 +51,11 @@ public class EventService implements IEventService {
             public Predicate toPredicate(Root<Event> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates = new ArrayList<>();
                 if(eventFilterDTO != null){
+                    if(eventFilterDTO.eventNameField!=null)
                     predicates.add(criteriaBuilder.like(criteriaBuilder.upper(root.get("eventName")),"%"+eventFilterDTO.eventNameField.toUpperCase()+"%"));
+                    if(eventFilterDTO.eventTypeDropDownMenuItem!=null)
                     predicates.add(criteriaBuilder.like(criteriaBuilder.upper(root.get("eventType").get("eventTypeDescription")),"%"+eventFilterDTO.eventTypeDropDownMenuItem.toUpperCase()+"%"));
+                    if(eventFilterDTO.locationNameField!=null)
                     predicates.add(criteriaBuilder.like(criteriaBuilder.upper(root.get("location").get("description")),"%"+eventFilterDTO.locationNameField.toUpperCase()+"%"));
                 }
                 return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));

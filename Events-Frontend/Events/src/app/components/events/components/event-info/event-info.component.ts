@@ -13,7 +13,7 @@ import { LocalStorageService } from '../../../../util/local-storage.service';
 })
 export class EventInfoComponent implements OnInit {;
   @Input()
-  event: any;
+  public event: any;
   public eventInfoString:string="";
   constructor() { }
 

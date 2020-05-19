@@ -5,11 +5,22 @@ import { Subject } from 'rxjs';
 export class LocalStorageService {
  
   public userLoginChange: Subject<any>;
+  public eventChange : Subject<any>;
 
   constructor() { 
     this.userLoginChange = new Subject<any>();
+    this.eventChange = new Subject<any>();
   }
-
+  
+  public setEvents(events:any): void {
+    localStorage.setItem("events",JSON.stringify(events));
+    this.eventChange.next(events);
+  }
+  public getEvents(): any {
+    const output = localStorage.getItem("events");
+    if(output) return JSON.parse(output);
+    return null;
+  }
 
   public setUserInfo(userInfo: any): void {
     localStorage.setItem("userInfo", JSON.stringify(userInfo));

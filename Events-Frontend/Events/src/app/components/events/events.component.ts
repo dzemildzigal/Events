@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { event } from "./models/interfaces/event";
 import { eventComment } from "./models/interfaces/eventComment";
 import { userEventRegistration } from "./models/interfaces/userEventRegistration";
+import { EventService } from 'src/app/services/event.service';
+import { LocalStorageService } from 'src/app/util/local-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-events',
@@ -9,7 +12,8 @@ import { userEventRegistration } from "./models/interfaces/userEventRegistration
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit {
-  events:any[]=[{
+  public events:any[]=[
+    {
     eventId:null,
     eventName:"Radno vrijeme, promocija albuma",
     description:"Promocija debitanskog albuma benda Radno vrijeme pod nazivom \"0-24\".",
@@ -39,7 +43,8 @@ export class EventsComponent implements OnInit {
     eventTime: new Date(Date.now()),
     eventCommentsList:Array<eventComment>(),
     userEventRegistrationList:Array<userEventRegistration>()
-  },{
+  },
+  {
     eventId:null,
     eventName:"Radno vrijeme, promocija albuma",
     description:"Promocija debitanskog albuma benda Radno vrijeme pod nazivom \"0-24\".",
@@ -70,9 +75,24 @@ export class EventsComponent implements OnInit {
     eventCommentsList:Array<eventComment>(),
     userEventRegistrationList:Array<userEventRegistration>()
   }];
-  constructor() { }
 
-  ngOnInit(): void {
+  constructor(
+    public eventService: EventService,
+    public localStorage: LocalStorageService,
+    public router: Router
+  ){
+
   }
 
+
+  public filter: any ={
+    eventName:"RV"
+  };
+
+  ngOnInit():void{
+    this.eventService.getEventsByFilter(this.filter).subscribe(res => {
+        this.events.push(res);
+    });
+
+  }
 }
