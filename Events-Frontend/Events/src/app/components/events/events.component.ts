@@ -91,8 +91,12 @@ export class EventsComponent implements OnInit {
 
   ngOnInit():void{
     this.eventService.getEventsByFilter(this.filter).subscribe(res => {
-        this.events.push(res);
+        this.events = this.events.concat(res);
     });
+
+    this.eventService.getEventById(4).subscribe(res => {
+      console.log(res);
+    })
 
   }
 }
