@@ -62,7 +62,7 @@ public class EventServiceApplication {
 				true,
 				10.0D,
 				100L,
-				"https://www.google.ba",
+				"https://i.ytimg.com/vi/kjLs9Yd_Gss/maxresdefault.jpg",
 				1L,
 				tmpEnuEventStatus,
 				new java.sql.Date(millis),

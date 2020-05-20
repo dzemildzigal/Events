@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -46,9 +47,12 @@ public class EventController {
     ProducerService producerService;
 
     @PostMapping(path="/search",produces={MediaType.APPLICATION_JSON_VALUE})
-    public List<Event> getFilteredEvents(@RequestBody EventFilterDTO filter) throws CustomEventException{
+    public List<EventWrapperDTO> getFilteredEvents(@RequestBody EventFilterDTO filter) throws CustomEventException{
         List<Event> output = eventService.findAll(filter);
-        return output;
+        List<EventWrapperDTO> returnValues = output.stream().map(event -> {
+            return new EventWrapperDTO(event);
+        }).collect(Collectors.toList());
+        return returnValues;
     }
 
     //Get the Event by its ID

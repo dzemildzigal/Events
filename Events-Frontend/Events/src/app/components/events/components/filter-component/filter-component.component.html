@@ -1,0 +1,31 @@
+<div class="example-container">
+    <form class="flex-container flex-column-direction" style="margin:5%;" [formGroup]="formGroup" #form (submit)="onSubmit()" >
+    <mat-form-field appearance="outline">
+      <mat-label>Pretraži po nazivu eventa...</mat-label>
+      <input matInput placeholder="Naziv eventa" matInput formControlName="eventNameField">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline">
+        <mat-label>Pretraži po tipu eventa...</mat-label>
+        <input matInput placeholder="Tip eventa" matInput formControlName="eventTypeDropDownMenuItem">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline">
+        <mat-label>Pretraži po lokaciji eventa...</mat-label>
+        <input matInput placeholder="Lokacija eventa" matInput formControlName="locationNameField">
+    </mat-form-field>
+    
+    <mat-form-field>
+        <mat-label>Pretraži po datumu održavanja eventa...</mat-label>
+        <input matInput [matDatepicker]="picker" placeholder="Datum održavanja eventa (MM/DD/YYYY)" formControlName="eventDate" >
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+      
+
+    <div class="flex-container flex-center">
+        <button type="submit" mat-raised-button color="primary" class="button-size ">Pretraži</button>
+    </div>
+    </form>
+  </div>
+  

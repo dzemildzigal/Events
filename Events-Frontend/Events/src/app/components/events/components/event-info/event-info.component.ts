@@ -18,13 +18,13 @@ export class EventInfoComponent implements OnInit {;
   constructor() { }
 
   ngOnInit(): void {
-    var time: Date = this.event.eventTime;
-    this.eventInfoString= this.event.description+
+    var time: Date = new Date(this.event.event.eventTime);
+    this.eventInfoString= this.event.event.description+
                           " se održava na lokaciji " +
                           this.event.location.description+
                           " dana "+
                           time.getDate()+"."+String((time.getMonth())+1)+"."+time.getFullYear()+"."+
-                          (this.event.canBuyTicket==true?"Karte se mogu kupiti i koštaju "+this.event.ticketPrice+"KM po komadu.":"Karte se ne mogu kupiti."); 
+                          (this.event.event.canBuyTicket==true?"Karte se mogu kupiti i koštaju "+this.event.event.ticketPrice+"KM po komadu.":"Karte se ne mogu kupiti."); 
   }
   
 

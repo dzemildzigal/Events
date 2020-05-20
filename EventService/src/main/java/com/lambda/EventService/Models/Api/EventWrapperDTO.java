@@ -19,4 +19,11 @@ public class EventWrapperDTO {
     public EnuEventStatus enuEventStatus;
     public EventType eventType;
     public Long userId;
+    public EventWrapperDTO(Event event){
+        this.event = event;
+        this.location = event.getLocation();
+        this.enuEventStatus = event.getEnuEventStatus();
+        this.eventType = event.getEventType();
+        this.userId = event.getCreatedByUserId();
+    }
 }

@@ -1,6 +1,8 @@
 <div class="flex-container">
-<div style="flex: 1; background-color: green; padding-right: 10%;">Events filter
-    <button (click)="filterData()">Search</button>
+<div style="flex: 1; padding-right: 1%;">
+    <!-- Events filter
+    <button (click)="filterData()">Search</button> -->
+    <app-filter-component (filterResponse)="updateEvents($event)"></app-filter-component>
 </div>
 <div style="flex: 5; flex-wrap: wrap;" class="flex-container">
      <app-event-info style="max-width: 300px; margin: 1em; min-width: 300px; " class="flex-item" *ngFor="let event of events"  [event]="event"></app-event-info> 

@@ -5,6 +5,7 @@ import { userEventRegistration } from "./models/interfaces/userEventRegistration
 import { EventService } from 'src/app/services/event.service';
 import { LocalStorageService } from 'src/app/util/local-storage.service';
 import { Router } from '@angular/router';
+import { FilterDTO } from './models/DTO/FilterDTO'
 
 @Component({
   selector: 'app-events',
@@ -13,6 +14,7 @@ import { Router } from '@angular/router';
 })
 export class EventsComponent implements OnInit {
 
+  filterResponse:event[]=[];
   public events: any[] = [];
 
   constructor(
@@ -23,22 +25,15 @@ export class EventsComponent implements OnInit {
 
   }
 
-
-  public filter: any ={
-    eventName:"RV"
-  };
-
   ngOnInit():void{
-    // this.updateEvents({});
+    //this.updateEvents({});
   }
 
-  public filterData(): void {
-     this.updateEvents({});
-  }
 
-  public updateEvents(filterDTO: any): void {
-    this.eventService.getEventsByFilter(this.filter).subscribe(res => {
-      this.events = res;
+  public updateEvents(filter: FilterDTO): void {  
+    this.eventService.getEventsByFilter(filter).subscribe(res => {
+      if(res!=null)
+        this.events=res;
   });
   }
 }

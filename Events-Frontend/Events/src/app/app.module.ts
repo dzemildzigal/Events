@@ -17,6 +17,7 @@ import { LocalStorageService } from './util/local-storage.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { EventInfoComponent } from './components/events/components/event-info/event-info.component';
 import { EventService } from './services/event.service';
+import { FilterComponentComponent } from './components/events/components/filter-component/filter-component.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { EventService } from './services/event.service';
     NotificationsComponent,
     LoginComponent,
     EventInfoComponent,
+    FilterComponentComponent,
   ],
   imports: [
     BrowserModule,
