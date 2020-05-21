@@ -1,1 +1,20 @@
-<h1> Notifications: TODO</h1>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div id="lista"  >
+    <p>Tu sam</p>
+  
+  <ul class="list-group" width="20%" >
+
+    <li *ngFor = "let notification of notifications" class ="list-group-item" >
+
+      <h1>  {{notification.description}}  </h1> 
+      <br> <br>
+
+     
+
+    </li>
+
+  </ul>
+  
+    
+</div>
+<script src="js/addons/rating.js"></script>

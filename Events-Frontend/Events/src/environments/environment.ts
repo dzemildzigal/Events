@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   userServiceAPI: "http://localhost:8080/users/",
-  eventServiceAPI:"http://localhost:8090/eventservice/"
+  eventServiceAPI:"http://localhost:8090/eventservice/",
+  notificationServiceAPI: "http://localhost:8090/notificationservice/"
 
 };
 
