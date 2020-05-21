@@ -18,6 +18,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { EventInfoComponent } from './components/events/components/event-info/event-info.component';
 import { EventService } from './services/event.service';
 import { FilterComponentComponent } from './components/events/components/filter-component/filter-component.component';
+import { NotificationsService } from './services/notifications.service';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { FilterComponentComponent } from './components/events/components/filter-
   providers: [
     UserService,
     LocalStorageService,
+    NotificationsService,
     EventService,
     {
       provide: HTTP_INTERCEPTORS,

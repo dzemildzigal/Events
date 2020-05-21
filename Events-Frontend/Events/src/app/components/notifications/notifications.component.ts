@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationsService } from 'src/app/notifications.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 import { LocalStorageService } from 'src/app/util/local-storage.service';
 
 @Component({
@@ -9,18 +9,17 @@ import { LocalStorageService } from 'src/app/util/local-storage.service';
 })
 export class NotificationsComponent implements OnInit {
 
-  notifications: any[];
+  public notifications: any[];
+
   constructor(private notificationService: NotificationsService, 
               private localStorage: LocalStorageService) { }
 
   ngOnInit(): void {
     const userinfo = this.localStorage.getUserInfo();
     if(userinfo){
-    this.notificationService.getNotificationsByUserId(userinfo.userId).subscribe(res => {
-      this.notifications = res;
-  });
+      this.notificationService.getNotificationsByUserId(userinfo.userId).subscribe(res => {
+        this.notifications = res;
+      });
+    }
   }
-  }
-
-
 }
