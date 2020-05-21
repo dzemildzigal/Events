@@ -19,6 +19,7 @@ import { EventInfoComponent } from './components/events/components/event-info/ev
 import { EventService } from './services/event.service';
 import { FilterComponentComponent } from './components/events/components/filter-component/filter-component.component';
 import { NotificationsService } from './services/notifications.service';
+import { AddEventComponent } from './components/events/components/add-event/add-event.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { NotificationsService } from './services/notifications.service';
     LoginComponent,
     EventInfoComponent,
     FilterComponentComponent,
+    AddEventComponent,
   ],
   imports: [
     BrowserModule,

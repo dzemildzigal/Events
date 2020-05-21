@@ -1,0 +1,64 @@
+<div class="example-container">
+    <form class="flex-container flex-column-direction" style="margin:5%;" [formGroup]="formGroup" #form (submit)="onSubmit()" >
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Set Event name..." matInput formControlName="eventNameField" appearance="outline">
+    </mat-form-field>
+    
+    <br>
+    
+    <mat-form-field appearance="outline">
+        <input matInput placeholder="Set URL for Event picture..." matInput formControlName="eventTypeDropDownMenuItem">
+    </mat-form-field>
+    
+    <br>
+    
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Set date of the event... (MM/DD/YYYY)" formControlName="eventDate" >
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    
+    <br>
+
+    <mat-form-field>
+        <mat-checkbox>Are tickets available?</mat-checkbox>
+    </mat-form-field>
+    
+    <br>
+
+    <mat-form-field appearance="outline">
+        <input matInput placeholder="Set unit ticket price..." matInput formControlName="eventTypeDropDownMenuItem">
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field appearance="outline">
+        <input matInput placeholder="Set # of available tickets..." matInput formControlName="eventTypeDropDownMenuItem">
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field appearance="outline">
+        <input matInput placeholder="Set Location name..." matInput formControlName="locationNameField">
+    </mat-form-field>
+
+    <br>
+
+    <mat-menu #appMenu="matMenu">
+        <button mat-menu-item>Active</button>
+        <button mat-menu-item>Canceled</button>
+        <button mat-menu-item>Delayed</button>
+    </mat-menu>
+      
+    <button mat-icon-button [matMenuTriggerFor]="appMenu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+    
+    
+      
+
+    <div class="flex-container flex-center">
+        <button type="submit" mat-raised-button color="primary" class="button-size ">Add Event</button>
+    </div>
+    </form>
+  </div>
