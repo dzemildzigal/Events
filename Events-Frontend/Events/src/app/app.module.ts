@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MaterialsModule} from './materials/materials.module';
+import { MaterialsModule} from './materials/materials.module';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { EventsComponent } from './components/events/events.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
@@ -22,6 +22,8 @@ import { NotificationsService } from './services/notifications.service';
 import { AddEventComponent } from './components/events/components/add-event/add-event.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterFormComponent } from './components/register/register-form/register-form.component';
+import { PopupService } from './util/popup.service';
+import { BuyATicketPopupComponent } from './components/buy-aticket-popup/buy-aticket-popup.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { RegisterFormComponent } from './components/register/register-form/regis
     AddEventComponent,
     ProfileComponent,
     RegisterFormComponent,
+    BuyATicketPopupComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,12 +55,16 @@ import { RegisterFormComponent } from './components/register/register-form/regis
     LocalStorageService,
     NotificationsService,
     EventService,
+    PopupService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true 
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    BuyATicketPopupComponent
+  ]
 })
 export class AppModule { }

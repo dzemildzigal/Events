@@ -5,6 +5,7 @@ import { enuEventStatus } from '../../models/interfaces/enuEventStatus';
 import { userEventRegistration } from '../../models/interfaces/userEventRegistration';
 import { stringify } from 'querystring';
 import { LocalStorageService } from '../../../../util/local-storage.service';
+import { PopupService } from 'src/app/util/popup.service';
 
 @Component({
   selector: 'app-event-info',
@@ -15,7 +16,7 @@ export class EventInfoComponent implements OnInit {;
   @Input()
   public event: any;
   public eventInfoString:string="";
-  constructor() { }
+  constructor(private popupService: PopupService) { }
 
   ngOnInit(): void {
     var time: Date = new Date(this.event.event.eventTime);
@@ -25,6 +26,10 @@ export class EventInfoComponent implements OnInit {;
                           " dana "+
                           time.getDate()+"."+String((time.getMonth())+1)+"."+time.getFullYear()+"."+
                           (this.event.event.canBuyTicket==true?"Karte se mogu kupiti i koštaju "+this.event.event.ticketPrice+"KM po komadu.":"Karte se ne mogu kupiti."); 
+  }
+
+  public buyATicket(): void {
+    this.popupService.buyATicketPopup(this.event);
   }
   
 
