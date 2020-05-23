@@ -29,7 +29,12 @@ export class EventInfoComponent implements OnInit {;
   }
 
   public buyATicket(): void {
-    this.popupService.buyATicketPopup(this.event);
+    this.popupService.buyATicketPopup(this.event).subscribe(resultOfDialog => {
+      console.log("Dialog closed", resultOfDialog);
+      if (resultOfDialog) {
+        // call api with info  :TODO
+      }
+    });
   }
   
 

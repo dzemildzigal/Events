@@ -15,4 +15,7 @@ export class BuyATicketPopupComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public buyATicket(): void {
+    this.dialogRef.close("Buy A ticket Called");
+  }
 }
