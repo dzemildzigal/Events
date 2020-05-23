@@ -49,4 +49,11 @@ export class ProfileComponent implements OnInit {
       });
     }
   }
+
+  public removeProfile(): void {
+    this.userService.deleteUser(this.userInfo.userId).subscribe(res => {
+      this.localStorageService.setUserInfo(null);
+      this.router.navigateByUrl("/");
+    });
+  }
 }

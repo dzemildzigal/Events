@@ -9,7 +9,8 @@ const CONSTANTS: any = {
   signUp: 'user-info/sign-up',
   isUserAuthorized: 'is-user-authorized/',
   userInfo: 'user-info/',
-  updateUserInfo: 'user-info/update'
+  updateUserInfo: 'user-info/update',
+  deleteUser: 'delete/'
 };
 
 @Injectable()
@@ -34,7 +35,7 @@ export class UserService {
   }
 
   public updateUserInfo(userInfo: any): Observable<any> {
-    return this.http.post(this.userApiBaseURL + CONSTANTS.updateUserInfo, userInfo);
+    return this.http.put(this.userApiBaseURL + CONSTANTS.updateUserInfo, userInfo);
   }
 
   public checkIsUserLoggedIn(): void {
@@ -50,5 +51,9 @@ export class UserService {
 
   public getUserInfo(userId: number): Observable<any> {
     return this.http.get(this.userApiBaseURL + CONSTANTS.userInfo + userId);
+  }
+
+  public deleteUser(userId: number): Observable<any> {
+    return this.http.delete(this.userApiBaseURL + CONSTANTS.deleteUser + userId);
   }
 }

@@ -6,6 +6,7 @@ import com.lambda.UserService.Model.Api.UserLoginAckDTO;
 import com.lambda.UserService.Model.Api.UserLoginDTO;
 import com.lambda.UserService.Model.Entity.UserCredentials;
 import com.lambda.UserService.Model.Entity.UserInfo;
+import com.sun.research.ws.wadl.HTTPMethods;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.nio.file.AccessDeniedException;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("users")
+@CrossOrigin(origins = {"*"})
 public class UserController {
 
     @Autowired
@@ -39,7 +40,7 @@ public class UserController {
     }
 
     @ApiOperation("Update user info")
-    @PostMapping("/user-info/update")
+    @PutMapping("/user-info/update")
     public UserInfo updateUserInfo (@RequestBody UserCredentials info, @RequestHeader(value = "Authorization") String authorization) throws AccessDeniedException {
         if (info.getUser().getUserId() == null) {
             throw new IllegalArgumentException("UserId cannot be null");
