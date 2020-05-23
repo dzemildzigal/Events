@@ -6,7 +6,7 @@ import com.lambda.UserService.Model.Entity.UserCredentials;
 import com.lambda.UserService.Model.Entity.UserInfo;
 
 public interface IUserService {
-    UserInfo createUser(UserCredentials userDTO);
+    UserInfo createOrUpdateUser(UserCredentials userDTO);
     UserInfo findById(long id) throws Exception;
     UserInfo updateUserInfo(UserInfo info);
     UserLoginAckDTO login(UserLoginDTO userLoginDTO);

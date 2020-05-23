@@ -34,7 +34,7 @@ public class UserServiceApplication {
 		return (args) -> {
 			UserInfo userInfo = new UserInfo(null, "test", "test", "test");
 			UserCredentials userCredentials = new UserCredentials(null, "test", "testtest", userInfo);
-			var tmp = service.createUser(userCredentials);
+			var tmp = service.createOrUpdateUser(userCredentials);
 		};
 	}
 

@@ -1,0 +1,9 @@
+
+<div class="flex-center form-wrapper">
+    <mat-card class="form-size">
+        <mat-card-header class="flex-center">
+            <mat-card-title style="font-size: 2em;">User Info</mat-card-title>
+        </mat-card-header>
+        <app-register-form [formGroup]="formGroup" [buttonName]="'Save'"  (buttonClick)="buttonClick($event)" [disableUsername]="true"></app-register-form>
+    </mat-card>
+</div>

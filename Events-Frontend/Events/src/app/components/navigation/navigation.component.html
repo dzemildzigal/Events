@@ -17,7 +17,11 @@
               <mat-icon>accessibility</mat-icon>
               <span>Login</span>
             </button>
-          
+           
+            <button mat-menu-item [disabled]="!userDetails" routerLink="/my-profile">
+              <mat-icon>accessibility</mat-icon>
+              <span>Profile</span>
+            </button>
             <button mat-menu-item routerLink="/notifications"  [disabled]="!userDetails" style="min-width: 250px;">
               <mat-icon>notifications</mat-icon>
               <span>Notifications</span>

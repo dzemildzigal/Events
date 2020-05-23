@@ -14,4 +14,5 @@ public class UserLoginAckDTO {
     String token;
     Long userId;
     String username;
+    Long userCredentialsId;
 }

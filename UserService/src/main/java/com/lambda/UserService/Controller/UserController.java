@@ -6,6 +6,7 @@ import com.lambda.UserService.Model.Api.UserLoginAckDTO;
 import com.lambda.UserService.Model.Api.UserLoginDTO;
 import com.lambda.UserService.Model.Entity.UserCredentials;
 import com.lambda.UserService.Model.Entity.UserInfo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,21 +35,21 @@ public class UserController {
     @ApiOperation("Register user")
     @PostMapping("user-info/sign-up")
     public UserInfo registerUser (@RequestBody UserCredentials info) {
-        return this.userService.createUser(info);
+        return this.userService.createOrUpdateUser(info);
     }
 
     @ApiOperation("Update user info")
-    @PutMapping("/user-info/update")
-    public UserInfo updateUserInfo (@RequestBody UserInfo info, @RequestHeader(value = "Authorization") String authorization) throws AccessDeniedException {
-        if (info.getUserId() == null) {
+    @PostMapping("/user-info/update")
+    public UserInfo updateUserInfo (@RequestBody UserCredentials info, @RequestHeader(value = "Authorization") String authorization) throws AccessDeniedException {
+        if (info.getUser().getUserId() == null) {
             throw new IllegalArgumentException("UserId cannot be null");
         }
-        Long id = info.getUserId();
+        Long id = info.getUser().getUserId();
         UserLoginAckDTO userLoginAckDTO = this.userService.isUserAuthorized(id, authorization);
         if (!userLoginAckDTO.isAuthenticated()) {
             throw new AccessDeniedException("User is not authorized");
         }
-        return  this.userService.updateUserInfo(info);
+        return  this.userService.createOrUpdateUser(info);
     }
 
     @ApiOperation("Sign in")

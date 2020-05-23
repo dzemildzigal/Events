@@ -7,7 +7,9 @@ import { LocalStorageService } from '../util/local-storage.service';
 const CONSTANTS: any = {
   signIn: 'sign-in',
   signUp: 'user-info/sign-up',
-  isUserAuthorized: 'is-user-authorized/'
+  isUserAuthorized: 'is-user-authorized/',
+  userInfo: 'user-info/',
+  updateUserInfo: 'user-info/update'
 };
 
 @Injectable()
@@ -31,6 +33,10 @@ export class UserService {
     return this.http.get(this.userApiBaseURL + CONSTANTS.isUserAuthorized + userId);
   }
 
+  public updateUserInfo(userInfo: any): Observable<any> {
+    return this.http.post(this.userApiBaseURL + CONSTANTS.updateUserInfo, userInfo);
+  }
+
   public checkIsUserLoggedIn(): void {
     const userInfo: any = this.localStorage.getUserInfo();
     if (userInfo) {
@@ -40,6 +46,9 @@ export class UserService {
         }
       });
     }
-    
+  }
+
+  public getUserInfo(userId: number): Observable<any> {
+    return this.http.get(this.userApiBaseURL + CONSTANTS.userInfo + userId);
   }
 }
