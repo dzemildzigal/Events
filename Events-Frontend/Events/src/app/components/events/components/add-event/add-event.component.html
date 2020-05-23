@@ -1,64 +1,61 @@
 <div class="example-container">
-    <form class="flex-container flex-column-direction" style="margin:5%;" [formGroup]="formGroup" #form (submit)="onSubmit()" >
+    <form class="flex-container flex-column-direction" style="margin:5%;" [formGroup]="newEventFormGroup" #form (submit)="onSubmit()" >
     <mat-form-field appearance="outline">
-      <input matInput placeholder="Set Event name..." matInput formControlName="eventNameField" appearance="outline">
+      <input matInput placeholder="Set Event name..." formControlName="eventName" appearance="outline">
     </mat-form-field>
     
-    <br>
-    
     <mat-form-field appearance="outline">
-        <input matInput placeholder="Set URL for Event picture..." matInput formControlName="eventTypeDropDownMenuItem">
+        <input matInput placeholder="URL for Event picture..." formControlName="eventPictureURL">
     </mat-form-field>
-    
-    <br>
     
     <mat-form-field>
-        <input matInput [matDatepicker]="picker" placeholder="Set date of the event... (MM/DD/YYYY)" formControlName="eventDate" >
+        <input matInput [matDatepicker]="picker" placeholder="Date of the event... (MM/DD/YYYY)" formControlName="eventDate" >
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-    
-    <br>
+
+    <mat-checkbox matInput class="example-margin" formControlName="canBuyTickets">Are tickets available?</mat-checkbox>
+
+
+    <mat-form-field appearance="outline">
+        <input matInput placeholder="Unit ticket price..." formControlName="ticketPrice">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <input matInput placeholder="Number of available tickets..." formControlName="numberOfTicketsAvailable">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <input matInput placeholder="Location name..." formControlName="locationName">
+    </mat-form-field>
 
     <mat-form-field>
-        <mat-checkbox>Are tickets available?</mat-checkbox>
-    </mat-form-field>
+        <mat-label>Event status</mat-label>
+        <select matNativeControl formControlName="eventStatusDescription">
+          <option value="Active">Active</option>
+          <option value="Canceled">Canceled</option>
+          <option value="Delayed">Delayed</option>
+          <option value="Changed">Changed</option>
+        </select>
+      </mat-form-field>
     
-    <br>
-
     <mat-form-field appearance="outline">
-        <input matInput placeholder="Set unit ticket price..." matInput formControlName="eventTypeDropDownMenuItem">
+        <input matInput placeholder="Event type..." formControlName="eventTypeDescription">
     </mat-form-field>
 
-    <br>
-
-    <mat-form-field appearance="outline">
-        <input matInput placeholder="Set # of available tickets..." matInput formControlName="eventTypeDropDownMenuItem">
-    </mat-form-field>
-
-    <br>
-
-    <mat-form-field appearance="outline">
-        <input matInput placeholder="Set Location name..." matInput formControlName="locationNameField">
-    </mat-form-field>
-
-    <br>
-
-    <mat-menu #appMenu="matMenu">
-        <button mat-menu-item>Active</button>
-        <button mat-menu-item>Canceled</button>
-        <button mat-menu-item>Delayed</button>
-    </mat-menu>
-      
-    <button mat-icon-button [matMenuTriggerFor]="appMenu">
-        <mat-icon>more_vert</mat-icon>
-    </button>
-    
-    
-      
-
+    <mat-form-field>
+        <mat-label>Event description</mat-label>
+        <textarea matInput
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="5"
+                  formControlName="eventDescription"></textarea>
+    </mat-form-field> 
     <div class="flex-container flex-center">
         <button type="submit" mat-raised-button color="primary" class="button-size ">Add Event</button>
     </div>
+
+    
     </form>
   </div>
