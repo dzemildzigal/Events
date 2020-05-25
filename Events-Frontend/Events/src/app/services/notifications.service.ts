@@ -9,8 +9,14 @@ export class NotificationsService {
   
   constructor(private httpClient: HttpClient) {}
   
-  getNotificationsByUserId(id: any): Observable<any> {
+  public getNotificationsByUserId(id: any): Observable<any> {
     let url = this.notificationApiBaseURL + 'notifications/get-notifications/' + id.toString();
     return this.httpClient.get<any>(url);
   }
+  
+  public subscribeToEvent(event: any): Observable<any>{
+    let url = this.notificationApiBaseURL + 'notifications/newsubscription';
+    return this.httpClient.post<any>(url, event);
+  }
+
 }

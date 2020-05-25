@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { event } from '../../models/interfaces/event';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -12,39 +11,29 @@ import { LocalStorageService } from 'src/app/util/local-storage.service';
 import { EventWrapperDTO } from '../../models/DTO/eventWrapperDTO';
 import { MatDialogRef } from '@angular/material/dialog';
 
-
 @Component({
-  selector: 'app-add-event',
-  templateUrl: './add-event.component.html',
-  styleUrls: ['./add-event.component.scss']
+  selector: 'app-edit-event',
+  templateUrl: './edit-event.component.html',
+  styleUrls: ['./edit-event.component.scss']
 })
-export class AddEventComponent implements OnInit {
-  public newEventFormGroup: FormGroup;
-  public event: event;
+export class EditEventComponent implements OnInit {
+  newEventFormGroup: FormGroup;
+  event: event;
+  eventWrapper: EventWrapperDTO;
+
+  @Output() editEventFormResponse = new EventEmitter<any>();
+  //TODO: ensure only the user that created an event can event click the edit.
   constructor(private localStorageService: LocalStorageService,
-              public dialogRef: MatDialogRef<AddEventComponent> ) { 
+              public dialogRef: MatDialogRef<EditEventComponent>) { }
 
-  }
-  
-  OnChange(event){
-    console.log(event); 
-    //MatCheckboxChange {checked,MatCheckbox}
-  }
-
-  OnIndeterminateChange(event){
-    console.log(event); 
-    //true or false
-  }
-  
   ngOnInit(): void {
-
     this.newEventFormGroup = new FormGroup (
       {
         eventName: new FormControl(null),
         eventPictureURL: new FormControl(null),
         locationName: new FormControl(null),
-        eventDate: new FormControl(null),
-        canBuyTickets: new FormControl(null),
+        eventTime: new FormControl(null),
+        canBuyTickets: new FormControl(false),
         ticketPrice: new FormControl(null),
         numberOfTicketsAvailable: new FormControl(null),
         eventTypeDescription: new FormControl(null),
@@ -53,9 +42,9 @@ export class AddEventComponent implements OnInit {
 
       }
     )
+    this.newEventFormGroup.patchValue(this.eventWrapper.event);
   }
-  
-  onSubmit():void{
+  public onSubmit(){
     const formGroupValue = this.newEventFormGroup.value;
     var eventData: event = formGroupValue;
     eventData.createdByUserId = this.localStorageService.getUserInfo().userId;
@@ -82,7 +71,7 @@ export class AddEventComponent implements OnInit {
     eventData.userEventRegistrationList = [];
     
     var eventTemp:event={
-      eventId:null,
+      eventId:this.event.eventId,
       eventName:eventData.eventName,
       description: formGroupValue.eventDescription,
       location: eventData.location,
@@ -90,7 +79,7 @@ export class AddEventComponent implements OnInit {
       eventPictureURL: eventData.eventPictureURL,
       enuEventStatus: eventData.enuEventStatus,
       eventCommentsList: [],
-      eventTime: formGroupValue.eventDate,
+      eventTime: formGroupValue.eventTime,
       canBuyTicket: formGroupValue.canBuyTickets,
       ticketPrice: eventData.ticketPrice,
       numberOfTicketsAvailable: eventData.numberOfTicketsAvailable,
@@ -104,9 +93,7 @@ export class AddEventComponent implements OnInit {
     EventWrapper.eventType = eventTypeData;
     EventWrapper.location = eventLocation;
     EventWrapper.userId = eventData.createdByUserId;
-
+    this.eventWrapper = EventWrapper;
     this.dialogRef.close(EventWrapper);
-
-    //this.addEventFormResponse.emit(EventWrapper);
   }
 }

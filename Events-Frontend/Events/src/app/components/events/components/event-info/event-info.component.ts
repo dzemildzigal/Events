@@ -6,6 +6,10 @@ import { userEventRegistration } from '../../models/interfaces/userEventRegistra
 import { stringify } from 'querystring';
 import { LocalStorageService } from '../../../../util/local-storage.service';
 import { PopupService } from 'src/app/util/popup.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { FilterDTO } from '../../models/DTO/FilterDTO';
+import { EventWrapperDTO } from '../../models/DTO/eventWrapperDTO';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-event-info',
@@ -14,28 +18,48 @@ import { PopupService } from 'src/app/util/popup.service';
 })
 export class EventInfoComponent implements OnInit {;
   @Input()
-  public event: any;
+  public event: EventWrapperDTO;
   public eventInfoString:string="";
-  constructor(private popupService: PopupService) { }
+  constructor(private popupService: PopupService,
+              private notificationsService: NotificationsService,
+              private eventService: EventService) { }
 
   ngOnInit(): void {
     var time: Date = new Date(this.event.event.eventTime);
     this.eventInfoString= this.event.event.description+
-                          " se održava na lokaciji " +
+                          " will be held on location " +
                           this.event.location.description+
-                          " dana "+
+                          " on the day of "+
                           time.getDate()+"."+String((time.getMonth())+1)+"."+time.getFullYear()+"."+
-                          (this.event.event.canBuyTicket==true?"Karte se mogu kupiti i koštaju "+this.event.event.ticketPrice+"KM po komadu.":"Karte se ne mogu kupiti."); 
+                          (this.event.event.canBuyTicket==true?"Tickets can be bought and cost "+this.event.event.ticketPrice+"KM per piece.":"Tickets can not be bought."); 
   }
 
   public buyATicket(): void {
-    this.popupService.buyATicketPopup(this.event).subscribe(resultOfDialog => {
+    this.popupService.buyATicketPopup(this.event.event).subscribe(resultOfDialog => {
       console.log("Dialog closed", resultOfDialog);
       if (resultOfDialog) {
         // call api with info  :TODO
       }
     });
   }
-  
+
+  public subscribe(): void {
+    this.notificationsService.subscribeToEvent(this.event).subscribe(resultOfDialog => {
+      console.log("Dialog closed", resultOfDialog);
+      if (resultOfDialog){
+        //TODO: subscribe the event with NotificationService
+      }
+    });
+  }
+
+  public editEvent(): any {
+    this.popupService.editEventPopup(this.event).subscribe(dialogRes => {
+      if(dialogRes){
+        this.eventService.updateEvent(dialogRes).subscribe(response => {
+          console.log("Event edited", response);
+        })
+      }
+    });
+  }
 
 }

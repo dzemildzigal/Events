@@ -5,6 +5,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { EventsComponent } from './components/events/events.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AddEventComponent } from './components/events/components/add-event/add-event.component';
+import { EditEventComponent } from './components/events/components/edit-event/edit-event.component';
 
 
 const routes: Routes = [
@@ -28,7 +30,7 @@ const routes: Routes = [
   {
     path: 'my-profile',
     component: ProfileComponent
-  }
+  },
 ];
 
 @NgModule({

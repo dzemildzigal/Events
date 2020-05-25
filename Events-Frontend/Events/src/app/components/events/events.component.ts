@@ -18,27 +18,16 @@ export class EventsComponent implements OnInit {
   filterResponse:event[]=[];
   public events: any[] = [];
   addEventFormResponse:event;
-
+  editEventFormResponse:event;
   constructor(
     public eventService: EventService,
     public localStorage: LocalStorageService,
     public router: Router
-  ){
-
-  }
-
+  ){  }
+  
   ngOnInit():void{
     //this.updateEvents({});
   }
-
-  public addEvent(newEvent:EventWrapperDTO):void {
-    this.eventService.addEvent(newEvent).subscribe(res=>{
-      if(res!=null){
-        this.events=res;
-      }
-    });
-  }
-
   public updateEvents(filter: FilterDTO): void {  
     this.eventService.getEventsByFilter(filter).subscribe(res => {
       if(res!=null)

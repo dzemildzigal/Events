@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from 'src/app/util/local-storage.service';
 import { UserService } from 'src/app/services/user.service';
+import { PopupService } from 'src/app/util/popup.service';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-navigation',
@@ -10,9 +12,12 @@ import { UserService } from 'src/app/services/user.service';
 export class NavigationComponent implements OnInit {
 
   public userDetails: any;
-
+  public showAddEventComponent: boolean;
   constructor(private localStorageService: LocalStorageService,
-              private userService: UserService) { }
+              private userService: UserService,
+              private popupService: PopupService,
+              private eventService: EventService,
+              ) { }
 
   ngOnInit(): void {
     this.userService.checkIsUserLoggedIn();
@@ -20,6 +25,15 @@ export class NavigationComponent implements OnInit {
       this.userDetails = details
     });
   }
+
+  public addEvent(): any {
+    this.popupService.addEventPopup().subscribe(dialogRes => {
+      this.eventService.addEvent(dialogRes).subscribe(response => {
+        console.log("New event added", response);
+      })
+    });
+  }
+  
 
   public logout(): void {
     this.localStorageService.setUserInfo(null);

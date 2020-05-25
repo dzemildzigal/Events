@@ -44,7 +44,9 @@ export class UserService {
       this.isUserAuthorized(userInfo.userId).subscribe(res => {
         if (res.authenticated) {
           this.localStorage.setUserInfo(userInfo);
+          return true;
         }
+        return false;
       });
     }
   }

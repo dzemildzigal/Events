@@ -87,7 +87,7 @@ public class EventController {
     }
 
     //Update the whole oldEvent by the newEvent parameters
-    @PutMapping(path = "/update-event",produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(path = "/update-event",produces = {MediaType.APPLICATION_JSON_VALUE})
     public Event updateEvent(@RequestParam Long oldEventId, @RequestBody EventWrapperDTO eventWrapper, @RequestHeader(value = "Authorization") String authorizationToken) throws Exception{
         if(eventWrapper.getEnuEventStatus() == null || eventWrapper.getEvent()== null || eventWrapper.getEventType() == null || eventWrapper.getLocation() == null)
             throw new CustomEventException("400: Bad request. One or more properties of the class EventWrapperDTO are null!");

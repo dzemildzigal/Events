@@ -2,10 +2,16 @@
     <div>
         <span style="margin-right: 5%; font-size: 1.5em">Events</span>
         <mat-icon>event</mat-icon>
+        
     </div>
 
-    <div >
+    
+    <div>
         <span *ngIf="userDetails">{{userDetails.username}}</span>
+        <button mat-icon-button color="native" (click) = "addEvent()" [disabled]="!userDetails" routerLink="/add-event">
+          <mat-icon>library_add</mat-icon>
+        </button>
+        <!-- <button mat-icon-button (click)="addEvent()" style="padding-right: 100px;"  >Add A New Event</button> -->
         <button mat-icon-button routerLink="/notifications" [disabled]="!userDetails" style="padding-right: 0px;">
             <mat-icon>notifications</mat-icon>
         </button>

@@ -34,4 +34,28 @@ export class LocalStorageService {
     }
     return null;
   }
+
+  public setAddEventTrigger(trigger: boolean): any {
+    localStorage.setItem("addEventTrigger", JSON.stringify(trigger));
+  }
+  
+  public getAddEventTrigger(): any {
+    const result = localStorage.getItem("addEventTrigger");
+    if(result){
+      return JSON.parse(result);
+    }
+    return null;
+  }
+
+  public setEditEventTrigger(trigger: boolean): any {
+    localStorage.setItem("editEventTrigger", JSON.stringify(trigger));
+  }
+  
+  public editAddEventTrigger(): any {
+    const result = localStorage.getItem("editEventTrigger");
+    if(result){
+      return JSON.parse(result);
+    }
+    return null;
+  }
 }

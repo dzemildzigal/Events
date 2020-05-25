@@ -24,6 +24,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterFormComponent } from './components/register/register-form/register-form.component';
 import { PopupService } from './util/popup.service';
 import { BuyATicketPopupComponent } from './components/buy-aticket-popup/buy-aticket-popup.component';
+import { EditEventComponent } from './components/events/components/edit-event/edit-event.component';
+import { DeleteEventComponent } from './components/events/components/delete-event/delete-event.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { BuyATicketPopupComponent } from './components/buy-aticket-popup/buy-ati
     ProfileComponent,
     RegisterFormComponent,
     BuyATicketPopupComponent,
+    EditEventComponent,
+    DeleteEventComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,7 +68,9 @@ import { BuyATicketPopupComponent } from './components/buy-aticket-popup/buy-ati
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    BuyATicketPopupComponent
+    BuyATicketPopupComponent,
+    AddEventComponent,
+    EditEventComponent,
   ]
 })
 export class AppModule { }
