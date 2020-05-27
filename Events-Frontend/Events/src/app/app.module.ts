@@ -26,6 +26,7 @@ import { PopupService } from './util/popup.service';
 import { BuyATicketPopupComponent } from './components/buy-aticket-popup/buy-aticket-popup.component';
 import { EditEventComponent } from './components/events/components/edit-event/edit-event.component';
 import { DeleteEventComponent } from './components/events/components/delete-event/delete-event.component';
+import { UserTicketService } from './services/user-ticket.service';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { DeleteEventComponent } from './components/events/components/delete-even
     LocalStorageService,
     NotificationsService,
     EventService,
+    UserTicketService,
     PopupService,
     {
       provide: HTTP_INTERCEPTORS,

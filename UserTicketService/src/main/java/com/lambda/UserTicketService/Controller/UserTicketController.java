@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("usertickets")
+@CrossOrigin(origins = "*")
 public class UserTicketController {
 
     @Autowired

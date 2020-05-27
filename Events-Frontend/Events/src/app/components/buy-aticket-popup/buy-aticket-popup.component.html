@@ -1,2 +1,18 @@
-<p>buy-aticket-popup works!</p>
-<button mat-button (click)="buyATicket()">Buy A Ticket</button>
+<div class="wrapper" (submit)="buyATicket()">
+    <form *ngIf="canBuyATicket" [formGroup]="formGroup">
+        <h2>{{event.eventName}}</h2>
+        <h3>Price: ${{event.ticketPrice}}</h3>
+        <h3>Number of tickets available: {{event.numberOfTicketsAvailable}} </h3>
+        
+        <div >
+            <mat-form-field>
+                <input type="text" placeholder="Credit Card Number" matInput formControlName="creditCardNumber" />
+            </mat-form-field>
+            <div style="text-align: right;">
+                <button  mat-raised-button color="primary" type="submit">Buy A Ticket</button>
+            </div>
+        </div>
+        
+    </form>
+</div>
+<h1 *ngIf="!canBuyATicket" >Currently there is not available tickets for this event</h1>
