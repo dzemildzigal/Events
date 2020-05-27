@@ -31,6 +31,7 @@ const routes: Routes = [
     path: 'my-profile',
     component: ProfileComponent
   },
+  
 ];
 
 @NgModule({

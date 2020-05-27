@@ -42,7 +42,20 @@ export class EditEventComponent implements OnInit {
 
       }
     )
-    this.newEventFormGroup.patchValue(this.eventWrapper.event);
+    let eventFormWrapper = {
+        eventName: this.eventWrapper.event.eventName,
+        eventPictureURL: this.eventWrapper.event.eventPictureURL,
+        locationName: this.eventWrapper.location.description,
+        eventTime: this.eventWrapper.event.eventTime,
+        canBuyTickets: this.eventWrapper.event.canBuyTicket,
+        ticketPrice: this.eventWrapper.event.ticketPrice,
+        numberOfTicketsAvailable: this.eventWrapper.event.numberOfTicketsAvailable,
+        eventTypeDescription: this.eventWrapper.eventType.eventTypeDescription,
+        eventDescription: this.eventWrapper.event.description,
+        eventStatusDescription: this.eventWrapper.enuEventStatus.description
+    }
+
+    this.newEventFormGroup.patchValue(eventFormWrapper);
   }
   public onSubmit(){
     const formGroupValue = this.newEventFormGroup.value;

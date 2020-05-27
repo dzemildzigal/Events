@@ -28,9 +28,12 @@ export class NavigationComponent implements OnInit {
 
   public addEvent(): any {
     this.popupService.addEventPopup().subscribe(dialogRes => {
+      console.log("Dialog closed", dialogRes);
+      if(dialogRes){
       this.eventService.addEvent(dialogRes).subscribe(response => {
         console.log("New event added", response);
       })
+    }
     });
   }
   

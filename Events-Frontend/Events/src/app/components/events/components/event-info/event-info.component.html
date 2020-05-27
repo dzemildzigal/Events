@@ -11,9 +11,9 @@
         </mat-card-content>
         <mat-card-actions>
         
-        <button mat-button (click)= "subscribe()">Subscribe</button>
-        <button mat-button (click)= "buyATicket()">Tickets</button>
-        <button mat-button (click)= "editEvent()">Edit</button>
+        <button mat-button (click)= "subscribe()" *ngIf="canSubscribe">Subscribe</button>
+        <button mat-button (click)= "buyATicket()" *ngIf="canBuyATicket">Tickets</button>
+        <button mat-button (click)= "editEvent()" *ngIf="canEditEvent">Edit</button>
         </mat-card-actions>
 </mat-card>
   

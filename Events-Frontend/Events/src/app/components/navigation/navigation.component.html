@@ -8,7 +8,7 @@
     
     <div>
         <span *ngIf="userDetails">{{userDetails.username}}</span>
-        <button mat-icon-button color="native" (click) = "addEvent()" [disabled]="!userDetails" routerLink="/add-event">
+        <button mat-icon-button color="native" (click) = "addEvent()" [disabled]="!userDetails"> <!-- routerLink="/add-event"> -->
           <mat-icon>library_add</mat-icon>
         </button>
         <!-- <button mat-icon-button (click)="addEvent()" style="padding-right: 100px;"  >Add A New Event</button> -->

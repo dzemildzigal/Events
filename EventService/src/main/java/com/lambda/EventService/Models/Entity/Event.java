@@ -42,9 +42,9 @@ public class Event {
 
     @javax.validation.constraints.NotNull(message = "canBuyTicket can not be null, must be of type Boolean!")
     private Boolean canBuyTicket;
-    @javax.validation.constraints.NotNull(message = "ticketPrice can not be null, must be of type Double!")
+    //@javax.validation.constraints.NotNull(message = "ticketPrice can not be null, must be of type Double!")
     private Double ticketPrice;
-    @javax.validation.constraints.NotNull(message = "numberOfTicketsAvailable can not be null, must be of type Long!")
+    //@javax.validation.constraints.NotNull(message = "numberOfTicketsAvailable can not be null, must be of type Long!")
     private Long numberOfTicketsAvailable;
     @javax.validation.constraints.NotNull(message = "eventPictureURL can not be null, must be of type String!")
     private String eventPictureURL;

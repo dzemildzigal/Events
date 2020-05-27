@@ -24,7 +24,9 @@ export class PopupService {
 
     public addEventPopup(): Observable<any>{
         const dialog = this.matDialog.open(AddEventComponent);
+        if(dialog)
         return dialog.afterClosed();
+        return dialog.beforeClosed();
     }
 
     public editEventPopup(event: EventWrapperDTO): Observable<any>{

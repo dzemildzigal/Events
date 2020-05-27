@@ -14,7 +14,11 @@ import { EventWrapperDTO } from './models/DTO/eventWrapperDTO';
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit {
-
+  refresher: boolean = false;
+  filterDTO: FilterDTO = {eventNameField: null,
+                          eventTypeDropDownMenuItem: null,
+                          locationNameField: null,
+                          eventDate: null}
   filterResponse:event[]=[];
   public events: any[] = [];
   addEventFormResponse:event;
@@ -26,12 +30,17 @@ export class EventsComponent implements OnInit {
   ){  }
   
   ngOnInit():void{
-    //this.updateEvents({});
+    this.updateEvents(this.filterDTO);
+  }
+  public refresh():void{
+    this.updateEvents(this.filterDTO);
   }
   public updateEvents(filter: FilterDTO): void {  
     this.eventService.getEventsByFilter(filter).subscribe(res => {
-      if(res!=null)
+      if(res!=null){
         this.events=res;
-  });
+        this.filterDTO = filter;
+      }
+      });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { event } from '../../models/interfaces/event';
 import { eventComment } from '../../models/interfaces/eventComment';
 import { enuEventStatus } from '../../models/interfaces/enuEventStatus';
@@ -17,14 +17,26 @@ import { EventService } from 'src/app/services/event.service';
   styleUrls: ['./event-info.component.scss']
 })
 export class EventInfoComponent implements OnInit {;
+  @Output()
+  public refresh: EventEmitter<any> = new EventEmitter();  
   @Input()
   public event: EventWrapperDTO;
   public eventInfoString:string="";
+  public canEditEvent: boolean = false;
+  public canBuyATicket: boolean = false;
+  public canSubscribe: boolean = false;
   constructor(private popupService: PopupService,
               private notificationsService: NotificationsService,
-              private eventService: EventService) { }
-
+              private eventService: EventService,
+              private localStorageService: LocalStorageService) { }
+         
+              
   ngOnInit(): void {
+    if(localStorage.userInfo != "null"){
+    this.canEditEvent = this.event.userId == JSON.parse(localStorage.userInfo).userId;
+    this.canBuyATicket = this.event.event.canBuyTicket;//JSON.parse(localStorage.userInfo) != null;
+    this.canSubscribe = JSON.parse(localStorage.userInfo) != null;
+    }
     var time: Date = new Date(this.event.event.eventTime);
     this.eventInfoString= this.event.event.description+
                           " will be held on location " +
@@ -56,11 +68,14 @@ export class EventInfoComponent implements OnInit {;
 
   public editEvent(): any {
     this.popupService.editEventPopup(this.event).subscribe(dialogRes => {
+      console.log("Dialog closed", dialogRes);
       if(dialogRes){
         this.eventService.updateEvent(dialogRes).subscribe(response => {
           console.log("Event edited", response);
+          this.refresh.emit(null);
         })
       }
+      
     });
   }
 
