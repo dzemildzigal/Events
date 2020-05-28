@@ -58,12 +58,14 @@ export class EventInfoComponent implements OnInit {;
   }
 
   public subscribe(): void {
-    this.notificationsService.subscribeToEvent(this.event).subscribe(resultOfDialog => {
-      console.log("Dialog closed", resultOfDialog);
-      if (resultOfDialog){
-        //TODO: subscribe the event with NotificationService
-      }
-    });
+    const userinfo = this.localStorageService.getUserInfo();
+        
+    var subscription = {
+      "userId" :  userinfo.userId,
+      "eventTypeId" : this.event.eventType.eventTypeId
+      
+    }
+    this.notificationsService.subscribeToEvent(subscription);
   }
 
   public editEvent(): any {

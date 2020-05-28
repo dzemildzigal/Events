@@ -14,9 +14,12 @@ export class NotificationsService {
     return this.httpClient.get<any>(url);
   }
   
-  public subscribeToEvent(event: any): Observable<any>{
+  public subscribeToEvent(subscription: any): Observable<any>{
+   // console.log(subscription);
+   console.log(subscription);
     let url = this.notificationApiBaseURL + 'notifications/newsubscription';
-    return this.httpClient.post<any>(url, event);
+    return this.httpClient.post<any>(url, subscription);
+   
   }
 
 }
