@@ -65,7 +65,9 @@ export class EventInfoComponent implements OnInit {;
       "eventTypeId" : this.event.eventType.eventTypeId
       
     }
-    this.notificationsService.subscribeToEvent(subscription);
+    this.notificationsService.subscribeToEvent(subscription).subscribe(response => {
+ 
+    })
   }
 
   public editEvent(): any {
