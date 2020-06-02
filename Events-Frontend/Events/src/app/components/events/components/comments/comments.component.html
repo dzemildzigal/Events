@@ -1,0 +1,23 @@
+<div>
+      <app-comment-info *ngFor="let comment of comments"  [comment]="comment"></app-comment-info>
+
+      <div class="example-container" style="min-width: 50em;" *ngIf="loggedIn">
+        <form class="flex-container flex-column-direction" style="margin:5%;" [formGroup]="newEventFormGroup" #form (submit)="onSubmit()" >
+    
+        <mat-form-field>
+            <mat-label>Add Comment</mat-label>
+            <textarea matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="5"
+                      formControlName="commentTextField"></textarea>
+        </mat-form-field> 
+        <div class="flex-container flex-center">
+            <button type="submit" mat-raised-button color="primary" class="button-size ">Post Comment</button>
+        </div>
+    
+        
+        </form>
+      </div>
+</div>
