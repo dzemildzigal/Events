@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { event } from '../../models/interfaces/event';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { map } from 'rxjs/operators';
@@ -29,16 +29,16 @@ export class EditEventComponent implements OnInit {
   ngOnInit(): void {
     this.newEventFormGroup = new FormGroup (
       {
-        eventName: new FormControl(null),
-        eventPictureURL: new FormControl(null),
-        locationName: new FormControl(null),
-        eventTime: new FormControl(null),
+        eventName: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+        eventPictureURL: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+        locationName: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+        eventTime: new FormControl(null, [Validators.required]),
         canBuyTickets: new FormControl(false),
         ticketPrice: new FormControl(null),
         numberOfTicketsAvailable: new FormControl(null),
-        eventTypeDescription: new FormControl(null),
-        eventDescription: new FormControl(null),
-        eventStatusDescription: new FormControl(null)
+        eventTypeDescription: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+        eventDescription: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+        eventStatusDescription: new FormControl(null, [Validators.required, Validators.minLength(3)])
 
       }
     )

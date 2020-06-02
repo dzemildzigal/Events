@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { event } from '../../models/interfaces/event';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { map } from 'rxjs/operators';
@@ -28,28 +28,26 @@ export class AddEventComponent implements OnInit {
   
   OnChange(event){
     console.log(event); 
-    //MatCheckboxChange {checked,MatCheckbox}
   }
 
   OnIndeterminateChange(event){
     console.log(event); 
-    //true or false
   }
   
   ngOnInit(): void {
 
     this.newEventFormGroup = new FormGroup (
       {
-        eventName: new FormControl(null),
-        eventPictureURL: new FormControl(null),
-        locationName: new FormControl(null),
-        eventDate: new FormControl(null),
-        canBuyTickets: new FormControl(null),
+        eventName: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+        eventPictureURL: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+        locationName: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+        eventDate: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+        canBuyTickets: new FormControl(false),
         ticketPrice: new FormControl(null),
         numberOfTicketsAvailable: new FormControl(null),
-        eventTypeDescription: new FormControl(null),
-        eventDescription: new FormControl(null),
-        eventStatusDescription: new FormControl(null)
+        eventTypeDescription: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+        eventDescription: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+        eventStatusDescription: new FormControl(null, [Validators.required, Validators.minLength(3)])
 
       }
     )
@@ -106,7 +104,5 @@ export class AddEventComponent implements OnInit {
     EventWrapper.userId = eventData.createdByUserId;
 
     this.dialogRef.close(EventWrapper);
-
-    //this.addEventFormResponse.emit(EventWrapper);
   }
 }
