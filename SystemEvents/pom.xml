@@ -146,5 +146,6 @@
 				</executions>
 			</plugin>
 		</plugins>
+		<finalName>system-events-service</finalName>
 	</build>
 </project>

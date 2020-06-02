@@ -1,0 +1,4 @@
+FROM openjdk:13-alpine
+ADD target/system-events-service.jar system-events-service.jar
+EXPOSE 8085
+ENTRYPOINT [ "java", "-jar", "system-events-service.jar" ]
