@@ -46,7 +46,10 @@ export class UserService {
           this.localStorage.setUserInfo(userInfo);
           return true;
         }
+        this.localStorage.setUserInfo(null);
         return false;
+      }, error =>{
+        this.localStorage.setUserInfo(null);
       });
     }
   }

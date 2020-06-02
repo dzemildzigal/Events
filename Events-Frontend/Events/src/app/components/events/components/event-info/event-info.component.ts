@@ -43,7 +43,7 @@ export class EventInfoComponent implements OnInit {;
                           this.event.location.description+
                           " on the day of "+
                           time.getDate()+"."+String((time.getMonth())+1)+"."+time.getFullYear()+"."+
-                          (this.event.event.canBuyTicket==true?"Tickets can be bought and cost "+this.event.event.ticketPrice+"KM per piece.":"Tickets can not be bought."); 
+                          (this.event.event.canBuyTicket==true?"Tickets can be bought and cost "+this.event.event.ticketPrice+"$ per piece.":"Tickets can not be bought."); 
   }
 
   public buyATicket(): void {
@@ -63,19 +63,28 @@ export class EventInfoComponent implements OnInit {;
     var subscription = {
       "userId" :  userinfo.userId,
       "eventTypeId" : this.event.eventType.eventTypeId
-      
     }
     this.notificationsService.subscribeToEvent(subscription).subscribe(response => {
  
     })
   }
 
+  public getComments(): any {
+    this.popupService.getCommentsPopup(this.event).subscribe(dialogRes => {
+      if(dialogRes != null && dialogRes != undefined){
+        const commentText = dialogRes.commentTextField;
+        this.eventService.postComment(commentText,this.event).subscribe(res=>{
+
+        });
+
+      }
+    });
+  }
+
   public editEvent(): any {
     this.popupService.editEventPopup(this.event).subscribe(dialogRes => {
-      console.log("Dialog closed", dialogRes);
       if(dialogRes){
         this.eventService.updateEvent(dialogRes).subscribe(response => {
-          console.log("Event edited", response);
           this.refresh.emit(null);
         })
       }

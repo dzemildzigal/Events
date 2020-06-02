@@ -28,6 +28,8 @@ import { EditEventComponent } from './components/events/components/edit-event/ed
 import { DeleteEventComponent } from './components/events/components/delete-event/delete-event.component';
 import { UserTicketService } from './services/user-ticket.service';
 import { SimplePopupComponent } from './util/simple-popup/simple-popup.component';
+import { CommentsComponent } from './components/events/components/comments/comments.component';
+import { CommentInfoComponent } from './components/events/components/comment-info/comment-info.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { SimplePopupComponent } from './util/simple-popup/simple-popup.component
     EditEventComponent,
     DeleteEventComponent,
     SimplePopupComponent,
+    CommentsComponent,
+    CommentInfoComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,7 +79,8 @@ import { SimplePopupComponent } from './util/simple-popup/simple-popup.component
     BuyATicketPopupComponent,
     AddEventComponent,
     EditEventComponent,
-    SimplePopupComponent
+    SimplePopupComponent,
+    CommentsComponent,
   ]
 })
 export class AppModule { }
