@@ -8,7 +8,6 @@ import { EventService } from '../services/event.service';
 import { AddEventComponent } from '../components/events/components/add-event/add-event.component';
 import { SimplePopupComponent } from './simple-popup/simple-popup.component';
 import { CommentsComponent } from '../components/events/components/comments/comments.component';
-import { event } from '../components/events/models/interfaces/event'
 
 @Injectable()
 export class PopupService {
