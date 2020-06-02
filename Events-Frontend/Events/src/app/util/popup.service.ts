@@ -6,6 +6,7 @@ import { EditEventComponent } from '../components/events/components/edit-event/e
 import { EventWrapperDTO } from '../components/events/models/DTO/EventWrapperDTO';
 import { EventService } from '../services/event.service';
 import { AddEventComponent } from '../components/events/components/add-event/add-event.component';
+import { SimplePopupComponent } from './simple-popup/simple-popup.component';
 
 @Injectable()
 export class PopupService {
@@ -35,6 +36,12 @@ export class PopupService {
         const dialog = this.matDialog.open(EditEventComponent);
         dialog.componentInstance.eventWrapper = event;
         dialog.componentInstance.event = event.event;
+        return dialog.afterClosed();
+    }
+
+    public simplePopup(message: string): Observable<any> {
+        const dialog = this.matDialog.open(SimplePopupComponent);
+        dialog.componentInstance.message = message;
         return dialog.afterClosed();
     }
 
