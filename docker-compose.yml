@@ -260,7 +260,6 @@ services:
     networks:
       - events
 
-#TODO: ng build 
   events-frontend:
     container_name: events-frontend
     build:
@@ -269,9 +268,9 @@ services:
     image: events-frontend:latest
     restart: always
     expose:
-      - 4200
+      - 80
     ports:
-      - 4200:4200 
+      - 80:80 
     networks:
       - events
     

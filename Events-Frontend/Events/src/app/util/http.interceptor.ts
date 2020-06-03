@@ -26,7 +26,7 @@ export class TokenInterceptor implements HttpInterceptor {
         Authorization: `Bearer ${token}`
       }
     });
-    return next.handle(request).pipe(retry(1), catchError((error: HttpErrorResponse) => {
+    return next.handle(request).pipe(catchError((error: HttpErrorResponse) => {
       if (error.statusText === "Unknown Error") {
         this.popupService.simplePopup("Service unavailable");
       } else {
