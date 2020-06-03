@@ -1,4 +1,4 @@
 FROM openjdk:13-alpine
-ADD target/UserTicketService-*.jar user-ticket-service.jar
-EXPOSE 8082
+ADD target/user-ticket-service.jar user-ticket-service.jar
+EXPOSE 8081
 ENTRYPOINT [ "java", "-jar", "user-ticket-service.jar" ]

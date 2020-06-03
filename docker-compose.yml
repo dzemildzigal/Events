@@ -1,6 +1,17 @@
 version: '3'
 services:
 # services
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks: 
+      - events
   db:
     container_name: db
     image: "postgres"
@@ -80,7 +91,7 @@ services:
     image: eureka-service:latest
     restart: always
     links:
-      - db:db
+      - db:db #?
     expose:
       - 8761
     ports:
@@ -118,7 +129,7 @@ services:
     container_name: user-service
     build:
       context: ./UserService/
-      dockerfile: Docker
+      dockerfile: Dockerfile
     image: user-service:latest
     restart: always
     links:
@@ -139,11 +150,12 @@ services:
       - eureka-service
     networks:
       - events
+      
   user-ticket-service:
     container_name: user-ticket-service
     build:
       context: ./UserTicketService/
-      dockerfile: Docker
+      dockerfile: Dockerfile
     image: user-ticket-service:latest
     restart: always
     links:
@@ -162,6 +174,7 @@ services:
     depends_on:
       - user-ticket-service-db 
       - eureka-service
+      - system-events-service
     networks:
       - events
 
@@ -175,6 +188,7 @@ services:
     links:
       - eureka-service:eureka-service
       - notification-service-db:notification-service-db
+      - rabbitmq:rabbitmq
     expose:
       - 8083
     ports:
@@ -185,9 +199,11 @@ services:
       - DATABASE_PASSWORD=password
       - DATABASE_NAME=NotificationServiceDatabase
       - DATABASE_PORT=5432
+      - AMQP_URL='amqp://rabbitmq?connection_attempts=5&retry_delay=5'
     depends_on:
       - notification-service-db 
       - eureka-service
+      - rabbitmq
     networks:
       - events
 
@@ -201,6 +217,7 @@ services:
     links:
       - eureka-service:eureka-service
       - event-service-db:event-service-db
+      - rabbitmq:rabbitmq
     expose:
       - 8082
     ports:
@@ -211,9 +228,12 @@ services:
       - DATABASE_PASSWORD=password
       - DATABASE_NAME=EventDatabase
       - DATABASE_PORT=5432
+      - AMQP_URL='amqp://rabbitmq?connection_attempts=5&retry_delay=5'
     depends_on:
       - event-service-db 
       - eureka-service
+      - rabbitmq
+      - system-events-service
     networks:
       - events
 
@@ -226,49 +246,36 @@ services:
     restart: always
     links:
       - eureka-service:eureka-service
-      #- event-service-db:event-service-db
     expose:
       - 8090
     ports:
       - 8090:8090 
-    #environment:
-    #  - DATABASE_HOST=event-service-db
-    #  - DATABASE_USER=postgres
-    #  - DATABASE_PASSWORD=password
-    #  - DATABASE_NAME=EventDatabase
-    #  - DATABASE_PORT=5432
-    depends_on:
-    #  - event-service-db 
+    depends_on: 
       - eureka-service
+      - event-service
+      - notification-service
+      - user-ticket-service
+      - user-service
+      - system-events-service
     networks:
       - events
-  
+
+#TODO: ng build 
   events-frontend:
     container_name: events-frontend
     build:
-      context: ./Events-Frontend/
+      context: ./Events-Frontend/Events/
       dockerfile: Dockerfile
     image: events-frontend:latest
     restart: always
-    #links:
-    #  - eureka-service:eureka-service
-    #  - event-service-db:event-service-db
     expose:
       - 4200
     ports:
       - 4200:4200 
-    #environment:
-      #- DATABASE_HOST=event-service-db
-      #- DATABASE_USER=postgres
-      #- DATABASE_PASSWORD=password
-      #- DATABASE_NAME=EventDatabase
-      #- DATABASE_PORT=5432
-    #depends_on:
-      #- event-service-db 
-      #- eureka-service
     networks:
       - events
-
+    
+    
 networks:
   events:
     driver: bridge

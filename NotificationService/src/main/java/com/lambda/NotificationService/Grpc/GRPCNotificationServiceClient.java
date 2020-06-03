@@ -42,7 +42,10 @@ public class GRPCNotificationServiceClient {
                 System.out.println("Completed everything");
             }
         };
-
+        if(systemEventsServiceStub == null)
+            this.initializeClient();
+        if(systemEventsServiceStub == null)
+            return;
 
 
         systemEventsServiceStub.saveSystemEvent(systemEventMessage,streamObserver);
@@ -53,9 +56,10 @@ public class GRPCNotificationServiceClient {
 
     @PostConstruct
     private void initializeClient(){
-        final InstanceInfo instanceInfo = eurekaClient.getNextServerFromEureka("SystemEvent", false);
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(instanceInfo.getIPAddr(), instanceInfo.getPort()).usePlaintext().build();
-        systemEventsServiceStub = SystemEventsServiceGrpc.newStub(channel);
-
+        try {
+            final InstanceInfo instanceInfo = eurekaClient.getNextServerFromEureka("SystemEvent", false);
+            ManagedChannel channel = ManagedChannelBuilder.forAddress(instanceInfo.getIPAddr(), instanceInfo.getPort()).usePlaintext().build();
+            systemEventsServiceStub = SystemEventsServiceGrpc.newStub(channel);
+        }catch (Exception ex){}
     }
 }
