@@ -14,6 +14,7 @@ services:
       - 5432
     networks:
       - events
+  
   event-service-db:
     container_name: event-service-db
     image: "postgres"
@@ -27,6 +28,7 @@ services:
       - 5432
     networks:
       - events
+  
   user-service-db:
     container_name: user-service-db
     image: "postgres"
@@ -39,7 +41,8 @@ services:
     expose:
       - 5432
     networks:
-          - events
+      - events
+  
   user-ticket-service-db:
     container_name: user-ticket-service-db
     image: "postgres"
@@ -52,7 +55,8 @@ services:
     expose:
       - 5432
     networks:
-          - events
+      - events
+      
   notification-service-db:
     container_name: notification-service-db
     image: "postgres"
@@ -65,7 +69,9 @@ services:
     expose:
       - 5432
     networks:
-          - events
+      - events
+
+
   eureka-service:
     container_name: eureka-service
     build:
@@ -81,6 +87,7 @@ services:
       - 8761:8761
     networks:
       - events
+
   system-events-service:
     container_name: system-events-service
     build:
@@ -106,7 +113,7 @@ services:
       - eureka-service
     networks:
       - events
-    
+
   user-service:
     container_name: user-service
     build:
@@ -183,6 +190,33 @@ services:
       - eureka-service
     networks:
       - events
+
+  events-frontend:
+    container_name: events-frontend
+    build:
+      context: ./Events-Frontend/
+      dockerfile: Dockerfile
+    image: events-frontend:latest
+    restart: always
+    #links:
+    #  - eureka-service:eureka-service
+    #  - event-service-db:event-service-db
+    expose:
+      - 4200
+    ports:
+      - 4200:4200 
+    #environment:
+      #- DATABASE_HOST=event-service-db
+      #- DATABASE_USER=postgres
+      #- DATABASE_PASSWORD=password
+      #- DATABASE_NAME=EventDatabase
+      #- DATABASE_PORT=5432
+    #depends_on:
+      #- event-service-db 
+      #- eureka-service
+    networks:
+      - events
+
 networks:
   events:
     driver: bridge
