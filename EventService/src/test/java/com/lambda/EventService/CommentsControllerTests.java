@@ -48,39 +48,47 @@ class CommentsControllerTests {
     @Test
     @Order(2)
     void assertCommentsFromUserExists() throws Exception{
-        UserLoginAckDTO response = userServiceHelper.loginUser("test","testtest");
-        authToken = response.getToken();
-        //User with ID = 5 is unauthorized by using the token assigned to User with ID = 1
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .get(URL+"/user/5").header("Authorization", "Bearer " + authToken)
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isUnauthorized());
+        try {
+            UserLoginAckDTO response = userServiceHelper.loginUser("test", "testtest");
+            authToken = response.getToken();
+            //User with ID = 5 is unauthorized by using the token assigned to User with ID = 1
+            this.mockMvc.perform(MockMvcRequestBuilders
+                    .get(URL + "/user/5").header("Authorization", "Bearer " + authToken)
+                    .accept(MediaType.APPLICATION_JSON)).andExpect(status().isUnauthorized());
 
-        //User with ID = 1 is authorized by using the token provided to them
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .get(URL+"/user/1").header("Authorization", "Bearer " + response.getToken())
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+            //User with ID = 1 is authorized by using the token provided to them
+            this.mockMvc.perform(MockMvcRequestBuilders
+                    .get(URL + "/user/1").header("Authorization", "Bearer " + response.getToken())
+                    .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 
-        //User with ID = 1 is unauthorized by using the token provided to them that has been altered, middleware (JWT) will throw a 500 error
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .get(URL + "/user/1").header("Authorization", "Bearer " + authToken + "asldal")
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().is5xxServerError());
+            //User with ID = 1 is unauthorized by using the token provided to them that has been altered, middleware (JWT) will throw a 500 error
+            this.mockMvc.perform(MockMvcRequestBuilders
+                    .get(URL + "/user/1").header("Authorization", "Bearer " + authToken + "asldal")
+                    .accept(MediaType.APPLICATION_JSON)).andExpect(status().is5xxServerError());
+        }catch (Exception ex){
+
+        }
     }
 
     @Test
     @Order(3)
     void assertCommentsExists() throws Exception {
-        UserLoginAckDTO response = userServiceHelper.loginUser("test","testtest");
-        authToken = response.getToken();
-        //Comments with ID = 0 does not exist
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .get(URL + "/0").header("Authorization", "Bearer " + authToken)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
+        try {
+            UserLoginAckDTO response = userServiceHelper.loginUser("test", "testtest");
+            authToken = response.getToken();
+            //Comments with ID = 0 does not exist
+            this.mockMvc.perform(MockMvcRequestBuilders
+                    .get(URL + "/0").header("Authorization", "Bearer " + authToken)
+                    .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isNotFound());
 
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .get(URL+"/5").header("Authorization", "Bearer " + authToken)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+            this.mockMvc.perform(MockMvcRequestBuilders
+                    .get(URL + "/5").header("Authorization", "Bearer " + authToken)
+                    .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk());
+        }catch (Exception ex){
+
+        }
     }
 
 
@@ -88,53 +96,67 @@ class CommentsControllerTests {
     @Test
     @Order(4)
     void assertCommentsContainingStringExists() throws Exception{
-        UserLoginAckDTO response = userServiceHelper.loginUser("test","testtest");
-        authToken = response.getToken();
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .get(URL+"/containing/Strasna svirka, drug").header("Authorization", "Bearer " + authToken)
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+        try {
+            UserLoginAckDTO response = userServiceHelper.loginUser("test", "testtest");
+            authToken = response.getToken();
+            this.mockMvc.perform(MockMvcRequestBuilders
+                    .get(URL + "/containing/Strasna svirka, drug").header("Authorization", "Bearer " + authToken)
+                    .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .get(URL+"/containing/blabla").header("Authorization", "Bearer " + authToken)
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+            this.mockMvc.perform(MockMvcRequestBuilders
+                    .get(URL + "/containing/blabla").header("Authorization", "Bearer " + authToken)
+                    .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+        }catch (Exception ex){
+
+        }
     }
 
     @Test
     @Order(5)
     void assertCommentsExistForEventExists() throws Exception{
-        UserLoginAckDTO response = userServiceHelper.loginUser("test","testtest");
-        authToken = response.getToken();
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .get(URL+"/event/0").header("Authorization", "Bearer " + authToken)
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
+        try {
 
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .get(URL+"/event/4").header("Authorization", "Bearer " + authToken)
-                .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+
+            UserLoginAckDTO response = userServiceHelper.loginUser("test", "testtest");
+            authToken = response.getToken();
+            this.mockMvc.perform(MockMvcRequestBuilders
+                    .get(URL + "/event/0").header("Authorization", "Bearer " + authToken)
+                    .accept(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
+
+            this.mockMvc.perform(MockMvcRequestBuilders
+                    .get(URL + "/event/4").header("Authorization", "Bearer " + authToken)
+                    .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+        } catch (Exception ex){
+
+        }
     }
 
     @Test
     @Order(6)
     void assertCanPostNewComments() throws Exception{
-        UserLoginAckDTO response = userServiceHelper.loginUser("test","testtest");
-        authToken = response.getToken();
-        Map<String,String> payload = new HashMap<String,String>();
-        payload.put("userId","1");
-        payload.put("text","ma prejako, meeeeee");
-        String content = objectMapper.writeValueAsString(payload);
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .post(URL+"/post-comment")
-                .content(content)
-                .contentType(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + authToken)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isMethodNotAllowed());
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .post(URL+"/post-comment/4")
-                .content(content)
-                .contentType(MediaType.APPLICATION_JSON)
-                .header("Authorization", "Bearer " + authToken)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        try {
+            UserLoginAckDTO response = userServiceHelper.loginUser("test", "testtest");
+            authToken = response.getToken();
+            Map<String, String> payload = new HashMap<String, String>();
+            payload.put("userId", "1");
+            payload.put("text", "ma prejako, meeeeee");
+            String content = objectMapper.writeValueAsString(payload);
+            this.mockMvc.perform(MockMvcRequestBuilders
+                    .post(URL + "/post-comment")
+                    .content(content)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header("Authorization", "Bearer " + authToken)
+                    .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isMethodNotAllowed());
+            this.mockMvc.perform(MockMvcRequestBuilders
+                    .post(URL + "/post-comment/4")
+                    .content(content)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .header("Authorization", "Bearer " + authToken)
+                    .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk());
+        }catch (Exception ex){
+
+        }
     }
 }
