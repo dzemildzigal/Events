@@ -107,6 +107,57 @@ services:
     networks:
       - events
     
+  user-service:
+    container_name: user-service
+    build:
+      context: ./UserService/
+      dockerfile: Docker
+    image: user-service:latest
+    restart: always
+    links:
+      - eureka-service:eureka-service
+      - user-service-db:user-service-db
+    expose:
+      - 8080
+    ports:
+      - 8080:8080 
+    environment:
+      - DATABASE_HOST=user-service-db
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=EventDatabase
+      - DATABASE_PORT=5432
+    depends_on:
+      - user-service-db 
+      - eureka-service
+    networks:
+      - events
+
+  event-service:
+    container_name: event-service
+    build:
+      context: ./EventService/
+      dockerfile: Dockerfile
+    image: event-service:latest
+    restart: always
+    links:
+      - eureka-service:eureka-service
+      - event-service-db:event-service-db
+    expose:
+      - 8082
+    ports:
+      - 8082:8082 
+    environment:
+      - DATABASE_HOST=event-service-db
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=EventDatabase
+      - DATABASE_PORT=5432
+    depends_on:
+      - event-service-db 
+      - eureka-service
+    networks:
+      - events
 networks:
   events:
     driver: bridge
