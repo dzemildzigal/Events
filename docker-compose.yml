@@ -125,10 +125,35 @@ services:
       - DATABASE_HOST=user-service-db
       - DATABASE_USER=postgres
       - DATABASE_PASSWORD=password
-      - DATABASE_NAME=EventDatabase
+      - DATABASE_NAME=UserDatabase
       - DATABASE_PORT=5432
     depends_on:
       - user-service-db 
+      - eureka-service
+    networks:
+      - events
+  user-ticket-service:
+    container_name: user-ticket-service
+    build:
+      context: ./UserTicketService/
+      dockerfile: Docker
+    image: user-ticket-service:latest
+    restart: always
+    links:
+      - eureka-service:eureka-service
+      - user-ticket-service-db:user-ticket-service-db
+    expose:
+      - 8081
+    ports:
+      - 8081:8081 
+    environment:
+      - DATABASE_HOST=user-ticket-service-db
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=UserTicketDatabase
+      - DATABASE_PORT=5432
+    depends_on:
+      - user-ticket-service-db 
       - eureka-service
     networks:
       - events
