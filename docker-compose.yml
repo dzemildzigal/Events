@@ -165,6 +165,32 @@ services:
     networks:
       - events
 
+  notification-service:
+    container_name: notification-service
+    build:
+      context: ./NotificationService/
+      dockerfile: Dockerfile
+    image: notification-service:latest
+    restart: always
+    links:
+      - eureka-service:eureka-service
+      - notification-service-db:notification-service-db
+    expose:
+      - 8083
+    ports:
+      - 8083:8083 
+    environment:
+      - DATABASE_HOST=notification-service-db
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=NotificationServiceDatabase
+      - DATABASE_PORT=5432
+    depends_on:
+      - notification-service-db 
+      - eureka-service
+    networks:
+      - events
+
   event-service:
     container_name: event-service
     build:
@@ -191,6 +217,32 @@ services:
     networks:
       - events
 
+  zuul-gateway:
+    container_name: zuul-gateway
+    build:
+      context: ./ZuulGateway/
+      dockerfile: Dockerfile
+    image: zuul-gateway:latest
+    restart: always
+    links:
+      - eureka-service:eureka-service
+      #- event-service-db:event-service-db
+    expose:
+      - 8090
+    ports:
+      - 8090:8090 
+    #environment:
+    #  - DATABASE_HOST=event-service-db
+    #  - DATABASE_USER=postgres
+    #  - DATABASE_PASSWORD=password
+    #  - DATABASE_NAME=EventDatabase
+    #  - DATABASE_PORT=5432
+    depends_on:
+    #  - event-service-db 
+      - eureka-service
+    networks:
+      - events
+  
   events-frontend:
     container_name: events-frontend
     build:
