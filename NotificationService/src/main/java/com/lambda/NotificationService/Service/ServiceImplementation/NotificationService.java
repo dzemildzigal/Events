@@ -47,6 +47,12 @@ public class NotificationService implements INotificationService {
     @Override
     public UserSubscription createUserSubscription(UserSubscription userSubscription) {
 
+       List<UserSubscription> subscriptions = this.userSubscriptionRepository.findByUserId(userSubscription.getUserId());
+       for(int i=0; i<subscriptions.size(); ++i){
+            if(subscriptions.get(i).getEventTypeId().equals(userSubscription.getEventTypeId())){
+                return userSubscription;
+            }
+       }
        UserSubscription createdUserSubscription = this.userSubscriptionRepository.save(userSubscription);
 
        return createdUserSubscription;

@@ -32,10 +32,11 @@ export class EventInfoComponent implements OnInit {;
          
               
   ngOnInit(): void {
-    if(localStorage.userInfo != "null"){
-    this.canEditEvent = this.event.userId == JSON.parse(localStorage.userInfo).userId;
-    this.canBuyATicket = this.event.event.canBuyTicket;//JSON.parse(localStorage.userInfo) != null;
-    this.canSubscribe = JSON.parse(localStorage.userInfo) != null;
+    let userInfo = this.localStorageService.getUserInfo();
+    if(userInfo){
+      this.canEditEvent = this.event.userId == userInfo.userId;
+      this.canBuyATicket = this.event.event.canBuyTicket;
+      this.canSubscribe = userInfo != null;
     }
     var time: Date = new Date(this.event.event.eventTime);
     this.eventInfoString= this.event.event.description+
