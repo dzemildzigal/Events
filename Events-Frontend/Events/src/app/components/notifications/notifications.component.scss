@@ -1,7 +1,8 @@
 .checked {
     color: orange;
   }
-  .mat-card{
-    background-color: 	 #ffccff;
-    width : "20";
-  }
+.mat-card{
+  background: rgb(109,131,247);
+  background: linear-gradient(90deg, rgba(109,131,247,1) 7%, rgba(121,153,255,1) 100%);
+  width: 50%;
+}

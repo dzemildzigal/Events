@@ -54,6 +54,9 @@ export class AddEventComponent implements OnInit {
   }
   
   onSubmit():void{
+    if (!this.newEventFormGroup.valid) {
+      return;
+    }
     const formGroupValue = this.newEventFormGroup.value;
     var eventData: event = formGroupValue;
     eventData.createdByUserId = this.localStorageService.getUserInfo().userId;

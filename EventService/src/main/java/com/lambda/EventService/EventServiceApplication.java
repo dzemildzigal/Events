@@ -48,15 +48,15 @@ public class EventServiceApplication {
 		return(args) ->{
 
 			long millis=System.currentTimeMillis();
-			Location lokacija = new Location(null,"Meee, strasna lokacija drug.");
+			Location lokacija = new Location(null,"Underground");
 			Location tmpLocation = locationService.createLocation(lokacija);
-			EventType tip = new EventType(null,"Tjentiste, almemi",null);
+			EventType tip = new EventType(null,"Rock music",null);
 			EventType tmpEventType = eventTypeService.createEventType(tip);
-			EnuEventStatus eES = new EnuEventStatus(null,"Aktivan",null);
+			EnuEventStatus eES = new EnuEventStatus(null,"Active",null);
 			EnuEventStatus tmpEnuEventStatus = enuEventStatusService.createEnuEventStatus(eES);
 			Event eventInfo = new Event(null,
-				"Svirka Radno Vrijeme",
-				"Straaaaaashna svirka, drug.",
+				"Radno Vrijeme",
+				"Album promotion",
 				tmpLocation,
 				tmpEventType,
 				true,
@@ -71,10 +71,10 @@ public class EventServiceApplication {
 			EventComments komentar = new EventComments(null,
 					eventInfo.getCreatedByUserId(),
 					eventInfo,
-					"Strashna je svirka bila, drug");
+					"Album is great");
 			var eventCommentTmp  = eventCommentsService.createEventComments(komentar);
 
-			EnuRegistrationType tipRegistracije = new EnuRegistrationType(null,"Registracija na Jeminu svirku",listUserEventRegistration);
+			EnuRegistrationType tipRegistracije = new EnuRegistrationType(null,"Registration",listUserEventRegistration);
 			UserEventRegistration registracija = new UserEventRegistration(null,1L,tipRegistracije,eventInfo);
 			var tipRegistracijeTmp = enuRegistrationTypeService.createEnuRegistrationType(tipRegistracije);
 			var registracijaTmp = userEventRegistrationService.createUserEventRegistration(registracija);

@@ -37,7 +37,7 @@ public class NotificationServiceApplication {
     public CommandLineRunner demo(INotificationService service) {
         return (args) -> {
 
-             UserNotification usernotification = new UserNotification(1L,1L,"Yesterday all my troubles seemed so far away",true);
+             UserNotification usernotification = new UserNotification(1L,1L,"Radno vrijeme",true);
              UserSubscription usersubscription = new UserSubscription(1L,1L,1L);
             var x =  service.createUserNotification(usernotification);
             var y = service.createUserSubscription(usersubscription);

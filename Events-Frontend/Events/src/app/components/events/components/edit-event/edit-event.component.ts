@@ -58,6 +58,9 @@ export class EditEventComponent implements OnInit {
     this.newEventFormGroup.patchValue(eventFormWrapper);
   }
   public onSubmit(){
+    if (!this.newEventFormGroup.valid) {
+      return;
+    }
     const formGroupValue = this.newEventFormGroup.value;
     var eventData: event = formGroupValue;
     eventData.createdByUserId = this.localStorageService.getUserInfo().userId;

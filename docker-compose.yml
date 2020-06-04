@@ -1,6 +1,20 @@
 version: '3'
 services:
 # services
+  eureka-service:
+    container_name: eureka-service
+    build:
+      context: ./EurekaService/
+      dockerfile: Docker
+    image: eureka-service:latest
+    restart: always
+    expose:
+      - 8761
+    ports:
+      - 8761:8761
+    networks:
+      - events
+
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq
@@ -83,21 +97,7 @@ services:
       - events
 
 
-  eureka-service:
-    container_name: eureka-service
-    build:
-      context: ./EurekaService/
-      dockerfile: Docker
-    image: eureka-service:latest
-    restart: always
-    links:
-      - db:db #?
-    expose:
-      - 8761
-    ports:
-      - 8761:8761
-    networks:
-      - events
+  
 
   system-events-service:
     container_name: system-events-service

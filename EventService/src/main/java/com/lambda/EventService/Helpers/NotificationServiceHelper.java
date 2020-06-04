@@ -20,14 +20,14 @@ public class NotificationServiceHelper {
         httpHeaders.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
         Map<String,String> info = new HashMap<String,String>();
         info.put("eventTypeId", newCreatedEvent.getEventType().getEventTypeId().toString());
-        info.put("description",newCreatedEvent.getLocation().getDescription()+" will take place at the location "+ newCreatedEvent.getLocation().getDescription()+" and begin at the time of "+newCreatedEvent.getEventTime().toString());
+        info.put("description",newCreatedEvent.getEventName() + " will take place at the location "+ newCreatedEvent.getLocation().getDescription()
+                + " and begin at the time of " + newCreatedEvent.getEventTime().toString());
         HttpEntity<Map<String,String>> entity = new HttpEntity<>(info,httpHeaders);
 
             ResponseEntity<MessageDTO> rez = restTemplate.exchange("http://NotificationService/notifications/notify-users-of-event-creation",
                                                                     HttpMethod.POST,
                                                                     entity,
                                                                     MessageDTO.class);
-
             return rez.getStatusCode().is2xxSuccessful();
 
     }
