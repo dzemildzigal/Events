@@ -11,6 +11,12 @@ Events - Napredne Web Tehnologije
 - EventService
 - Notifaction Service
 - UserTicket Service
+- SystemEvents Service (gRPC)
+- ZuulGateway 
+- Eureka Service
+
+# Frontend
+- EventsFrontend (Angular 9)
 
 
  #### Guide to run a service is provided in README.md file in the service directory
