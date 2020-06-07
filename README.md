@@ -2,7 +2,7 @@
 Events - Napredne Web Tehnologije
 #### Džigal Džemil, Begić Lejla, Hodo Midhat
 
-# To run services using docker-compose you can use script.cmd from root directory
+# To run services using docker-compose you can use script.cmd from root directory after you install all dependencies needed by the projects
 
 # Services
 
