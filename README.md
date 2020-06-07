@@ -2,7 +2,7 @@
 Events - Napredne Web Tehnologije
 #### Džigal Džemil, Begić Lejla, Hodo Midhat
 
-# To run services using docker-compose you can use script.cmd from root directory after you install all dependencies needed by the projects
+#### To run services using docker-compose you can use script.cmd from root directory after you install all dependencies needed by the projects (read README.md of the projects)
 
 # Services
 
@@ -18,6 +18,4 @@ Events - Napredne Web Tehnologije
 # Frontend
 - EventsFrontend (Angular 9)
 
-
- #### Guide to run a service is provided in README.md file in the service directory
 

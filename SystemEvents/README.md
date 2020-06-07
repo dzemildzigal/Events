@@ -1,4 +1,4 @@
-# User Service
+# SystemEvents Service
 
 # Requirements
 - Java 13 
@@ -10,5 +10,4 @@
 - Update connection string in application.properties
 - Use command `mvn -T 1C clean install -Dmaven.test.skip=true`
 - Use command `mvn spring-boot run` in terminal directed to the service directory 
-- To run tests use  `mvn test`  in terminal directed to the service directory 
 
